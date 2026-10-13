@@ -3,85 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - PijarBumi</title>
+    <title>Login - PijarBumi</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <style> ::-webkit-scrollbar { display: none; } </style>
 </head>
-<body class="bg-gray-100 h-screen overflow-hidden flex">
+<body class="bg-green-900 h-screen flex items-center justify-center p-4">
 
-    <aside class="hidden md:flex w-64 bg-green-900 text-white flex-col shadow-xl z-20">
-        <div class="p-6 flex items-center space-x-3">
-            <i class="fa-solid fa-lightbulb text-amber-500 text-2xl"></i>
-            <span class="text-2xl font-bold">PijarBumi</span>
+    <div class="bg-white p-8 md:p-10 rounded-3xl shadow-2xl w-full max-w-md text-center transform transition-all">
+        
+        <div class="mb-8 flex flex-col items-center justify-center">
+            <div class="w-20 h-20 bg-green-50 rounded-full flex items-center justify-center mb-4 shadow-inner">
+                <i class="fa-solid fa-lightbulb text-amber-500 text-5xl"></i>
+            </div>
+            <h1 class="text-3xl font-black text-green-900 tracking-tight">PijarBumi</h1>
+            <p class="text-sm text-gray-500 mt-2 font-medium">Platform Demokrasi & Efisiensi Energi</p>
         </div>
-        <nav class="flex-1 px-4 space-y-2 mt-4">
-            <a href="dashboard.html" class="block px-4 py-3 bg-green-800 rounded-lg font-bold"><i class="fa-solid fa-table-cells-large mr-2"></i> Dasbor</a>
-            <a href="pengaturan.html" class="block px-4 py-3 hover:bg-green-800 rounded-lg transition"><i class="fa-solid fa-gear mr-2"></i> Pengaturan</a>
-        </nav>
-        <div class="p-4">
-            <button onclick="prosesLogout()" class="w-full py-2 bg-red-600 hover:bg-red-700 rounded-lg text-white font-bold">
-                <i class="fa-solid fa-right-from-bracket mr-2"></i> Keluar
+        
+        <div class="space-y-4">
+            <div class="relative">
+                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                    <i class="fa-solid fa-user text-gray-400"></i>
+                </div>
+                <input type="text" id="username" placeholder="Username (warga_unikom / pak_rt)" class="w-full pl-11 pr-4 py-3.5 rounded-xl bg-gray-50 border border-gray-200 focus:border-green-600 focus:ring-2 focus:ring-green-100 focus:outline-none transition font-medium text-gray-700">
+            </div>
+            
+            <div class="relative">
+                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                    <i class="fa-solid fa-lock text-gray-400"></i>
+                </div>
+                <input type="password" id="password" placeholder="Password (warga123 / rt123)" class="w-full pl-11 pr-4 py-3.5 rounded-xl bg-gray-50 border border-gray-200 focus:border-green-600 focus:ring-2 focus:ring-green-100 focus:outline-none transition font-medium text-gray-700">
+            </div>
+       
+            <button onclick="prosesLogin()" class="w-full bg-green-600 hover:bg-green-700 active:bg-green-800 text-white font-bold py-3.5 rounded-xl flex justify-center items-center shadow-lg shadow-green-600/30 transition-all mt-6">
+                <span id="textTombol">Masuk Sekarang</span>
+                <i id="loadingIcon" class="fa-solid fa-circle-notch fa-spin hidden ml-2"></i>
             </button>
         </div>
-    </aside>
 
-    <main class="flex-1 flex flex-col relative w-full">
-        
-        <header class="bg-white pt-8 pb-4 px-6 md:px-8 shadow-sm z-10 flex justify-between items-center">
-            <div>
-                <h1 class="text-xl md:text-2xl font-bold text-gray-800">Halo, Budi!</h1>
-                <p class="text-xs md:text-sm text-gray-500">RT 04 / RW 01</p>
-            </div>
-            <div class="w-10 h-10 bg-[#119468] rounded-full flex items-center justify-center text-white font-bold shadow-md">B</div>
-        </header>
+        <p class="text-xs text-gray-400 mt-8 font-medium">Prototype v1.0 &copy; 2026 Green Champions</p>
+    </div>
 
-        <div class="flex-1 overflow-y-auto p-6 md:p-8 pb-28 md:pb-8">
-            <h2 class="text-sm md:text-lg font-bold text-gray-800 mb-4">Ringkasan Emisi Bulan Ini</h2>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
-     
-                <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 flex items-center justify-between hover:shadow-md transition">
-                    <div>
-                        <p class="text-xs md:text-sm text-gray-400 font-bold mb-1">Konsumsi Listrik</p>
-                        <h3 class="text-3xl md:text-4xl font-black text-gray-800">145 <span class="text-sm font-normal text-gray-400">kWh</span></h3>
-                    </div>
-                    <div class="w-12 h-12 md:w-16 md:h-16 bg-amber-100 text-amber-500 rounded-full flex items-center justify-center text-2xl md:text-3xl">
-                        <i class="fa-solid fa-bolt"></i>
-                    </div>
-                </div>
-
-                <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 flex items-center justify-between hover:shadow-md transition">
-                    <div>
-                        <p class="text-xs md:text-sm text-gray-400 font-bold mb-1">Jejak Karbon</p>
-                        <h3 class="text-3xl md:text-4xl font-black text-gray-800">126 <span class="text-sm font-normal text-gray-400">kg CO2</span></h3>
-                    </div>
-                    <div class="w-12 h-12 md:w-16 md:h-16 bg-green-100 text-[#119468] rounded-full flex items-center justify-center text-2xl md:text-3xl">
-                        <i class="fa-solid fa-leaf"></i>
-                    </div>
-                </div>
-       
-                <div class="bg-gradient-to-r from-[#119468] to-green-500 p-5 rounded-2xl shadow-md text-white md:col-span-2 lg:col-span-1 flex flex-col justify-center">
-                    <h3 class="font-bold text-lg md:text-xl mb-1"><i class="fa-solid fa-award mr-2"></i>850 Poin Aksi</h3>
-                    <p class="text-xs md:text-sm text-green-100">Hebat! Kamu berhasil menghemat 5% energi bulan ini. Terus tingkatkan!</p>
-                </div>
-            </div>
-        </div>
-
-        <nav class="md:hidden absolute bottom-0 w-full bg-white border-t border-gray-100 flex justify-around items-center pt-2 pb-6 px-2 shadow-[0_-4px_10px_rgba(0,0,0,0.02)] z-20">
-            <a href="dashboard.html" class="flex flex-col items-center space-y-1 text-gray-800">
-                <div class="bg-[#F59E0B] text-white px-5 py-1 rounded-full"><i class="fa-solid fa-table-cells-large text-lg"></i></div>
-                <span class="text-[10px] font-bold">Dasbor</span>
-            </a>
-            <a href="#" class="flex flex-col items-center space-y-1 text-gray-800">
-                <i class="fa-solid fa-chart-simple text-xl"></i><span class="text-[10px] font-bold">Analitik</span>
-            </a>
-            <a href="pengaturan.html" class="flex flex-col items-center space-y-1 text-gray-800">
-                <i class="fa-solid fa-gear text-xl"></i><span class="text-[10px] font-bold">Pengaturan</span>
-            </a>
-        </nav>
-    </main>
-    
     <script src="js/app.js"></script>
 </body>
 </html>
