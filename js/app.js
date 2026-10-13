@@ -13,8 +13,8 @@ function prosesLogin() {
     ikon.classList.remove("hidden");
 
     setTimeout(function() {
-        if(inputUser === "warga_budi" && inputPass === "warga123") {
-            localStorage.setItem("namaPengguna", "Budi");
+        if(inputUser === "warga_unikom" && inputPass === "warga123") {
+            localStorage.setItem("namaPengguna", "Unikom1");
             window.location.href = "dashboard.html";
         } else if (inputUser === "pak_rt" && inputPass === "rt123") {
             localStorage.setItem("namaPengguna", "Pak RT");
