@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PijarBumi - Dashboard Demokrasi Energi</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+//theme
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        green: { 50: '#f0fdf4', 600: '#16a34a', 800: '#166534', 900: '#14532d' },
+                        amber: { 500: '#f59e0b' }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-100 font-sans text-gray-800 h-screen overflow-hidden">
+//login
+    <div id="loginPage" class="flex items-center justify-center h-full bg-green-900 bg-opacity-95 absolute inset-0 z-50 transition-opacity duration-500">
+        <div class="bg-white p-8 rounded-2xl shadow-2xl w-full max-w-md text-center">
+            <div class="mb-6 flex flex-col items-center justify-center">
+                <i class="fa-solid fa-lightbulb text-amber-500 text-5xl mb-3"></i>
+                <h1 class="text-3xl font-bold text-green-900">PijarBumi</h1>
+                <p class="text-sm text-gray-500 mt-2">Platform Demokrasi & Efisiensi Energi</p>
+            </div>
+            
+            <div class="space-y-4">
+                <div>
+                    <input type="text" placeholder="ID Pelanggan PLN atau Username" class="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:outline-none focus:border-green-600 focus:ring-1 focus:ring-green-600 transition" value="budisantoso_rt04">
+                </div>
+                <div>
+                    <input type="password" placeholder="Kata Sandi" class="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:outline-none focus:border-green-600 focus:ring-1 focus:ring-green-600 transition" value="password123">
+                </div>
+                <!-- Tombol yang memicu fungsi handleLogin() di bagian bawah -->
+                <button onclick="handleLogin()" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-4 rounded-lg transition shadow-md flex justify-center items-center">
+                    <span id="loginText">Masuk ke Dashboard</span>
+                    <i id="loginSpinner" class="fa-solid fa-circle-notch fa-spin hidden ml-2"></i>
+                </button>
+            </div>
+            <p class="text-xs text-gray-400 mt-6">Versi Prototype 1.0 - Green Champions 2026</p>
+        </div>
+    </div>
+//main dashboard
+    <div id="dashboardPage" class="hidden flex h-full w-full">
+        
+        <!-- Sidebar Menu Kiri -->
+        <aside class="w-64 bg-green-900 text-white flex flex-col hidden md:flex">
+            <div class="p-6 flex items-center space-x-3">
+                <i class="fa-solid fa-lightbulb text-amber-500 text-2xl"></i>
+                <span class="text-2xl font-bold tracking-wider">PijarBumi</span>
+            </div>
+            <nav class="flex-1 px-4 py-4 space-y-2">
+                <a href="#" class="flex items-center px-4 py-3 bg-green-800 rounded-lg text-white font-semibold">
+                    <i class="fa-solid fa-chart-pie w-6"></i> Dashboard Utama
+                </a>
+                <a href="#" class="flex items-center px-4 py-3 text-green-100 hover:bg-green-800 rounded-lg transition">
+                    <i class="fa-solid fa-ranking-star w-6"></i> Klasemen Warga
+                </a>
+                <a href="#" class="flex items-center px-4 py-3 text-green-100 hover:bg-green-800 rounded-lg transition">
+                    <i class="fa-solid fa-file-pdf w-6"></i> Policy Brief
+                </a>
+            </nav>
+            <div class="p-4">
+//logout
+                <button onclick="handleLogout()" class="w-full flex items-center justify-center px-4 py-2 bg-red-600 hover:bg-red-700 rounded-lg text-white font-semibold transition">
+                    <i class="fa-solid fa-right-from-bracket mr-2"></i> Keluar Aplikasi
+                </button>
+            </div>
+        </aside>
+
+//right cont
+        <main class="flex-1 overflow-y-auto bg-gray-50">
+//header
+            <header class="bg-white shadow-sm px-8 py-4 flex justify-between items-center sticky top-0 z-10">
+                <div>
+                    <h1 class="text-2xl font-bold text-gray-800">Halo, Budi Santoso!</h1>
+                    <p class="text-sm text-gray-500">Ringkasan Emisi Bulan Ini | RT 04 / RW 01</p>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="text-right hidden sm:block">
+                        <p class="text-xs text-green-600 font-bold">Pelopor Hijau Level 3</p>
+                    </div>
+                    <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center text-green-600 font-bold border border-green-200">
+                        BS
+                    </div>
+                </div>
+            </header>
+
+//card 1
+            <div class="p-8">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                    <!-- Kartu 1 -->
+                    <div class="bg-white p-6 rounded-xl shadow-sm border-l-4 border-amber-500 transform hover:scale-105 transition duration-300">
+                        <p class="text-sm text-gray-500 font-semibold mb-1">Konsumsi Listrik PLN</p>
+                        <h3 class="text-4xl font-bold text-gray-800">145 <span class="text-lg font-normal text-gray-500">kWh</span></h3>
+                        <p class="text-xs text-red-500 mt-2 font-semibold"><i class="fa-solid fa-arrow-up"></i> Naik 5% dari bulan lalu</p>
+                    </div>
+//card 2
+                    <div class="bg-white p-6 rounded-xl shadow-sm border-l-4 border-green-600 transform hover:scale-105 transition duration-300">
+                        <p class="text-sm text-gray-500 font-semibold mb-1">Jejak Karbon (CO2)</p>
+                        <h3 class="text-4xl font-bold text-gray-800">126 <span class="text-lg font-normal text-gray-500">kg</span></h3>
+                        <p class="text-xs text-green-600 mt-2 font-semibold"><i class="fa-solid fa-leaf"></i> Setara 5 pohon dewasa</p>
+                    </div>
+//card 3
+                    <div class="bg-white p-6 rounded-xl shadow-sm border-l-4 border-blue-500 transform hover:scale-105 transition duration-300">
+                        <p class="text-sm text-gray-500 font-semibold mb-1">Poin Aksi Komunitas</p>
+                        <h3 class="text-4xl font-bold text-gray-800">850 <span class="text-lg font-normal text-gray-500">Pts</span></h3>
+                        <p class="text-xs text-blue-600 mt-2 font-semibold"><i class="fa-solid fa-gift"></i> Cukup untuk klaim diskon iuran</p>
+                    </div>
+                </div>
+//adv
+                <div class="bg-gradient-to-r from-green-800 to-green-600 p-8 rounded-xl shadow-md text-white flex flex-col sm:flex-row items-center justify-between">
+                    <div class="mb-4 sm:mb-0">
+                        <h2 class="text-2xl font-bold mb-2">Policy Brief Siap Dicetak!</h2>
+                        <p class="text-green-100 max-w-lg">Bulan ini, warga RT 04 berhasil menghemat total 500kg CO2. Unduh laporan data kolektif ini untuk diajukan ke Kelurahan sebagai bukti Aksi Iklim nyata komunitas.</p>
+                    </div>
+                    <button class="bg-white text-green-800 font-bold py-3 px-6 rounded-lg hover:bg-gray-100 transition shadow-lg flex items-center whitespace-nowrap">
+                        <i class="fa-solid fa-download mr-2"></i> Unduh PDF Laporan
+                    </button>
+                </div>
+            </div>
+        </main>
+    </div>
+// Ljava
+    <script>
+        function handleLogin() {
+            // Ubah teks tombol jadi loading
+            document.getElementById('loginText').innerText = "Membuka Dashboard...";
+            document.getElementById('loginSpinner').classList.remove('hidden');
+
+            setTimeout(() => {
+                document.getElementById('loginPage').classList.add('hidden');
+                document.getElementById('dashboardPage').classList.remove('hidden');
+                document.getElementById('loginText').innerText = "Masuk ke Dashboard";
+                document.getElementById('loginSpinner').classList.add('hidden');
+            }, 1000); 
+        }
+
+        function handleLogout() {
+            document.getElementById('dashboardPage').classList.add('hidden');
+            document.getElementById('loginPage').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
