@@ -8,67 +8,53 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style> ::-webkit-scrollbar { display: none; } </style>
 </head>
-<body class="bg-gray-100 h-screen overflow-hidden flex">
+<body class="bg-gray-100 h-screen flex justify-center items-center overflow-hidden">
 
-    <aside class="hidden md:flex w-64 bg-green-900 text-white flex-col shadow-xl z-20">
-        <div class="p-6 flex items-center space-x-3">
-            <i class="fa-solid fa-lightbulb text-amber-500 text-2xl"></i>
-            <span class="text-2xl font-bold">PijarBumi</span>
-        </div>
-        <nav class="flex-1 px-4 space-y-2 mt-4">
-            <a href="dashboard_rt.html" class="block px-4 py-3 bg-green-800 rounded-lg font-bold"><i class="fa-solid fa-chart-pie mr-2"></i> Dasbor Admin</a>
-            <a href="pengaturan.html" class="block px-4 py-3 hover:bg-green-800 rounded-lg transition"><i class="fa-solid fa-gear mr-2"></i> Pengaturan</a>
-        </nav>
-        <div class="p-4">
-            <button onclick="prosesLogout()" class="w-full py-2 bg-red-600 hover:bg-red-700 rounded-lg text-white font-bold">
-                <i class="fa-solid fa-right-from-bracket mr-2"></i> Keluar
-            </button>
-        </div>
-    </aside>
-
-    <main class="flex-1 flex flex-col relative w-full">
+    <div class="w-full max-w-md h-full md:h-[90vh] md:rounded-[40px] md:shadow-2xl relative flex flex-col bg-gray-50 overflow-hidden border border-gray-200">
         
-        <header class="bg-white pt-8 pb-4 px-6 md:px-8 shadow-sm z-10 flex justify-between items-center">
+        <header class="bg-gradient-to-br from-amber-500 to-amber-600 pt-12 pb-8 px-6 text-white shadow-sm z-10 rounded-b-[30px] flex justify-between items-center">
             <div>
-                <h1 class="text-xl md:text-2xl font-bold text-gray-800">Admin RT 04</h1>
-                <p class="text-xs md:text-sm text-green-600 font-bold">Panel Agregat Warga</p>
+                <h1 id="sapaanUser" class="text-xl font-bold">Admin RT 04</h1>
+                <p class="text-xs text-amber-100">Panel Agregat Penggunaan Warga</p>
             </div>
-            <div class="w-10 h-10 bg-amber-500 rounded-full flex items-center justify-center text-white font-bold shadow-md">
+            <div class="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center text-white font-bold">
                 <i class="fa-solid fa-user-tie"></i>
             </div>
         </header>
 
-        <div class="flex-1 overflow-y-auto p-6 md:p-8 pb-28 md:pb-8">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mb-8">
-  
-                <div class="bg-white p-5 md:p-6 rounded-2xl shadow-sm border-l-4 border-blue-500">
-                    <p class="text-xs md:text-sm text-gray-500 font-bold mb-1">Total Warga Terdaftar</p>
-                    <h3 class="text-3xl md:text-4xl font-black text-gray-800">45 <span class="text-sm font-normal text-gray-500">KK</span></h3>
+        <main class="flex-1 overflow-y-auto px-6 py-4 pb-24 space-y-6">
+            
+            <div class="grid grid-cols-2 gap-3">
+                <div class="bg-white p-4 rounded-2xl shadow-sm border-l-4 border-blue-500">
+                    <p class="text-[10px] text-gray-400 font-bold mb-1">Total Warga</p>
+                    <h3 class="text-xl font-black text-gray-800">45 <span class="text-xs font-normal text-gray-400">KK</span></h3>
                 </div>
-  
-                <div class="bg-white p-5 md:p-6 rounded-2xl shadow-sm border-l-4 border-amber-500">
-                    <p class="text-xs md:text-sm text-gray-500 font-bold mb-1">Total Konsumsi RT</p>
-                    <h3 class="text-3xl md:text-4xl font-black text-gray-800">6.450 <span class="text-sm font-normal text-gray-500">kWh</span></h3>
-                </div>
-                <!-- Kartu Karbon Kolektif -->
-                <div class="bg-white p-5 md:p-6 rounded-2xl shadow-sm border-l-4 border-green-600">
-                    <p class="text-xs md:text-sm text-gray-500 font-bold mb-1">Total Penghematan Karbon</p>
-                    <h3 class="text-3xl md:text-4xl font-black text-gray-800">520 <span class="text-sm font-normal text-gray-500">kg CO2</span></h3>
+                <div class="bg-white p-4 rounded-2xl shadow-sm border-l-4 border-amber-500">
+                    <p class="text-[10px] text-gray-400 font-bold mb-1">Konsumsi RT</p>
+                    <h3 class="text-xl font-black text-gray-800">6.450 <span class="text-xs font-normal text-gray-400">kWh</span></h3>
                 </div>
             </div>
 
-            <div class="bg-gradient-to-r from-green-800 to-green-600 p-6 md:p-8 rounded-2xl shadow-md text-white flex flex-col md:flex-row justify-between items-center text-center md:text-left">
-                <div class="mb-4 md:mb-0">
-                    <h2 class="text-xl md:text-2xl font-bold mb-2">Cetak Rekapitulasi RT</h2>
-                    <p class="text-xs md:text-sm text-green-100 max-w-md">Gunakan data agregat ini sebagai lampiran Policy Brief untuk negosiasi insentif ke Kelurahan.</p>
+            <div class="bg-white p-4 rounded-2xl shadow-sm border-l-4 border-green-600 flex justify-between items-center">
+                <div>
+                    <p class="text-[10px] text-gray-400 font-bold mb-1">Penghematan Karbon RT</p>
+                    <h3 class="text-xl font-black text-gray-800">520 <span class="text-xs font-normal text-gray-400">kg CO2</span></h3>
                 </div>
-                <button class="bg-white text-green-800 font-bold py-3 px-6 rounded-lg hover:bg-gray-100 transition shadow-lg w-full md:w-auto">
-                    <i class="fa-solid fa-print mr-2"></i> Cetak PDF
+                <div class="w-10 h-10 bg-green-100 text-green-700 rounded-xl flex items-center justify-center text-lg">
+                    <i class="fa-solid fa-leaf"></i>
+                </div>
+            </div>
+
+            <div class="bg-gradient-to-r from-green-800 to-green-600 p-5 rounded-2xl text-white shadow-md">
+                <h3 class="font-bold text-base mb-1">Cetak Rekapitulasi RT</h3>
+                <p class="text-xs text-green-100 mb-4">Gunakan data agregat ini sebagai lampiran Policy Brief untuk negosiasi insentif ke Kelurahan.</p>
+                <button onclick="alert('Berhasil mencetak dokumen rekapitulasi RT!')" class="w-full bg-white text-green-800 font-bold py-2.5 rounded-xl text-xs hover:bg-gray-100 transition shadow">
+                    <i class="fa-solid fa-print mr-2"></i> Cetak Laporan PDF
                 </button>
             </div>
-        </div>
+        </main>
 
-        <nav class="md:hidden absolute bottom-0 w-full bg-white border-t border-gray-100 flex justify-around items-center pt-2 pb-6 px-2 shadow-[0_-4px_10px_rgba(0,0,0,0.02)] z-20">
+        <nav class="absolute bottom-0 w-full bg-white border-t border-gray-100 flex justify-around items-center pt-2 pb-5 px-2 z-20">
             <a href="dashboard_rt.html" class="flex flex-col items-center space-y-1 text-gray-800">
                 <div class="bg-[#F59E0B] text-white px-5 py-1 rounded-full"><i class="fa-solid fa-chart-pie text-lg"></i></div>
                 <span class="text-[10px] font-bold">Admin</span>
@@ -77,7 +63,7 @@
                 <i class="fa-solid fa-gear text-xl"></i><span class="text-[10px] font-bold">Pengaturan</span>
             </a>
         </nav>
-    </main>
+    </div>
 
     <script src="js/app.js"></script>
 </body>
