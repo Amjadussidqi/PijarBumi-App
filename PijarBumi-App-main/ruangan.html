@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ruangan & Perangkat - PijarBumi</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet">
+    <style> ::-webkit-scrollbar { display: none; } </style>
+</head>
+<body class="bg-gray-100 h-screen flex justify-center">
+
+    <div class="w-full max-w-md h-full relative flex flex-col bg-gray-50 overflow-hidden shadow-2xl">
+        
+        <header class="bg-gradient-to-br from-[#1cd988] to-[#119468] pt-12 pb-12 px-4 flex items-center rounded-b-[40px] text-white">
+            <a href="dashboard.html" class="text-white text-xl pl-2"><i class="fa-solid fa-chevron-left"></i></a>
+            <h1 class="flex-1 text-center text-lg font-bold pr-6">Manajemen Ruangan</h1>
+        </header>
+
+        <main class="flex-1 overflow-y-auto px-5 -mt-6 pb-12 space-y-4">
+            
+            <div class="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <div class="w-12 h-12 bg-blue-50 text-blue-500 rounded-xl flex items-center justify-center text-xl">
+                        <i class="fa-solid fa-bed"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-gray-800 text-sm">Kamar Utama</h3>
+                        <p class="text-xs text-gray-400 font-medium">2 Perangkat Aktif (AC, Lampu)</p>
+                    </div>
+                </div>
+                <span class="text-xs font-bold text-[#119468] bg-emerald-50 px-3 py-1.5 rounded-full">35 kWh</span>
+            </div>
+
+            <div class="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <div class="w-12 h-12 bg-amber-50 text-amber-500 rounded-xl flex items-center justify-center text-xl">
+                        <i class="fa-solid fa-utensils"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-gray-800 text-sm">Dapur</h3>
+                        <p class="text-xs text-gray-400 font-medium">3 Perangkat Aktif (Kulkas, Dispenser)</p>
+                    </div>
+                </div>
+                <span class="text-xs font-bold text-[#119468] bg-emerald-50 px-3 py-1.5 rounded-full">60 kWh</span>
+            </div>
+
+            <div class="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <div class="w-12 h-12 bg-purple-50 text-purple-500 rounded-xl flex items-center justify-center text-xl">
+                        <i class="fa-solid fa-couch"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-gray-800 text-sm">Ruang Keluarga</h3>
+                        <p class="text-xs text-gray-400 font-medium">2 Perangkat Aktif (TV, Kipas)</p>
+                    </div>
+                </div>
+                <span class="text-xs font-bold text-[#119468] bg-emerald-50 px-3 py-1.5 rounded-full">50 kWh</span>
+            </div>
+
+            <button onclick="alert('Fitur tambah ruangan baru akan segera dibuka!')" class="w-full border-2 border-dashed border-gray-300 text-gray-500 font-bold py-4 rounded-2xl hover:bg-gray-100 transition mt-4">
+                <i class="fa-solid fa-plus mr-2"></i> Tambah Ruangan Baru
+            </button>
+        </main>
+    </div>
+    <script src="js/app.js"></script>
+</body>
+</html>

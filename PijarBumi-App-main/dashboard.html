@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - PijarBumi</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet">
+    <style> ::-webkit-scrollbar { display: none; } </style>
+</head>
+<body class="bg-gray-100 h-screen overflow-hidden flex">
+
+    <aside class="hidden md:flex w-64 bg-green-900 text-white flex-col shadow-xl z-20">
+        <div class="p-6 flex items-center space-x-3">
+            <i class="fa-solid fa-lightbulb text-amber-500 text-2xl"></i>
+            <span class="text-2xl font-bold">PijarBumi</span>
+        </div>
+        <nav class="flex-1 px-4 space-y-2 mt-4">
+            <a href="dashboard.html" class="block px-4 py-3 bg-green-800 rounded-lg font-bold"><i class="fa-solid fa-table-cells-large mr-2"></i> Dasbor</a>
+            <a href="analitik.html" class="block px-4 py-3 hover:bg-green-800 rounded-lg transition"><i class="fa-solid fa-chart-simple mr-2"></i> Analitik</a>
+            <a href="alat.html" class="block px-4 py-3 hover:bg-green-800 rounded-lg transition"><i class="fa-solid fa-wrench mr-2"></i> Alat Energi</a>
+            <a href="pengaturan.html" class="block px-4 py-3 hover:bg-green-800 rounded-lg transition"><i class="fa-solid fa-gear mr-2"></i> Pengaturan</a>
+        </nav>
+        <div class="p-4">
+            <button onclick="prosesLogout()" class="w-full py-2 bg-red-600 hover:bg-red-700 rounded-lg text-white font-bold">
+                <i class="fa-solid fa-right-from-bracket mr-2"></i> Keluar
+            </button>
+        </div>
+    </aside>
+
+    <main class="flex-1 flex flex-col relative w-full bg-gray-50">
+        
+        <header class="bg-gradient-to-br from-[#1cd988] to-[#119468] pt-10 pb-8 px-6 text-white shadow-sm z-10 rounded-b-[30px] md:rounded-none flex justify-between items-center">
+            <div>
+                <h1 id="sapaanUser" class="text-xl md:text-2xl font-bold">Hai, Warga!</h1>
+                <p class="text-xs md:text-sm text-green-100">Track your home energy and start saving</p>
+            </div>
+            <i class="fa-regular fa-bell text-xl cursor-pointer"></i>
+        </header>
+
+        <div class="flex-1 overflow-y-auto p-6 md:p-8 pb-28 md:pb-8">
+            <div class="max-w-4xl mx-auto space-y-6">
+
+                <div id="areaInfoRumah">
+                    </div>
+
+                <div>
+                    <div class="flex justify-between items-center mb-4">
+                        <h2 class="text-sm md:text-lg font-bold text-gray-800">Ikhtisar Energi</h2>
+                        <span class="text-xs text-gray-400 font-medium">this month</span>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 flex items-center justify-between">
+                            <div>
+                                <p class="text-xs text-gray-400 font-bold mb-1">Total Penggunaan</p>
+                                <h3 class="text-2xl md:text-3xl font-black text-gray-800">145 <span class="text-sm font-normal text-gray-400">kWh</span></h3>
+                            </div>
+                            <div class="w-12 h-12 bg-amber-100 text-amber-500 rounded-2xl flex items-center justify-center text-xl">
+                                <i class="fa-solid fa-bolt"></i>
+                            </div>
+                        </div>
+
+                        <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 flex items-center justify-between">
+                            <div>
+                                <p class="text-xs text-gray-400 font-bold mb-1">Total Biaya</p>
+                                <h3 class="text-2xl md:text-3xl font-black text-gray-800">Rp 209.481</h3>
+                            </div>
+                            <div class="w-12 h-12 bg-red-100 text-red-500 rounded-2xl flex items-center justify-center text-xl">
+                                <i class="fa-solid fa-money-bill-wave"></i>
+                            </div>
+                        </div>
+
+                        <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 flex items-center justify-between">
+                            <div>
+                                <p class="text-xs text-gray-400 font-bold mb-1">Rata-rata Harian</p>
+                                <h3 class="text-2xl md:text-3xl font-black text-gray-800">4.8 <span class="text-sm font-normal text-gray-400">kWh</span></h3>
+                            </div>
+                            <div class="w-12 h-12 bg-blue-100 text-blue-500 rounded-2xl flex items-center justify-center text-xl">
+                                <i class="fa-solid fa-chart-line"></i>
+                            </div>
+                        </div>
+
+                        <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 flex items-center justify-between">
+                            <div>
+                                <p class="text-xs text-gray-400 font-bold mb-1">CO2 Dipancarkan</p>
+                                <h3 class="text-2xl md:text-3xl font-black text-gray-800">126 <span class="text-sm font-normal text-gray-400">kg</span></h3>
+                            </div>
+                            <div class="w-12 h-12 bg-green-100 text-[#119468] rounded-2xl flex items-center justify-center text-xl">
+                                <i class="fa-solid fa-leaf"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <h2 class="text-sm md:text-lg font-bold text-gray-800 mb-4">Tindakan Cepat</h2>
+                    <div class="grid grid-cols-5 gap-3">
+                        <a href="ruangan.html" class="flex flex-col items-center bg-white p-3 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition">
+                            <div class="w-10 h-10 bg-blue-50 text-blue-500 rounded-xl flex items-center justify-center mb-2"><i class="fa-solid fa-door-open"></i></div>
+                            <span class="text-[10px] font-bold text-gray-700 text-center">Ruangan</span>
+                        </a>
+                        <a href="alat.html" class="flex flex-col items-center bg-white p-3 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition">
+                            <div class="w-10 h-10 bg-emerald-50 text-emerald-600 rounded-xl flex items-center justify-center mb-2"><i class="fa-solid fa-bolt"></i></div>
+                            <span class="text-[10px] font-bold text-gray-700 text-center">Perangkat</span>
+                        </a>
+                        <a href="tagihan.html" class="flex flex-col items-center bg-white p-3 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition">
+                            <div class="w-10 h-10 bg-amber-50 text-amber-500 rounded-xl flex items-center justify-center mb-2"><i class="fa-solid fa-file-invoice-dollar"></i></div>
+                            <span class="text-[10px] font-bold text-gray-700 text-center">Tagihan</span>
+                        </a>
+                        <a href="#" class="flex flex-col items-center bg-white p-3 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition">
+                            <div class="w-10 h-10 bg-indigo-50 text-indigo-500 rounded-xl flex items-center justify-center mb-2"><i class="fa-solid fa-robot"></i></div>
+                            <span class="text-[10px] font-bold text-gray-700 text-center">Pelatih</span>
+                        </a>
+                        <a href="analitik.html" class="flex flex-col items-center bg-white p-3 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition">
+                            <div class="w-10 h-10 bg-purple-50 text-purple-500 rounded-xl flex items-center justify-center mb-2"><i class="fa-solid fa-chart-pie"></i></div>
+                            <span class="text-[10px] font-bold text-gray-700 text-center">Audit</span>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <nav class="md:hidden absolute bottom-0 w-full bg-white border-t border-gray-100 flex justify-around items-center pt-2 pb-6 px-2 shadow-[0_-4px_10px_rgba(0,0,0,0.02)] z-20">
+            <a href="dashboard.html" class="flex flex-col items-center space-y-1 text-gray-800">
+                <div class="bg-[#F59E0B] text-white px-5 py-1 rounded-full"><i class="fa-solid fa-table-cells-large text-lg"></i></div>
+                <span class="text-[10px] font-bold">Dasbor</span>
+            </a>
+            <a href="analitik.html" class="flex flex-col items-center space-y-1 text-gray-800">
+                <i class="fa-solid fa-chart-simple text-xl"></i><span class="text-[10px] font-bold">Analitik</span>
+            </a>
+            <a href="alat.html" class="flex flex-col items-center space-y-1 text-gray-800">
+                <i class="fa-solid fa-wrench text-xl"></i><span class="text-[10px] font-bold">Alat</span>
+            </a>
+            <a href="pengaturan.html" class="flex flex-col items-center space-y-1 text-gray-800">
+                <i class="fa-solid fa-gear text-xl"></i><span class="text-[10px] font-bold">Pengaturan</span>
+            </a>
+        </nav>
+    </main>
+
+    <script src="js/app.js"></script>
+    <script>
+        window.addEventListener("DOMContentLoaded", function() {
+            let dataSimpan = localStorage.getItem("dataRumahPijar");
+            let area = document.getElementById("areaInfoRumah");
+            
+            if(dataSimpan) {
+                let r = JSON.parse(dataSimpan);
+                area.innerHTML = `
+                    <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 flex items-center justify-between">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-12 h-12 bg-emerald-100 text-[#119468] rounded-2xl flex items-center justify-center text-xl">
+                                <i class="fa-solid fa-house"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-gray-800 text-sm md:text-base">${r.nama}</h3>
+                                <p class="text-xs text-gray-400 font-medium">${r.alamat} - ${r.luas} m² (${r.kamarTidur} Kamar)</p>
+                            </div>
+                        </div>
+                        <a href="tambah_rumah.html" class="bg-emerald-50 text-[#119468] font-bold text-xs px-4 py-2 rounded-full hover:bg-emerald-100 transition">
+                            Edit <i class="fa-solid fa-pen ml-1 text-[10px]"></i>
+                        </a>
+                    </div>
+                `;
+            } else {
+                area.innerHTML = `
+                    <div class="bg-[#119468] text-white p-6 rounded-3xl shadow-lg flex flex-col items-start space-y-3">
+                        <div class="w-12 h-12 bg-white/20 rounded-2xl flex items-center justify-center text-xl">
+                            <i class="fa-solid fa-house"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-lg">Selamat Datang di PijarBumi</h3>
+                            <p class="text-xs text-green-100 mt-1">Tambahkan rumah pertama Anda untuk mulai melacak penggunaan energi dan menghemat uang.</p>
+                        </div>
+                        <a href="tambah_rumah.html" class="bg-white text-[#119468] font-bold text-xs px-5 py-3 rounded-2xl shadow-md hover:bg-green-50 transition">
+                            Tambah Rumah
+                        </a>
+                    </div>
+                `;
+            }
+        });
+    </script>
+</body>
+</html>

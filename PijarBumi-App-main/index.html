@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - PijarBumi</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet">
+</head>
+<body class="bg-green-900 h-screen flex items-center justify-center p-4">
+
+    <div class="bg-white p-8 md:p-10 rounded-3xl shadow-2xl w-full max-w-md text-center transform transition-all">
+        
+        <div class="mb-8 flex flex-col items-center justify-center">
+            <div class="w-20 h-20 bg-green-50 rounded-full flex items-center justify-center mb-4 shadow-inner">
+                <i class="fa-solid fa-lightbulb text-amber-500 text-5xl"></i>
+            </div>
+            <h1 class="text-3xl font-black text-green-900 tracking-tight">PijarBumi</h1>
+            <p class="text-sm text-gray-500 mt-2 font-medium">Platform Demokrasi & Efisiensi Energi</p>
+        </div>
+        
+        <div class="space-y-4">
+            <div class="relative">
+                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                    <i class="fa-solid fa-user text-gray-400"></i>
+                </div>
+                <input type="text" id="username" placeholder="Username" class="w-full pl-11 pr-4 py-3.5 rounded-xl bg-gray-50 border border-gray-200 focus:border-green-600 focus:ring-2 focus:ring-green-100 focus:outline-none transition font-medium text-gray-700">
+            </div>
+            
+            <div class="relative">
+                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                    <i class="fa-solid fa-lock text-gray-400"></i>
+                </div>
+                <input type="password" id="password" placeholder="Password" class="w-full pl-11 pr-4 py-3.5 rounded-xl bg-gray-50 border border-gray-200 focus:border-green-600 focus:ring-2 focus:ring-green-100 focus:outline-none transition font-medium text-gray-700">
+            </div>
+       
+            <button onclick="prosesLogin()" class="w-full bg-green-600 hover:bg-green-700 active:bg-green-800 text-white font-bold py-3.5 rounded-xl flex justify-center items-center shadow-lg shadow-green-600/30 transition-all mt-6">
+                <span id="textTombol">Masuk Sekarang</span>
+                <i id="loadingIcon" class="fa-solid fa-circle-notch fa-spin hidden ml-2"></i>
+            </button>
+        </div>
+
+        <p class="text-xs text-gray-400 mt-8 font-medium">Prototype v1.0 &copy; 2026 Green Champions</p>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
