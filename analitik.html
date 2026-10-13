@@ -18,7 +18,7 @@
         <nav class="flex-1 px-4 space-y-2 mt-4">
             <a href="dashboard.html" class="block px-4 py-3 hover:bg-green-800 rounded-lg transition"><i class="fa-solid fa-table-cells-large mr-2"></i> Dasbor</a>
             <a href="analitik.html" class="block px-4 py-3 bg-green-800 rounded-lg font-bold"><i class="fa-solid fa-chart-simple mr-2"></i> Analitik</a>
-            <a href="alat.html" class="block px-4 py-3 hover:bg-green-800 rounded-lg transition"><i class="fa-solid fa-wrench mr-2"></i> Alat Energi</a>
+            <a href="alat.html" class="block px-4 py-3 hover:bg-green-800 rounded-lg transition"><i class="fa-solid fa-wrench mr-2"></i> Alat</a>
             <a href="pengaturan.html" class="block px-4 py-3 hover:bg-green-800 rounded-lg transition"><i class="fa-solid fa-gear mr-2"></i> Pengaturan</a>
         </nav>
         <div class="p-4">
@@ -28,31 +28,31 @@
         </div>
     </aside>
 
-    <main class="flex-1 flex flex-col relative w-full bg-gray-50">
+    <main class="flex-1 flex flex-col relative w-full bg-gray-50 h-full">
         
-        <header class="bg-gradient-to-br from-[#1cd988] to-[#119468] pt-12 pb-8 px-6 text-white shadow-sm z-10 rounded-b-[30px] md:rounded-none">
-            <h1 class="text-xl md:text-2xl font-bold text-center mb-4">Analitik</h1>
-            <div class="text-center">
-                <span class="text-3xl md:text-4xl font-black">Rp 209.481</span>
-                <span class="text-xs md:text-sm text-green-100 ml-2">bulan ini</span>
-                <p class="text-xs text-green-100 mt-1">145 kWh · 126 kg CO2</p>
+        <header class="bg-gradient-to-br from-[#1cd988] to-[#119468] pt-12 pb-8 px-6 text-white shadow-sm z-10 md:rounded-none rounded-b-[30px] text-center">
+            <h1 class="text-xl font-bold mb-2">Analitik</h1>
+            <div>
+                <span class="text-3xl font-black">Rp 209.481</span>
+                <span class="text-xs text-green-100 ml-1">bulan ini</span>
+                <p class="text-xs text-green-100 mt-0.5">145 kWh · 126 kg CO2</p>
             </div>
         </header>
 
         <div class="flex-1 overflow-y-auto p-6 md:p-8 pb-28 md:pb-8">
-            <div class="max-w-4xl mx-auto">
+            <div class="max-w-4xl mx-auto space-y-6">
                 
-                <div class="bg-white p-1.5 rounded-2xl shadow-sm flex justify-between mb-6 border border-gray-100">
-                    <button class="flex-1 py-2 text-xs md:text-sm font-bold text-gray-500 rounded-xl transition">Week</button>
-                    <button class="flex-1 py-2 text-xs md:text-sm font-bold text-white bg-[#119468] rounded-xl shadow-sm transition">Month</button>
-                    <button class="flex-1 py-2 text-xs md:text-sm font-bold text-gray-500 rounded-xl transition">Year</button>
+                <div class="bg-white p-1 rounded-2xl shadow-sm flex justify-between border border-gray-100 text-center max-w-md mx-auto">
+                    <button class="flex-1 py-1.5 text-xs font-bold text-gray-500 rounded-xl">Week</button>
+                    <button class="flex-1 py-1.5 text-xs font-bold text-white bg-[#119468] rounded-xl shadow-sm">Month</button>
+                    <button class="flex-1 py-1.5 text-xs font-bold text-gray-500 rounded-xl">Year</button>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 flex items-center justify-between">
                         <div>
                             <p class="text-xs text-gray-400 font-bold mb-1">Total Penggunaan</p>
-                            <h3 class="text-2xl md:text-3xl font-black text-gray-800">145 <span class="text-sm font-normal text-gray-400">kWh</span></h3>
+                            <h3 class="text-2xl font-black text-gray-800">145 <span class="text-sm font-normal text-gray-400">kWh</span></h3>
                         </div>
                         <div class="w-12 h-12 bg-amber-100 text-amber-500 rounded-2xl flex items-center justify-center text-xl">
                             <i class="fa-solid fa-bolt"></i>
@@ -62,77 +62,53 @@
                     <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 flex items-center justify-between">
                         <div>
                             <p class="text-xs text-gray-400 font-bold mb-1">Total Biaya (PLN)</p>
-                            <h3 class="text-2xl md:text-3xl font-black text-gray-800">Rp 209.481</h3>
+                            <h3 class="text-2xl font-black text-gray-800">Rp 209K</h3>
                         </div>
                         <div class="w-12 h-12 bg-red-100 text-red-500 rounded-2xl flex items-center justify-center text-xl">
                             <i class="fa-solid fa-rupiah-sign"></i>
                         </div>
                     </div>
-
-                    <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 flex items-center justify-between">
-                        <div>
-                            <p class="text-xs text-gray-400 font-bold mb-1">Rata-rata Harian</p>
-                            <h3 class="text-2xl md:text-3xl font-black text-gray-800">4.8 <span class="text-sm font-normal text-gray-400">kWh</span></h3>
-                        </div>
-                        <div class="w-12 h-12 bg-blue-100 text-blue-500 rounded-2xl flex items-center justify-center text-xl">
-                            <i class="fa-solid fa-chart-line"></i>
-                        </div>
-                    </div>
-
-                    <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 flex items-center justify-between">
-                        <div>
-                            <p class="text-xs text-gray-400 font-bold mb-1">CO2 Dipancarkan</p>
-                            <h3 class="text-2xl md:text-3xl font-black text-gray-800">126 <span class="text-sm font-normal text-gray-400">kg</span></h3>
-                        </div>
-                        <div class="w-12 h-12 bg-green-100 text-[#119468] rounded-2xl flex items-center justify-center text-xl">
-                            <i class="fa-solid fa-leaf"></i>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 mb-6">
-                    <div class="flex justify-between items-center mb-4">
-                        <h3 class="font-bold text-gray-800 text-sm">Tren Penggunaan</h3>
-                        <div class="bg-gray-100 p-1 rounded-xl flex space-x-1">
-                            <button class="bg-[#119468] text-white px-3 py-1 rounded-lg text-xs"><i class="fa-solid fa-chart-line"></i></button>
-                            <button class="text-gray-400 px-3 py-1 rounded-lg text-xs"><i class="fa-solid fa-chart-column"></i></button>
-                        </div>
-                    </div>
-                    <div class="h-48 flex items-center justify-center bg-gray-50 rounded-xl border border-dashed border-gray-200">
-                        <p class="text-xs text-gray-400 font-medium">Grafik Konsumsi Harian (145 kWh)</p>
-                    </div>
                 </div>
 
                 <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-                    <h3 class="font-bold text-gray-800 text-sm mb-4">Rincian Biaya</h3>
-                    <div class="space-y-3">
-                        <div class="flex justify-between items-center text-sm p-3 bg-gray-50 rounded-xl">
-                            <span class="font-medium text-gray-600">Tarif Dasar Listrik (PLN R-1)</span>
-                            <span class="font-bold text-gray-800">Rp 1.444 / kWh</span>
-                        </div>
-                        <div class="flex justify-between items-center text-sm p-3 bg-gray-50 rounded-xl">
-                            <span class="font-medium text-gray-600">Estimasi Konversi Karbon</span>
-                            <span class="font-bold text-[#119468]">0.87 kg CO2 / kWh</span>
-                        </div>
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="font-bold text-gray-800 text-sm">Tren Penggunaan</h3>
+                    </div>
+                    <div class="h-40 flex items-center justify-center bg-gray-50 rounded-xl border border-dashed border-gray-200">
+                        <p class="text-xs text-gray-400 font-medium">Grafik Konsumsi Harian</p>
                     </div>
                 </div>
 
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 space-y-3">
+                    <h3 class="font-bold text-gray-800 text-sm mb-3">Rincian Tarif</h3>
+                    <div class="flex justify-between items-center text-sm p-3 bg-gray-50 rounded-xl">
+                        <span class="text-gray-600 font-medium">Tarif PLN (R-1)</span>
+                        <span class="font-bold text-gray-800">Rp 1.444 / kWh</span>
+                    </div>
+                    <div class="flex justify-between items-center text-sm p-3 bg-gray-50 rounded-xl">
+                        <span class="text-gray-600 font-medium">Faktor Karbon</span>
+                        <span class="font-bold text-[#119468]">0.87 kg CO2 / kWh</span>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <nav class="md:hidden absolute bottom-0 w-full bg-white border-t border-gray-100 flex justify-around items-center pt-2 pb-6 px-2 shadow-[0_-4px_10px_rgba(0,0,0,0.02)] z-20">
+        <nav class="md:hidden absolute bottom-0 w-full bg-white border-t border-gray-100 flex justify-around items-center pt-2 pb-6 px-2 z-20">
             <a href="dashboard.html" class="flex flex-col items-center space-y-1 text-gray-800">
-                <i class="fa-solid fa-table-cells-large text-xl"></i><span class="text-[10px] font-bold">Dasbor</span>
+                <i class="fa-solid fa-table-cells-large text-xl"></i>
+                <span class="text-[10px] font-bold">Dasbor</span>
             </a>
             <a href="analitik.html" class="flex flex-col items-center space-y-1 text-gray-800">
                 <div class="bg-[#F59E0B] text-white px-5 py-1 rounded-full"><i class="fa-solid fa-chart-simple text-lg"></i></div>
                 <span class="text-[10px] font-bold">Analitik</span>
             </a>
             <a href="alat.html" class="flex flex-col items-center space-y-1 text-gray-800">
-                <i class="fa-solid fa-wrench text-xl"></i><span class="text-[10px] font-bold">Alat</span>
+                <i class="fa-solid fa-wrench text-xl"></i>
+                <span class="text-[10px] font-bold">Alat</span>
             </a>
             <a href="pengaturan.html" class="flex flex-col items-center space-y-1 text-gray-800">
-                <i class="fa-solid fa-gear text-xl"></i><span class="text-[10px] font-bold">Pengaturan</span>
+                <i class="fa-solid fa-gear text-xl"></i>
+                <span class="text-[10px] font-bold">Pengaturan</span>
             </a>
         </nav>
     </main>
