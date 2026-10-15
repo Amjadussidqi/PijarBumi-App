@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#f8fafc">
+    <title>Kalkulator Surya - PijarBumi</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        * { font-family: 'DM Sans', sans-serif; }
+
+        body {
+            margin: 0;
+            background: #f8fafc;
+            color: #1e293b;
+        }
+
+        .sidebar-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 14px;
+            border-radius: 12px;
+            color: #64748b;
+            font-size: 14px;
+            font-weight: 600;
+            transition: .2s;
+        }
+
+        .sidebar-link:hover {
+            background: #f0fdf4;
+            color: #15803d;
+        }
+
+        .sidebar-link.active {
+            color: #15803d;
+            background: #dcfce7;
+        }
+
+        .card {
+            background: white;
+            border: 1px solid #e8edf2;
+            border-radius: 20px;
+        }
+
+        .field {
+            width: 100%;
+            background: transparent;
+            outline: none;
+            color: #1e293b;
+            font-weight: 700;
+        }
+
+        .field-wrap {
+            border: 1px solid #e2e8f0;
+            border-radius: 14px;
+            padding: 14px;
+            background: #f8fafc;
+            transition: .2s;
+        }
+
+        .field-wrap:focus-within {
+            border-color: #16a34a;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(22, 163, 74, .08);
+        }
+
+        .solar-hero {
+            background: linear-gradient(120deg, #14532d, #15803d 60%, #d9a514);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .solar-hero::after {
+            content: "";
+            position: absolute;
+            width: 240px;
+            height: 240px;
+            border: 1px solid rgba(255,255,255,.15);
+            border-radius: 50%;
+            right: -80px;
+            top: -100px;
+            box-shadow: 0 0 0 28px rgba(255,255,255,.035),
+                        0 0 0 58px rgba(255,255,255,.025);
+            pointer-events: none;
+        }
+
+        .mobile-nav { display: none; }
+
+        .result-value {
+            overflow-wrap: anywhere;
+        }
+
+        @media (max-width: 767px) {
+            .desktop-sidebar { display: none; }
+
+            .mobile-nav {
+                display: grid;
+                grid-template-columns: repeat(4, minmax(0, 1fr));
+            }
+
+            .page-content { padding-bottom: 100px; }
+        }
+    </style>
+</head>
+
+<body class="min-h-screen">
+
+<div class="min-h-screen md:flex">
+
+    <!-- SIDEBAR DESKTOP -->
+    <aside class="desktop-sidebar w-64 bg-white border-r border-slate-200 min-h-screen fixed left-0 top-0 bottom-0 p-5 z-30">
+        <a href="dashboard.html" class="flex items-center gap-3 mb-10 px-2">
+Hitung Energi, Jaga Bumi
+            <div>
+                <h1 class="font-extrabold text-xl tracking-tight text-slate-800">
+                    Pijar<span class="text-green-600">Bumi</span>
+                </h1>
+                <p class="text-[10px] text-slate-400 font-semibold tracking-widest uppercase">
+                    Hitung Energi, Jaga Bumi
+                </p>
+            </div>
+        </a>
+
+        <p class="text-[10px] uppercase tracking-widest font-bold text-slate-400 px-3 mb-3">
+            Menu Utama
+        </p>
+
+        <nav class="space-y-1">
+            <a href="dashboard.html" class="sidebar-link">
+                <i class="fa-solid fa-house w-5"></i> Dasbor
+            </a>
+            <a href="analitik.html" class="sidebar-link">
+                <i class="fa-solid fa-chart-line w-5"></i> Analitik
+            </a>
+            <a href="alat.html" class="sidebar-link active">
+                <i class="fa-solid fa-plug w-5"></i> Perangkat
+            </a>
+            <a href="jejak_karbon.html" class="sidebar-link">
+                <svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 24 24"
+  width="20"
+  height="20"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="1.8"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  aria-hidden="true"
+>
+  <path d="M20 4c-8 0-14 3-14 10a6 6 0 0 0 6 6c7 0 10-6 8-16Z"/>
+  <path d="M4 21c3-5 7-8 12-11"/>
+</svg> Jejak Karbon
+            </a>
+        </nav>
+
+        <div class="absolute bottom-5 left-5 right-5">
+            <div class="rounded-2xl bg-green-50 border border-green-100 p-4">
+                <div class="w-9 h-9 rounded-xl bg-green-100 text-green-700 flex items-center justify-center mb-3">
+                    <i class="fa-solid fa-sun"></i>
+                </div>
+                <p class="text-sm font-bold text-slate-800">Energi lebih bersih</p>
+                <p class="text-xs text-slate-500 mt-1 leading-relaxed">
+                    Kenali potensi energi matahari untuk rumahmu.
+                </p>
+            </div>
+            <p class="text-[10px] text-center text-slate-400 mt-4">PijarBumi © 2026</p>
+        </div>
+    </aside>
+
+    <!-- KONTEN UTAMA -->
+    <main class="page-content w-full min-w-0 md:ml-64 px-4 py-5 sm:px-6 md:px-8 lg:px-10">
+
+        <!-- HEADER -->
+        <header class="flex items-center gap-3 mb-7">
+            <a href="alat.html"
+               aria-label="Kembali ke perangkat"
+               class="w-10 h-10 rounded-xl bg-white border border-slate-200 flex items-center justify-center text-slate-600 hover:text-green-700 hover:border-green-300 transition">
+                <i class="fa-solid fa-arrow-left"></i>
+            </a>
+
+            <div>
+                <p class="text-xs font-semibold text-green-700 mb-1">PijarBumi / Perangkat</p>
+                <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-800">
+                    Kalkulator Surya
+                </h2>
+                <p class="text-sm text-slate-500 mt-1">
+                    Hitung potensi dan estimasi penghematan energi matahari.
+                </p>
+            </div>
+        </header>
+
+        <!-- HERO -->
+        <section class="solar-hero rounded-3xl p-6 sm:p-8 mb-6 text-white shadow-lg">
+            <div class="relative z-10 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-5">
+                <div class="max-w-xl">
+                    <span class="inline-flex items-center gap-2 bg-white/15 border border-white/20 rounded-full px-3 py-1.5 text-xs font-semibold mb-4">
+                        <i class="fa-solid fa-sun text-yellow-200"></i>
+                        Energi Terbarukan
+                    </span>
+
+                    <h3 class="text-2xl sm:text-3xl font-extrabold leading-tight">
+                        Apakah rumahmu cocok menggunakan panel surya?
+                    </h3>
+
+                    <p class="text-sm text-green-50 mt-3 leading-relaxed">
+                        Masukkan informasi rumah dan tagihan listrik untuk mendapatkan simulasi awal kebutuhan panel surya, biaya, serta potensi penghematan.
+                    </p>
+                </div>
+
+                <div class="hidden sm:flex w-24 h-24 rounded-3xl bg-white/10 border border-white/20 items-center justify-center flex-shrink-0">
+                    <i class="fa-solid fa-solar-panel text-5xl text-yellow-200"></i>
+                </div>
+            </div>
+        </section>
+
+        <div class="grid grid-cols-1 xl:grid-cols-5 gap-6 items-start">
+
+            <!-- FORM INPUT -->
+            <section class="card p-5 sm:p-6 xl:col-span-3">
+                <div class="flex items-start gap-3 mb-6">
+                    <div class="w-10 h-10 rounded-xl bg-green-50 text-green-700 flex items-center justify-center">
+                        <i class="fa-solid fa-sliders"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-extrabold text-lg text-slate-800">Data Rumah</h3>
+                        <p class="text-sm text-slate-500 mt-1">Lengkapi data berikut untuk memulai simulasi.</p>
+                    </div>
+                </div>
+
+                <form id="solarForm" class="space-y-5">
+
+                    <!-- TAGIHAN -->
+                    <div>
+                        <label for="tagihan" class="block text-sm font-bold text-slate-700 mb-2">
+                            Tagihan listrik per bulan
+                        </label>
+                        <div class="field-wrap flex items-center gap-3">
+                            <span class="text-green-700 font-bold text-sm">Rp</span>
+                            <input
+                                id="tagihan"
+                                class="field text-lg"
+                                type="number"
+                                min="1"
+                                max="1000000000"
+                                step="1000"
+                                value=""
+                                placeholder="Contoh: 500000"
+                                required>
+                        </div>
+                        <p class="text-xs text-slate-400 mt-2">Masukkan nominal tagihan dalam rupiah.</p>
+                    </div>
+
+                    <!-- LUAS ATAP -->
+                    <div>
+                        <label for="luasAtap" class="block text-sm font-bold text-slate-700 mb-2">
+                            Luas atap yang dapat digunakan
+                        </label>
+                        <div class="field-wrap flex items-center gap-3">
+                            <i class="fa-solid fa-house text-green-700"></i>
+                            <input
+                                id="luasAtap"
+                                class="field text-lg"
+                                type="number"
+                                min="1"
+                                max="100000"
+                                step="0.1"
+                                value=""
+                                placeholder="Contoh: 40"
+                                required>
+                            <span class="text-sm text-slate-400 font-semibold whitespace-nowrap">m²</span>
+                        </div>
+                        <p class="text-xs text-slate-400 mt-2">Gunakan luas atap yang bebas dari penghalang.</p>
+                    </div>
+
+                    <!-- JAM MATAHARI -->
+                    <div>
+                        <label for="jamMatahari" class="block text-sm font-bold text-slate-700 mb-2">
+                            Rata-rata jam matahari efektif per hari
+                        </label>
+                        <div class="field-wrap flex items-center gap-3">
+                            <i class="fa-solid fa-sun text-amber-500"></i>
+                            <input
+                                id="jamMatahari"
+                                class="field text-lg"
+                                type="number"
+                                min="0.5"
+                                max="10"
+                                step="0.1"
+                                value="4"
+                                required>
+                            <span class="text-sm text-slate-400 font-semibold whitespace-nowrap">jam/hari</span>
+                        </div>
+                        <p class="text-xs text-slate-400 mt-2">
+                            Nilai awal 4 jam hanya asumsi simulasi, bukan data cuaca lokasi secara langsung.
+                        </p>
+                    </div>
+
+                    <!-- JENIS ATAP -->
+                    <div>
+                        <label for="jenisAtap" class="block text-sm font-bold text-slate-700 mb-2">
+                            Jenis atap
+                        </label>
+                        <div class="field-wrap flex items-center gap-3">
+                            <i class="fa-solid fa-house-chimney text-green-700"></i>
+                            <select id="jenisAtap" class="field text-sm cursor-pointer" required>
+                                <option value="beton">Beton / Dak</option>
+                                <option value="genteng">Genteng Tanah Liat</option>
+                                <option value="metal">Seng / Metal</option>
+                                <option value="aspal">Sirap Aspal</option>
+                            </select>
+                            <i class="fa-solid fa-chevron-down text-xs text-slate-400"></i>
+                        </div>
+                    </div>
+
+                    <!-- NAUNGAN -->
+                    <div>
+                        <label for="naungan" class="block text-sm font-bold text-slate-700 mb-2">
+                            Kondisi naungan
+                        </label>
+                        <div class="field-wrap flex items-center gap-3">
+                            <i class="fa-solid fa-cloud-sun text-amber-500"></i>
+                            <select id="naungan" class="field text-sm cursor-pointer" required>
+                                <option value="0">Tanpa naungan berarti</option>
+                                <option value="0.15">Sedikit naungan</option>
+                                <option value="0.30">Sebagian tertutup</option>
+                                <option value="0.50">Banyak naungan</option>
+                            </select>
+                            <i class="fa-solid fa-chevron-down text-xs text-slate-400"></i>
+                        </div>
+                    </div>
+
+                    <!-- BIAYA INSTALASI -->
+                    <div>
+                        <label for="biayaPerWp" class="block text-sm font-bold text-slate-700 mb-2">
+                            Asumsi biaya instalasi per Wp
+                        </label>
+                        <div class="field-wrap flex items-center gap-3">
+                            <span class="text-green-700 font-bold text-xs whitespace-nowrap">Rp/Wp</span>
+                            <input
+                                id="biayaPerWp"
+                                class="field text-lg"
+                                type="number"
+                                min="1000"
+                                max="100000"
+                                step="500"
+                                value="15000"
+                                required>
+                        </div>
+                        <p class="text-xs text-slate-400 mt-2">
+                            Asumsi simulasi yang bisa diubah. Bukan harga penawaran pemasangan.
+                        </p>
+                    </div>
+
+                    <!-- TARIF LISTRIK -->
+                    <div>
+                        <label for="tarifListrik" class="block text-sm font-bold text-slate-700 mb-2">
+                            Tarif listrik
+                        </label>
+                        <div class="field-wrap flex items-center gap-3">
+                            <span class="text-green-700 font-bold text-xs whitespace-nowrap">Rp/kWh</span>
+                            <input
+                                id="tarifListrik"
+                                class="field text-lg"
+                                type="number"
+                                min="1"
+                                max="100000"
+                                step="1"
+                                value="1444.70"
+                                required>
+                        </div>
+                        <p class="text-xs text-slate-400 mt-2">
+                            Sesuaikan dengan tarif pada tagihan listrik rumahmu.
+                        </p>
+                    </div>
+
+                    <div id="formError" class="hidden rounded-xl border border-red-200 bg-red-50 p-3 text-sm text-red-700" role="alert"></div>
+
+                    <button
+                        type="submit"
+                        class="w-full bg-green-700 hover:bg-green-800 active:bg-green-900 text-white font-bold py-4 rounded-xl shadow-lg shadow-green-100 transition flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-calculator"></i>
+                        Hitung Potensi Surya
+                    </button>
+
+                    <p class="text-xs text-slate-400 text-center leading-relaxed">
+                        Hasil merupakan estimasi awal dan tidak menggantikan survei teknis.
+                    </p>
+                </form>
+            </section>
+
+            <!-- HASIL -->
+            <section class="xl:col-span-2 space-y-5">
+
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center">
+                        <i class="fa-solid fa-chart-column"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-extrabold text-lg text-slate-800">Hasil Simulasi</h3>
+                        <p class="text-sm text-slate-500">Ringkasan potensi sistem surya.</p>
+                    </div>
+                </div>
+
+                <!-- STATUS AWAL -->
+                <div id="emptyResult" class="card p-6 text-center">
+                    <div class="w-16 h-16 rounded-2xl bg-amber-50 text-amber-500 flex items-center justify-center text-2xl mx-auto mb-4">
+                        <i class="fa-solid fa-solar-panel"></i>
+                    </div>
+                    <h4 class="font-extrabold text-slate-800">Siap menghitung?</h4>
+                    <p class="text-sm text-slate-500 mt-2 leading-relaxed">
+                        Isi tagihan listrik dan luas atap, lalu tekan tombol hitung untuk melihat estimasi hasil.
+                    </p>
+                </div>
+
+                <div id="resultPanel" class="hidden space-y-4">
+
+                    <!-- KAPASITAS -->
+                    <div class="rounded-2xl bg-green-700 text-white p-5 shadow-lg">
+                        <div class="flex items-center justify-between gap-3">
+                            <p class="text-sm font-semibold text-green-100">Rekomendasi kapasitas panel</p>
+                            <i class="fa-solid fa-solar-panel text-green-200 text-xl"></i>
+                        </div>
+                        <div class="flex items-baseline gap-2 mt-3">
+                            <h4 id="hasilKapasitas" class="result-value text-4xl font-extrabold">0</h4>
+                            <span class="text-sm text-green-100">kWp</span>
+                        </div>
+                        <p id="hasilJumlahPanel" class="text-xs text-green-100 mt-3">Estimasi kapasitas sistem.</p>
+                    </div>
+
+                    <!-- ESTIMASI BIAYA -->
+                    <div class="card p-5">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center">
+                                <i class="fa-solid fa-wallet"></i>
+                            </div>
+                            <div>
+                                <p class="text-xs font-semibold text-slate-500">Estimasi biaya instalasi</p>
+                                <h4 id="hasilBiaya" class="result-value text-xl font-extrabold text-slate-800 mt-1">Rp0</h4>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- PRODUKSI -->
+                    <div class="card p-5">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center">
+                                <i class="fa-solid fa-bolt"></i>
+                            </div>
+                            <div>
+                                <p class="text-xs font-semibold text-slate-500">Estimasi produksi energi</p>
+                                <h4 id="hasilProduksi" class="result-value text-xl font-extrabold text-slate-800 mt-1">0 kWh/bulan</h4>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- PENGHEMATAN -->
+                    <div class="card p-5">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center">
+                                <i class="fa-solid fa-piggy-bank"></i>
+                            </div>
+                            <div>
+                                <p class="text-xs font-semibold text-slate-500">Potensi penghematan bulanan</p>
+                                <h4 id="hasilHemat" class="result-value text-xl font-extrabold text-emerald-700 mt-1">Rp0</h4>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ROI -->
+                    <div class="card p-5">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center">
+                                <i class="fa-solid fa-hourglass-half"></i>
+                            </div>
+                            <div>
+                                <p class="text-xs font-semibold text-slate-500">Estimasi balik modal sederhana</p>
+                                <h4 id="hasilROI" class="result-value text-xl font-extrabold text-slate-800 mt-1">Belum tersedia</h4>
+                            </div>
+                        </div>
+                        <p class="text-xs text-slate-400 leading-relaxed mt-3">
+                            Perhitungan sederhana tanpa memperhitungkan perubahan tarif, biaya perawatan, degradasi panel, pendanaan, atau ekspor listrik ke jaringan.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- CATATAN -->
+                <div class="rounded-2xl border border-amber-100 bg-amber-50 p-5">
+                    <div class="flex items-start gap-3">
+                        <i class="fa-solid fa-circle-info text-amber-600 mt-0.5"></i>
+                        <div>
+                            <h4 class="font-bold text-sm text-slate-800">Perlu diketahui</h4>
+                            <p class="text-xs text-slate-600 mt-2 leading-relaxed">
+                                Produksi aktual dipengaruhi cuaca, orientasi dan kemiringan atap, efisiensi sistem, serta kondisi lokasi. Penghematan juga bergantung pada waktu penggunaan listrik dan konfigurasi sistem.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+            </section>
+        </div>
+
+        <footer class="text-center text-xs text-slate-400 mt-8">
+            PijarBumi © 2026 · Green Champions
+        </footer>
+
+    </main>
+</div>
+
+<!-- NAVIGASI MOBILE -->
+<nav class="mobile-nav fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur border-t border-slate-200 px-2 pt-2 pb-[max(8px,env(safe-area-inset-bottom))] z-40">
+    <a href="dashboard.html" class="flex flex-col items-center gap-1 py-2 text-slate-400">
+        <i class="fa-solid fa-house text-lg"></i>
+        <span class="text-[10px] font-semibold">Dasbor</span>
+    </a>
+    <a href="analitik.html" class="flex flex-col items-center gap-1 py-2 text-slate-400">
+        <i class="fa-solid fa-chart-line text-lg"></i>
+        <span class="text-[10px] font-semibold">Analitik</span>
+    </a>
+    <a href="alat.html" class="flex flex-col items-center gap-1 py-2 text-green-700">
+        <i class="fa-solid fa-plug text-lg"></i>
+        <span class="text-[10px] font-bold">Perangkat</span>
+    </a>
+    <a href="jejak_karbon.html" class="flex flex-col items-center gap-1 py-2 text-slate-400">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 24 24"
+  width="20"
+  height="20"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="1.8"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  aria-hidden="true"
+>
+  <path d="M20 4c-8 0-14 3-14 10a6 6 0 0 0 6 6c7 0 10-6 8-16Z"/>
+  <path d="M4 21c3-5 7-8 12-11"/>
+</svg>
+        <span class="text-[10px] font-semibold">Karbon</span>
+    </a>
+</nav>
+
+<!-- APP UTAMA -->
+<script src="js/app.js"></script>
+
+<!-- LOGIKA KALKULATOR SURYA -->
+<script>
+(function () {
+    const form = document.getElementById('solarForm');
+    const errorBox = document.getElementById('formError');
+
+    const formatRupiah = (angka) => new Intl.NumberFormat('id-ID', {
+        style: 'currency',
+        currency: 'IDR',
+        maximumFractionDigits: 0
+    }).format(angka);
+
+    const formatAngka = (angka, digit = 1) => new Intl.NumberFormat('id-ID', {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: digit
+    }).format(angka);
+
+    function tampilkanError(pesan) {
+        errorBox.textContent = pesan;
+        errorBox.classList.remove('hidden');
+    }
+
+    function hitungSurya(event) {
+        event.preventDefault();
+        errorBox.classList.add('hidden');
+
+        const tagihan = Number(document.getElementById('tagihan').value);
+        const luasAtap = Number(document.getElementById('luasAtap').value);
+        const jamMatahari = Number(document.getElementById('jamMatahari').value);
+        const jenisAtap = document.getElementById('jenisAtap').value;
+        const naungan = Number(document.getElementById('naungan').value);
+        const biayaPerWp = Number(document.getElementById('biayaPerWp').value);
+        const tarif = Number(document.getElementById('tarifListrik').value);
+
+        if (
+            !Number.isFinite(tagihan) || tagihan <= 0 ||
+            !Number.isFinite(luasAtap) || luasAtap <= 0 ||
+            !Number.isFinite(jamMatahari) || jamMatahari < 0.5 || jamMatahari > 10 ||
+            !Number.isFinite(biayaPerWp) || biayaPerWp <= 0 ||
+            !Number.isFinite(tarif) || tarif <= 0
+        ) {
+            tampilkanError('Periksa kembali input. Semua nilai harus lebih besar dari nol dan berada dalam rentang yang wajar.');
+            return;
+        }
+
+        /*
+          Asumsi simulasi:
+          - 1 kWp memerlukan sekitar 5 m² area panel.
+          - Faktor performa sistem: 80%.
+          - Pengurangan potensi produksi akibat naungan mengikuti pilihan pengguna.
+          - Produksi bulanan dihitung dari kapasitas × jam matahari × 30 hari × faktor performa.
+          - Penghematan dibatasi oleh tagihan bulanan.
+          Nilai ini bukan pengganti perhitungan teknis instalasi.
+        */
+
+        const faktorAtap = {
+            beton: 1,
+            genteng: 1,
+            metal: 1,
+            aspal: 1
+        };
+
+        const faktorPerforma = 0.80;
+        const luasEfektif = luasAtap * faktorAtap[jenisAtap];
+
+        const kapasitasMaksAtap = luasEfektif / 5;
+        const energiBulananPerKwp = jamMatahari * 30 * faktorPerforma * (1 - naungan);
+        const kebutuhanEnergiBulanan = tagihan / tarif;
+
+        let kapasitasDariTagihan = kebutuhanEnergiBulanan / Math.max(energiBulananPerKwp, 0.01);
+        let kapasitas = Math.min(kapasitasDariTagihan, kapasitasMaksAtap);
+
+        if (!Number.isFinite(kapasitas) || kapasitas <= 0) {
+            tampilkanError('Data belum dapat dihitung. Periksa kembali input yang dimasukkan.');
+            return;
+        }
+
+        kapasitas = Math.round(kapasitas * 100) / 100;
+
+        const produksiBulanan = kapasitas * energiBulananPerKwp;
+        const penghematanBulanan = Math.min(produksiBulanan * tarif, tagihan);
+
+        const biayaInstalasi = kapasitas * 1000 * biayaPerWp;
+        const tahunBalikModal = penghematanBulanan > 0
+            ? biayaInstalasi / (penghematanBulanan * 12)
+            : Infinity;
+
+        const jumlahPanel = Math.ceil((kapasitas * 1000) / 450);
+        const dibatasiAtap = kapasitasDariTagihan > kapasitasMaksAtap;
+
+        document.getElementById('hasilKapasitas').textContent = formatAngka(kapasitas, 2);
+        document.getElementById('hasilJumlahPanel').textContent =
+            'Sekitar ' + jumlahPanel + ' panel 450 Wp (estimasi).';
+
+        document.getElementById('hasilBiaya').textContent = formatRupiah(biayaInstalasi);
+        document.getElementById('hasilProduksi').textContent =
+            formatAngka(produksiBulanan, 1) + ' kWh/bulan';
+        document.getElementById('hasilHemat').textContent =
+            formatRupiah(penghematanBulanan) + '/bulan';
+
+        document.getElementById('hasilROI').textContent =
+            Number.isFinite(tahunBalikModal)
+                ? formatAngka(tahunBalikModal, 1) + ' tahun'
+                : 'Belum tersedia';
+
+        document.getElementById('emptyResult').classList.add('hidden');
+        document.getElementById('resultPanel').classList.remove('hidden');
+
+        let catatan = document.getElementById('hasilCatatan');
+
+        if (!catatan) {
+            catatan = document.createElement('div');
+            catatan.id = 'hasilCatatan';
+            catatan.className = 'rounded-xl border p-4 text-sm leading-relaxed';
+            document.getElementById('resultPanel').appendChild(catatan);
+        }
+
+        if (dibatasiAtap) {
+            catatan.className = 'rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-800 leading-relaxed';
+            catatan.textContent =
+                'Kapasitas simulasi dibatasi oleh luas atap yang tersedia. Sistem aktual perlu diperiksa berdasarkan bentuk atap, jarak antarpanel, dan kondisi lokasi.';
+        } else {
+            catatan.className = 'rounded-xl border border-green-200 bg-green-50 p-4 text-sm text-green-800 leading-relaxed';
+            catatan.textContent =
+                'Hasil ini merupakan estimasi awal berdasarkan input dan asumsi simulasi. Konsultasikan dengan tenaga profesional untuk desain sistem dan perhitungan biaya yang lebih akurat.';
+        }
+
+        document.getElementById('resultPanel').scrollIntoView({
+            behavior: 'smooth',
+            block: 'nearest'
+        });
+    }
+
+    form.addEventListener('submit', hitungSurya);
+})();
+</script>
+
+</body>
+</html>
