@@ -17,6 +17,8 @@
         </div>
         <nav class="flex-1 px-4 space-y-2 mt-4">
             <a href="dashboard.html" class="block px-4 py-3 hover:bg-green-800 rounded-lg transition"><i class="fa-solid fa-table-cells-large mr-2"></i> Dasbor</a>
+            <a href="analitik.html" class="block px-4 py-3 hover:bg-green-800 rounded-lg transition"><i class="fa-solid fa-chart-simple mr-2"></i> Analitik</a>
+            <a href="alat.html" class="block px-4 py-3 hover:bg-green-800 rounded-lg transition"><i class="fa-solid fa-wrench mr-2"></i> Alat Energi</a>
             <a href="pengaturan.html" class="block px-4 py-3 bg-green-800 rounded-lg font-bold"><i class="fa-solid fa-gear mr-2"></i> Pengaturan</a>
         </nav>
         <div class="p-4">
@@ -31,72 +33,116 @@
         <header class="pt-10 md:pt-12 pb-4 text-center bg-white shadow-sm md:shadow-none z-10">
             <h1 class="text-lg md:text-2xl font-bold text-gray-800">Pengaturan</h1>
         </header>
-        <div class="flex-1 overflow-y-auto px-5 md:px-8 pb-28 md:pb-8">
-            <div class="max-w-2xl mx-auto mt-4">
+
+        <div class="flex-1 overflow-y-auto px-5 md:px-8 pb-32 md:pb-8">
+            <div class="max-w-2xl mx-auto mt-4 space-y-4">
                 
-                <div class="border border-gray-200 bg-white rounded-2xl p-4 flex items-center justify-between mb-5 shadow-sm">
+                <div class="border border-gray-200 bg-white rounded-2xl p-4 flex items-center justify-between shadow-sm">
                     <div class="flex items-center space-x-4">
                         <div class="w-14 h-14 bg-[#119468] rounded-full flex items-center justify-center text-white text-xl font-bold">M</div>
                         <div>
-                            <h2 class="text-base md:text-lg font-bold text-gray-900">Miaw Meo</h2>
-                            <p class="text-xs md:text-sm text-gray-400">budi.santoso@warga.com</p>
+                            <h2 class="text-base md:text-lg font-bold text-gray-900">Unikom1</h2>
+                            <p class="text-xs md:text-sm text-gray-400">PijarBumiUtama@gmail.com</p>
                         </div>
                     </div>
                     <div class="text-[#119468]"><i class="fa-solid fa-pen cursor-pointer hover:text-green-800"></i></div>
                 </div>
 
-                <div class="bg-[#119468] rounded-xl p-4 flex items-center justify-between text-white mb-6 shadow-md hover:bg-green-800 transition cursor-pointer">
-                    <div class="flex items-center space-x-3">
-                        <div class="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center"><i class="fa-solid fa-award text-xl"></i></div>
-                        <div>
-                            <h3 class="font-bold text-sm md:text-base">Dukung Gerakan Hijau</h3>
-                            <p class="text-[10px] md:text-xs text-green-100">Jadilah donatur untuk kampanye iklim RT...</p>
-                        </div>
-                    </div>
-                    <div class="flex items-center space-x-2">
-                        <button class="bg-white text-xs text-[#119468] font-bold py-1.5 px-3 rounded-full">INFO</button>
-                        <i class="fa-solid fa-chevron-right text-xs"></i>
-                    </div>
-                </div>
-
-                <div class="space-y-1 bg-white md:p-6 md:rounded-2xl md:shadow-sm">
+                <div class="bg-white md:p-6 md:rounded-2xl md:shadow-sm space-y-1">
                     <a href="#" class="flex items-center justify-between py-3.5 hover:bg-gray-50 rounded-lg transition px-2">
                         <div class="flex items-center space-x-4">
-                            <i class="fa-solid fa-house text-gray-500 w-6 text-center text-lg"></i><span class="font-semibold text-[15px] text-gray-700">Rumah Saya</span>
+                            <i class="fa-solid fa-house text-gray-500 w-6 text-center text-lg"></i>
+                            <span class="font-semibold text-[15px] text-gray-700">Rumah Saya</span>
                         </div>
                         <i class="fa-solid fa-chevron-right text-gray-400 text-sm"></i>
                     </a>
                     <a href="#" class="flex items-center justify-between py-3.5 hover:bg-gray-50 rounded-lg transition px-2">
                         <div class="flex items-center space-x-4">
-                            <i class="fa-solid fa-lock text-gray-500 w-6 text-center text-lg"></i><span class="font-semibold text-[15px] text-gray-700">Ubah Kata Sandi</span>
+                            <i class="fa-solid fa-lock text-gray-500 w-6 text-center text-lg"></i>
+                            <span class="font-semibold text-[15px] text-gray-700">Ubah Kata Sandi</span>
                         </div>
                         <i class="fa-solid fa-chevron-right text-gray-400 text-sm"></i>
                     </a>
                     <a href="#" class="flex items-center justify-between py-3.5 hover:bg-gray-50 rounded-lg transition px-2">
                         <div class="flex items-center space-x-4">
-                            <i class="fa-solid fa-bell text-gray-500 w-6 text-center text-lg"></i><span class="font-semibold text-[15px] text-gray-700">Preferensi Notifikasi</span>
+                            <i class="fa-solid fa-globe text-gray-500 w-6 text-center text-lg"></i>
+                            <span class="font-semibold text-[15px] text-gray-700">Bahasa</span>
                         </div>
                         <i class="fa-solid fa-chevron-right text-gray-400 text-sm"></i>
                     </a>
-                    
-                    <div class="h-4 border-b border-gray-100 mb-4"></div>
-
-                    <a href="#" onclick="prosesLogout()" class="md:hidden flex items-center justify-between py-3.5 hover:bg-red-50 rounded-lg transition px-2 mt-4">
+                    <a href="#" class="flex items-center justify-between py-3.5 hover:bg-gray-50 rounded-lg transition px-2">
                         <div class="flex items-center space-x-4">
-                            <i class="fa-solid fa-arrow-right-from-bracket text-red-500 w-6 text-center text-lg"></i><span class="font-semibold text-[15px] text-red-500">Keluar</span>
+                            <i class="fa-solid fa-comment-dots text-gray-500 w-6 text-center text-lg"></i>
+                            <span class="font-semibold text-[15px] text-gray-700">Masukan</span>
+                        </div>
+                        <i class="fa-solid fa-chevron-right text-gray-400 text-sm"></i>
+                    </a>
+                    <a href="#" class="flex items-center justify-between py-3.5 hover:bg-gray-50 rounded-lg transition px-2">
+                        <div class="flex items-center space-x-4">
+                            <i class="fa-solid fa-shield-halved text-gray-500 w-6 text-center text-lg"></i>
+                            <span class="font-semibold text-[15px] text-gray-700">Kebijakan Privasi</span>
+                        </div>
+                        <i class="fa-solid fa-chevron-right text-gray-400 text-sm"></i>
+                    </a>
+                    <a href="#" class="flex items-center justify-between py-3.5 hover:bg-gray-50 rounded-lg transition px-2">
+                        <div class="flex items-center space-x-4">
+                            <i class="fa-solid fa-file-lines text-gray-500 w-6 text-center text-lg"></i>
+                            <span class="font-semibold text-[15px] text-gray-700">Ketentuan Layanan</span>
+                        </div>
+                        <i class="fa-solid fa-chevron-right text-gray-400 text-sm"></i>
+                    </a>
+                    <a href="#" class="flex items-center justify-between py-3.5 hover:bg-gray-50 rounded-lg transition px-2">
+                        <div class="flex items-center space-x-4">
+                            <i class="fa-solid fa-cookie text-gray-500 w-6 text-center text-lg"></i>
+                            <span class="font-semibold text-[15px] text-gray-700">Kebijakan Cookie</span>
+                        </div>
+                        <i class="fa-solid fa-chevron-right text-gray-400 text-sm"></i>
+                    </a>
+                    <a href="#" class="flex items-center justify-between py-3.5 hover:bg-gray-50 rounded-lg transition px-2">
+                        <div class="flex items-center space-x-4">
+                            <i class="fa-solid fa-trash-can text-gray-500 w-6 text-center text-lg"></i>
+                            <span class="font-semibold text-[15px] text-gray-700">Penghapusan Data</span>
+                        </div>
+                        <i class="fa-solid fa-chevron-right text-gray-400 text-sm"></i>
+                    </a>
+                    <a href="#" class="flex items-center justify-between py-3.5 hover:bg-gray-50 rounded-lg transition px-2">
+                        <div class="flex items-center space-x-4">
+                            <i class="fa-solid fa-star text-gray-500 w-6 text-center text-lg"></i>
+                            <span class="font-semibold text-[15px] text-gray-700">Beri Nilai Aplikasi Ini</span>
+                        </div>
+                        <i class="fa-solid fa-chevron-right text-gray-400 text-sm"></i>
+                    </a>
+                    <a href="#" onclick="prosesLogout()" class="flex items-center justify-between py-3.5 hover:bg-red-50 rounded-lg transition px-2">
+                        <div class="flex items-center space-x-4">
+                            <i class="fa-solid fa-arrow-right-from-bracket text-red-500 w-6 text-center text-lg"></i>
+                            <span class="font-semibold text-[15px] text-red-500">Keluar</span>
+                        </div>
+                        <i class="fa-solid fa-chevron-right text-gray-300 text-sm"></i>
+                    </a>
+                    <a href="#" class="flex items-center justify-between py-3.5 hover:bg-red-50 rounded-lg transition px-2">
+                        <div class="flex items-center space-x-4">
+                            <i class="fa-solid fa-user-xmark text-red-500 w-6 text-center text-lg"></i>
+                            <span class="font-semibold text-[15px] text-red-500">Hapus Akun</span>
                         </div>
                         <i class="fa-solid fa-chevron-right text-gray-300 text-sm"></i>
                     </a>
                 </div>
+
             </div>
         </div>
 
         <nav class="md:hidden absolute bottom-0 w-full bg-white border-t border-gray-100 flex justify-around items-center pt-2 pb-6 px-2 shadow-[0_-4px_10px_rgba(0,0,0,0.02)] z-20">
             <a href="dashboard.html" class="flex flex-col items-center space-y-1 text-gray-800">
-                <i class="fa-solid fa-table-cells-large text-xl"></i><span class="text-[10px] font-bold">Dasbor</span>
+                <i class="fa-solid fa-table-cells-large text-xl"></i>
+                <span class="text-[10px] font-bold">Dasbor</span>
             </a>
-            <a href="#" class="flex flex-col items-center space-y-1 text-gray-800">
-                <i class="fa-solid fa-chart-simple text-xl"></i><span class="text-[10px] font-bold">Analitik</span>
+            <a href="analitik.html" class="flex flex-col items-center space-y-1 text-gray-800">
+                <i class="fa-solid fa-chart-simple text-xl"></i>
+                <span class="text-[10px] font-bold">Analitik</span>
+            </a>
+            <a href="alat.html" class="flex flex-col items-center space-y-1 text-gray-800">
+                <i class="fa-solid fa-wrench text-xl"></i>
+                <span class="text-[10px] font-bold">Alat</span>
             </a>
             <a href="pengaturan.html" class="flex flex-col items-center space-y-1 text-gray-800">
                 <div class="bg-[#F59E0B] text-white px-5 py-1 rounded-full"><i class="fa-solid fa-gear text-lg"></i></div>

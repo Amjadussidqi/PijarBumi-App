@@ -104,7 +104,12 @@
     if(names.includes(page)&&!localStorage.getItem('namaPengguna')) { /* halaman demo tetap bisa dibuka langsung */ }
     if(page==='dashboard.html')renderDashboard();
     if(page==='analitik.html')renderAnalytics();
-    if(page==='alat.html')renderDevices();
+    if(page==='alat.html'){
+      // Jangan membuat bagian "Perangkat & Pemakaian" pada halaman Alat Energi.
+      // Hapus juga jika elemen tersebut sudah ada di HTML.
+      const deviceManager = $('deviceManager');
+      if(deviceManager) deviceManager.remove();
+    }
     if(page==='ruangan.html')renderRooms();
     if(page==='tagihan.html')renderBills();
     if(page==='jejak_karbon.html')renderCarbon();
