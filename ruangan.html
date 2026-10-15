@@ -1,68 +1,1204 @@
+```html
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ruangan & Perangkat - PijarBumi</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet">
-    <style> ::-webkit-scrollbar { display: none; } </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#5b5ce2">
+  <title>Profil Ruangan - PijarBumi</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: #f7f8fc;
+      color: #172554;
+    }
+
+    .sidebar-link {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      padding: 12px 14px;
+      border-radius: 13px;
+      color: #52618b;
+      font-size: 14px;
+      font-weight: 600;
+      transition: .2s;
+    }
+
+    .sidebar-link:hover,
+    .sidebar-link.active {
+      background: #5b5ce2;
+      color: white;
+      box-shadow: 0 7px 18px #5b5ce226;
+    }
+
+    .panel {
+      background: white;
+      border: 1px solid #e8ebf8;
+      border-radius: 20px;
+      box-shadow: 0 3px 14px rgba(38, 56, 107, .025);
+    }
+
+    .room-card {
+      transition: transform .2s, box-shadow .2s;
+    }
+
+    .room-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 14px 30px #26386b12;
+    }
+
+    .field {
+      width: 100%;
+      min-width: 0;
+      border: 1px solid #e0e4f5;
+      border-radius: 12px;
+      padding: 11px 12px;
+      background: white;
+      color: #172554;
+      outline: none;
+      font-size: 14px;
+    }
+
+    .field:focus {
+      border-color: #7778ed;
+      box-shadow: 0 0 0 3px #5b5ce21a;
+    }
+
+    .field-label {
+      display: block;
+      margin-bottom: 7px;
+      color: #475569;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .btn-primary {
+      background: #5b5ce2;
+      color: white;
+      transition: .2s;
+    }
+
+    .btn-primary:hover { background: #4849c9; }
+
+    .modal-backdrop {
+      background: rgba(23, 37, 84, .48);
+      backdrop-filter: blur(5px);
+    }
+
+    .choice {
+      display: flex;
+      align-items: flex-start;
+      gap: 9px;
+      border: 1px solid #e4e7f4;
+      border-radius: 12px;
+      padding: 12px;
+      cursor: pointer;
+      transition: .2s;
+    }
+
+    .choice:has(input:checked) {
+      border-color: #7778ed;
+      background: #f2f2ff;
+    }
+
+    .choice input { margin-top: 4px; accent-color: #5b5ce2; }
+
+    .progress-track {
+      height: 7px;
+      overflow: hidden;
+      border-radius: 99px;
+      background: #eef0fb;
+    }
+
+    .progress-fill {
+      height: 100%;
+      border-radius: 99px;
+      transition: width .25s;
+    }
+
+    .main-scroll {
+      scrollbar-width: thin;
+      scrollbar-color: #d9def2 transparent;
+    }
+
+    @media (max-width: 767px) {
+      .main-scroll { padding-bottom: 105px; }
+    }
+  </style>
 </head>
-<body class="bg-gray-100 h-screen flex justify-center">
 
-    <div class="w-full max-w-md h-full relative flex flex-col bg-gray-50 overflow-hidden shadow-2xl">
-        
-        <header class="bg-gradient-to-br from-[#1cd988] to-[#119468] pt-12 pb-12 px-4 flex items-center rounded-b-[40px] text-white">
-            <a href="dashboard.html" class="text-white text-xl pl-2"><i class="fa-solid fa-chevron-left"></i></a>
-            <h1 class="flex-1 text-center text-lg font-bold pr-6">Manajemen Ruangan</h1>
-        </header>
+<body class="min-h-screen md:h-screen md:overflow-hidden">
 
-        <main class="flex-1 overflow-y-auto px-5 -mt-6 pb-12 space-y-4">
-            
-            <div class="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm flex items-center justify-between">
-                <div class="flex items-center space-x-3">
-                    <div class="w-12 h-12 bg-blue-50 text-blue-500 rounded-xl flex items-center justify-center text-xl">
-                        <i class="fa-solid fa-bed"></i>
-                    </div>
-                    <div>
-                        <h3 class="font-bold text-gray-800 text-sm">Kamar Utama</h3>
-                        <p class="text-xs text-gray-400 font-medium">2 Perangkat Aktif (AC, Lampu)</p>
-                    </div>
-                </div>
-                <span class="text-xs font-bold text-[#119468] bg-emerald-50 px-3 py-1.5 rounded-full">35 kWh</span>
-            </div>
+<div class="flex min-h-screen md:h-screen">
 
-            <div class="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm flex items-center justify-between">
-                <div class="flex items-center space-x-3">
-                    <div class="w-12 h-12 bg-amber-50 text-amber-500 rounded-xl flex items-center justify-center text-xl">
-                        <i class="fa-solid fa-utensils"></i>
-                    </div>
-                    <div>
-                        <h3 class="font-bold text-gray-800 text-sm">Dapur</h3>
-                        <p class="text-xs text-gray-400 font-medium">3 Perangkat Aktif (Kulkas, Dispenser)</p>
-                    </div>
-                </div>
-                <span class="text-xs font-bold text-[#119468] bg-emerald-50 px-3 py-1.5 rounded-full">60 kWh</span>
-            </div>
+  <!-- SIDEBAR -->
+  <aside class="hidden w-60 shrink-0 flex-col border-r border-indigo-100 bg-white px-4 md:flex">
+    <a href="dashboard.html" class="flex items-center gap-3 px-2 py-7">
+      <span class="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-teal-400 to-emerald-600 text-white">
+        <i class="fa-solid fa-leaf text-xl"></i>
+      </span>
+      <span>
+        <b class="block text-xl font-extrabold tracking-tight text-blue-950">PijarBumi</b>
+        <small class="text-xs text-slate-500">Energi lebih bijak</small>
+      </span>
+    </a>
 
-            <div class="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm flex items-center justify-between">
-                <div class="flex items-center space-x-3">
-                    <div class="w-12 h-12 bg-purple-50 text-purple-500 rounded-xl flex items-center justify-center text-xl">
-                        <i class="fa-solid fa-couch"></i>
-                    </div>
-                    <div>
-                        <h3 class="font-bold text-gray-800 text-sm">Ruang Keluarga</h3>
-                        <p class="text-xs text-gray-400 font-medium">2 Perangkat Aktif (TV, Kipas)</p>
-                    </div>
-                </div>
-                <span class="text-xs font-bold text-[#119468] bg-emerald-50 px-3 py-1.5 rounded-full">50 kWh</span>
-            </div>
+    <p class="mb-3 px-3 text-[10px] font-extrabold uppercase tracking-[.17em] text-slate-400">
+      Menu utama
+    </p>
 
-            <button onclick="alert('Fitur tambah ruangan baru akan segera dibuka!')" class="w-full border-2 border-dashed border-gray-300 text-gray-500 font-bold py-4 rounded-2xl hover:bg-gray-100 transition mt-4">
-                <i class="fa-solid fa-plus mr-2"></i> Tambah Ruangan Baru
-            </button>
-        </main>
+    <nav class="space-y-2">
+      <a href="dashboard.html" class="sidebar-link">
+        <i class="fa-solid fa-house w-5 text-center"></i> Dasbor
+      </a>
+      <a href="analitik.html" class="sidebar-link">
+        <i class="fa-solid fa-chart-column w-5 text-center"></i> Analitik
+      </a>
+      <a href="ruangan.html" class="sidebar-link active">
+        <i class="fa-solid fa-door-open w-5 text-center"></i> Ruangan
+      </a>
+      <a href="alat.html" class="sidebar-link">
+        <i class="fa-solid fa-plug w-5 text-center"></i> Alat Energi
+      </a>
+      <a href="tagihan.html" class="sidebar-link">
+        <i class="fa-solid fa-file-invoice-dollar w-5 text-center"></i> Tagihan
+      </a>
+      <a href="pengaturan.html" class="sidebar-link">
+        <i class="fa-solid fa-gear w-5 text-center"></i> Pengaturan
+      </a>
+    </nav>
+
+    <div class="mt-auto mb-4 rounded-2xl border border-indigo-100 bg-gradient-to-br from-indigo-50 to-blue-50 p-4">
+      <i class="fa-solid fa-house-circle-check mb-3 text-2xl text-indigo-600"></i>
+      <p class="text-sm font-bold leading-5 text-blue-950">Rumah nyaman, energi bijak</p>
+      <p class="mt-1 text-xs leading-5 text-slate-600">
+        Kenali kondisi tiap ruangan dan temukan peluang penghematan.
+      </p>
     </div>
-    <script src="js/app.js"></script>
+
+    <button type="button" onclick="prosesLogout()" class="mb-5 flex items-center gap-3 rounded-xl bg-rose-50 px-4 py-3 text-sm font-bold text-rose-600 transition hover:bg-rose-100">
+      <i class="fa-solid fa-right-from-bracket"></i> Keluar
+    </button>
+  </aside>
+
+  <!-- KONTEN -->
+  <main class="relative flex min-w-0 flex-1 flex-col md:overflow-hidden">
+
+    <header class="flex items-center justify-between gap-3 border-b border-indigo-50 bg-white/90 px-4 py-4 sm:px-8 md:px-10">
+      <div class="min-w-0">
+        <p class="text-xs font-semibold text-slate-400">PijarBumi / Rumah</p>
+        <h1 class="mt-1 truncate text-lg font-extrabold text-blue-950 sm:text-xl">Profil Ruangan</h1>
+      </div>
+
+      <div class="flex shrink-0 items-center gap-2 sm:gap-3">
+        <a href="pengaturan.html" aria-label="Pengaturan" class="flex h-10 w-10 items-center justify-center rounded-xl text-slate-500 transition hover:bg-indigo-50">
+          <i class="fa-solid fa-gear text-lg"></i>
+        </a>
+        <div class="flex items-center gap-2">
+          <span id="avatarHeader" class="flex h-10 w-10 items-center justify-center rounded-full bg-indigo-100 font-bold text-indigo-700">W</span>
+          <span id="namaHeader" class="hidden max-w-28 truncate text-sm font-bold text-blue-950 sm:block">Warga</span>
+        </div>
+      </div>
+    </header>
+
+    <div class="main-scroll flex-1 overflow-y-auto px-4 py-5 sm:px-7 md:px-10 md:py-7">
+      <div class="mx-auto max-w-6xl space-y-6">
+
+        <!-- INTRO -->
+        <section class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-indigo-600 to-indigo-500 p-6 text-white sm:p-8">
+          <div class="pointer-events-none absolute -right-8 -top-12 h-48 w-48 rounded-full border-[28px] border-white/10"></div>
+          <div class="pointer-events-none absolute -bottom-20 right-24 h-40 w-40 rounded-full bg-white/5"></div>
+
+          <div class="relative z-10 flex flex-col justify-between gap-5 sm:flex-row sm:items-center">
+            <div class="max-w-xl">
+              <span class="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-1.5 text-xs font-bold">
+                <i class="fa-solid fa-house-circle-check"></i> Manajemen rumah
+              </span>
+              <h2 class="mt-4 text-2xl font-extrabold leading-tight sm:text-3xl">Kenali setiap sudut rumahmu</h2>
+              <p class="mt-2 text-sm leading-6 text-indigo-100">
+                Catat luas, penghuni, pencahayaan, dan ventilasi untuk memahami kenyamanan serta peluang hemat energi di tiap ruangan.
+              </p>
+            </div>
+
+            <button type="button" onclick="bukaTambahRuangan()" class="inline-flex shrink-0 items-center justify-center gap-2 rounded-xl bg-white px-5 py-3 text-sm font-extrabold text-indigo-700 shadow-sm transition hover:bg-indigo-50">
+              <i class="fa-solid fa-plus"></i> Tambah ruangan
+            </button>
+          </div>
+        </section>
+
+        <!-- RINGKASAN -->
+        <section class="grid grid-cols-1 gap-3 sm:grid-cols-3">
+          <article class="panel p-5">
+            <div class="flex items-center justify-between gap-3">
+              <div>
+                <p class="text-xs font-bold text-slate-500">Ruangan terdata</p>
+                <p id="totalRuangan" class="mt-2 text-3xl font-extrabold text-blue-950">0</p>
+              </div>
+              <span class="flex h-12 w-12 items-center justify-center rounded-2xl bg-indigo-50 text-xl text-indigo-600">
+                <i class="fa-solid fa-door-open"></i>
+              </span>
+            </div>
+            <p class="mt-3 text-xs text-slate-400">Profil ruangan yang kamu buat</p>
+          </article>
+
+          <article class="panel p-5">
+            <div class="flex items-center justify-between gap-3">
+              <div>
+                <p class="text-xs font-bold text-slate-500">Total luas tercatat</p>
+                <p class="mt-2 text-3xl font-extrabold text-blue-950"><span id="totalLuas">0</span><span class="ml-1 text-sm font-semibold text-slate-400">m²</span></p>
+              </div>
+              <span class="flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-50 text-xl text-blue-600">
+                <i class="fa-solid fa-ruler-combined"></i>
+              </span>
+            </div>
+            <p class="mt-3 text-xs text-slate-400">Jumlah luas dari data yang diisi</p>
+          </article>
+
+          <article class="panel p-5">
+            <div class="flex items-center justify-between gap-3">
+              <div>
+                <p class="text-xs font-bold text-slate-500">Perlu perhatian</p>
+                <p id="totalPerhatian" class="mt-2 text-3xl font-extrabold text-blue-950">0</p>
+              </div>
+              <span class="flex h-12 w-12 items-center justify-center rounded-2xl bg-amber-50 text-xl text-amber-600">
+                <i class="fa-solid fa-lightbulb"></i>
+              </span>
+            </div>
+            <p class="mt-3 text-xs text-slate-400">Ruangan dengan peluang perbaikan</p>
+          </article>
+        </section>
+
+        <!-- PENCARIAN DAN FILTER -->
+        <section class="panel p-4 sm:p-5">
+          <div class="flex flex-col gap-3 sm:flex-row">
+            <div class="relative min-w-0 flex-1">
+              <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
+              <input id="cariRuangan" type="search" class="field pl-11" placeholder="Cari nama atau jenis ruangan...">
+            </div>
+
+            <select id="filterRuangan" class="field sm:max-w-52" aria-label="Filter ruangan">
+              <option value="semua">Semua kondisi</option>
+              <option value="baik">Kondisi lebih efisien</option>
+              <option value="perhatian">Perlu perhatian</option>
+              <option value="prioritas">Prioritas penghematan</option>
+            </select>
+          </div>
+          <p class="mt-3 text-xs leading-5 text-slate-400">
+            Filter membantu kamu menemukan ruangan berdasarkan kondisi dan prioritas penghematan, bukan daftar perangkat.
+          </p>
+        </section>
+
+        <!-- DAFTAR PROFIL -->
+        <section>
+          <div class="mb-4 flex items-end justify-between gap-3">
+            <div>
+              <h2 class="text-lg font-extrabold text-blue-950">Profil setiap ruangan</h2>
+              <p class="mt-1 text-sm text-slate-500">Pilih profil untuk melihat evaluasi dan saran khusus.</p>
+            </div>
+            <span id="jumlahHasil" class="shrink-0 rounded-full bg-indigo-50 px-3 py-1.5 text-xs font-bold text-indigo-700">0 ruangan</span>
+          </div>
+
+          <div id="daftarRuangan" class="grid grid-cols-1 gap-4 xl:grid-cols-2"></div>
+        </section>
+
+        <!-- RINGKASAN TIPS -->
+        <section class="panel p-5 sm:p-6">
+          <div class="flex items-start gap-4">
+            <span class="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-indigo-50 text-xl text-indigo-600">
+              <i class="fa-solid fa-wand-magic-sparkles"></i>
+            </span>
+            <div class="min-w-0 flex-1">
+              <h2 class="font-extrabold text-blue-950">Rekomendasi untuk rumahmu</h2>
+              <p class="mt-1 text-sm leading-6 text-slate-500">
+                Rekomendasi di bawah dibuat dari kondisi ruangan yang kamu catat. Hasilnya merupakan panduan umum, bukan pengukuran listrik langsung.
+              </p>
+              <div id="rekomendasiRumah" class="mt-4 space-y-3">
+                <p class="rounded-xl bg-slate-50 p-4 text-sm text-slate-500">
+                  Tambahkan profil ruangan untuk mendapatkan rekomendasi yang relevan.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <footer class="pb-3 text-center text-xs text-slate-400">
+          PijarBumi · Pantau energi, bangun kebiasaan yang lebih bijak.
+        </footer>
+
+      </div>
+    </div>
+
+    <!-- NAV MOBILE -->
+    <nav class="fixed inset-x-0 bottom-0 z-30 border-t border-indigo-100 bg-white/95 px-1 pb-[max(8px,env(safe-area-inset-bottom))] pt-2 shadow-[0_-5px_20px_rgba(30,41,90,.06)] backdrop-blur md:hidden">
+      <div class="mx-auto flex max-w-lg items-center justify-around">
+        <a href="dashboard.html" class="flex flex-col items-center gap-1 px-2 py-1 text-slate-500">
+          <span class="flex h-8 w-12 items-center justify-center"><i class="fa-solid fa-house text-lg"></i></span>
+          <span class="text-[10px] font-semibold">Dasbor</span>
+        </a>
+        <a href="analitik.html" class="flex flex-col items-center gap-1 px-2 py-1 text-slate-500">
+          <span class="flex h-8 w-12 items-center justify-center"><i class="fa-solid fa-chart-column text-lg"></i></span>
+          <span class="text-[10px] font-semibold">Analitik</span>
+        </a>
+        <a href="ruangan.html" class="flex flex-col items-center gap-1 px-2 py-1 text-indigo-700">
+          <span class="flex h-8 w-12 items-center justify-center rounded-full bg-indigo-100"><i class="fa-solid fa-door-open"></i></span>
+          <span class="text-[10px] font-extrabold">Ruangan</span>
+        </a>
+        <a href="alat.html" class="flex flex-col items-center gap-1 px-2 py-1 text-slate-500">
+          <span class="flex h-8 w-12 items-center justify-center"><i class="fa-solid fa-plug text-lg"></i></span>
+          <span class="text-[10px] font-semibold">Perangkat</span>
+        </a>
+        <a href="pengaturan.html" class="flex flex-col items-center gap-1 px-2 py-1 text-slate-500">
+          <span class="flex h-8 w-12 items-center justify-center"><i class="fa-solid fa-gear text-lg"></i></span>
+          <span class="text-[10px] font-semibold">Pengaturan</span>
+        </a>
+      </div>
+    </nav>
+
+  </main>
+</div>
+
+<!-- MODAL PROFIL RUANGAN -->
+<div id="modalRuangan" class="modal-backdrop fixed inset-0 z-50 hidden items-start justify-center overflow-y-auto p-3 sm:items-center sm:p-5">
+  <div class="my-3 w-full max-w-2xl rounded-2xl bg-white shadow-2xl sm:my-6">
+    <div class="sticky top-0 z-10 flex items-center justify-between rounded-t-2xl border-b border-indigo-50 bg-white px-5 py-4 sm:px-6">
+      <div>
+        <h2 id="judulModal" class="text-lg font-extrabold text-blue-950">Tambah profil ruangan</h2>
+        <p class="mt-1 text-xs text-slate-500">Informasi ruangan dan kondisi penggunaan energi.</p>
+      </div>
+      <button type="button" onclick="tutupModal()" aria-label="Tutup" class="flex h-9 w-9 items-center justify-center rounded-xl text-slate-400 hover:bg-slate-100">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+
+    <form id="formRuangan" class="space-y-6 p-5 sm:p-6">
+      <input id="roomId" type="hidden">
+
+      <section>
+        <h3 class="mb-3 text-sm font-extrabold text-blue-950">1. Identitas ruangan</h3>
+        <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+          <div>
+            <label for="namaRuangan" class="field-label">Nama ruangan *</label>
+            <input id="namaRuangan" class="field" maxlength="60" placeholder="Contoh: Kamar utama" required>
+          </div>
+
+          <div>
+            <label for="jenisRuangan" class="field-label">Fungsi ruangan</label>
+            <select id="jenisRuangan" class="field">
+              <option value="kamar">Kamar tidur</option>
+              <option value="keluarga">Ruang keluarga</option>
+              <option value="dapur">Dapur</option>
+              <option value="kerja">Ruang kerja / belajar</option>
+              <option value="mandi">Kamar mandi</option>
+              <option value="makan">Ruang makan</option>
+              <option value="cuci">Area mencuci</option>
+              <option value="lainnya">Lainnya</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="luasRuangan" class="field-label">Luas ruangan (m²) *</label>
+            <input id="luasRuangan" class="field" type="number" min="0.1" max="10000" step="any" placeholder="Contoh: 12" required>
+          </div>
+
+          <div>
+            <label for="penghuniRuangan" class="field-label">Jumlah pengguna rutin</label>
+            <input id="penghuniRuangan" class="field" type="number" min="0" max="1000" step="1" value="1" required>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h3 class="mb-1 text-sm font-extrabold text-blue-950">2. Kondisi ruangan</h3>
+        <p class="mb-3 text-xs leading-5 text-slate-500">Pilih kondisi yang paling mendekati keadaan ruanganmu saat ini.</p>
+
+        <div class="space-y-4">
+          <div>
+            <label class="field-label">Pencahayaan alami</label>
+            <div class="grid grid-cols-1 gap-2 sm:grid-cols-3">
+              <label class="choice">
+                <input type="radio" name="cahaya" value="baik" checked>
+                <span><b class="block text-sm text-blue-950">Baik</b><small class="text-xs text-slate-500">Cahaya matahari cukup</small></span>
+              </label>
+              <label class="choice">
+                <input type="radio" name="cahaya" value="sedang">
+                <span><b class="block text-sm text-blue-950">Sedang</b><small class="text-xs text-slate-500">Cukup pada waktu tertentu</small></span>
+              </label>
+              <label class="choice">
+                <input type="radio" name="cahaya" value="minim">
+                <span><b class="block text-sm text-blue-950">Minim</b><small class="text-xs text-slate-500">Sering perlu lampu</small></span>
+              </label>
+            </div>
+          </div>
+
+          <div>
+            <label class="field-label">Ventilasi udara</label>
+            <div class="grid grid-cols-1 gap-2 sm:grid-cols-3">
+              <label class="choice">
+                <input type="radio" name="ventilasi" value="baik" checked>
+                <span><b class="block text-sm text-blue-950">Baik</b><small class="text-xs text-slate-500">Udara mudah bersirkulasi</small></span>
+              </label>
+              <label class="choice">
+                <input type="radio" name="ventilasi" value="sedang">
+                <span><b class="block text-sm text-blue-950">Sedang</b><small class="text-xs text-slate-500">Sirkulasi terbatas</small></span>
+              </label>
+              <label class="choice">
+                <input type="radio" name="ventilasi" value="minim">
+                <span><b class="block text-sm text-blue-950">Minim</b><small class="text-xs text-slate-500">Udara sulit berganti</small></span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h3 class="mb-1 text-sm font-extrabold text-blue-950">3. Kebiasaan penggunaan energi</h3>
+        <p class="mb-3 text-xs leading-5 text-slate-500">Informasi ini digunakan untuk memberi saran, bukan untuk mengukur konsumsi listrik secara langsung.</p>
+
+        <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+          <div>
+            <label for="jamPakai" class="field-label">Lama ruangan digunakan per hari</label>
+            <div class="relative">
+              <input id="jamPakai" class="field pr-16" type="number" min="0" max="24" step="0.5" value="8" required>
+              <span class="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-slate-400">jam/hari</span>
+            </div>
+          </div>
+
+          <div>
+            <label for="lampu" class="field-label">Jenis lampu utama</label>
+            <select id="lampu" class="field">
+              <option value="led">LED</option>
+              <option value="campuran">Campuran LED dan non-LED</option>
+              <option value="nonled">Non-LED</option>
+              <option value="tidakada">Tidak ada lampu tetap</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="field-label">Penggunaan AC</label>
+            <div class="flex gap-3">
+              <label class="choice flex-1">
+                <input type="radio" name="ac" value="tidak" checked>
+                <span class="text-sm font-bold text-blue-950">Tidak ada</span>
+              </label>
+              <label class="choice flex-1">
+                <input type="radio" name="ac" value="ya">
+                <span class="text-sm font-bold text-blue-950">Menggunakan AC</span>
+              </label>
+            </div>
+          </div>
+
+          <div>
+            <label for="prioritas" class="field-label">Prioritas ruangan</label>
+            <select id="prioritas" class="field">
+              <option value="normal">Pemantauan biasa</option>
+              <option value="tinggi">Prioritas penghematan</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="mt-4">
+          <label for="catatanRuangan" class="field-label">Catatan tambahan (opsional)</label>
+          <textarea id="catatanRuangan" class="field resize-y" rows="2" maxlength="300" placeholder="Contoh: ruangan terasa panas pada siang hari."></textarea>
+        </div>
+      </section>
+
+      <p id="pesanForm" class="hidden rounded-xl px-4 py-3 text-sm" role="status" aria-live="polite"></p>
+
+      <div class="flex flex-col-reverse gap-3 border-t border-indigo-50 pt-4 sm:flex-row sm:justify-end">
+        <button type="button" onclick="tutupModal()" class="rounded-xl bg-slate-100 px-5 py-3 text-sm font-bold text-slate-600 hover:bg-slate-200">Batal</button>
+        <button type="submit" class="btn-primary rounded-xl px-5 py-3 text-sm font-bold">
+          <i class="fa-solid fa-floppy-disk mr-2"></i>Simpan profil
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- MODAL DETAIL -->
+<div id="modalDetail" class="modal-backdrop fixed inset-0 z-[60] hidden items-start justify-center overflow-y-auto p-3 sm:items-center sm:p-5">
+  <div class="my-4 w-full max-w-xl rounded-2xl bg-white p-5 shadow-2xl sm:p-7">
+    <div class="flex items-start justify-between gap-3">
+      <div>
+        <p class="text-xs font-bold uppercase tracking-widest text-indigo-500">Evaluasi ruangan</p>
+        <h2 id="detailNama" class="mt-2 text-xl font-extrabold text-blue-950">Detail ruangan</h2>
+        <p id="detailJenis" class="mt-1 text-sm text-slate-500"></p>
+      </div>
+      <button type="button" onclick="tutupDetail()" class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl text-slate-400 hover:bg-slate-100" aria-label="Tutup detail">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+
+    <div id="detailIsi" class="mt-5 space-y-4"></div>
+
+    <div class="mt-6 flex flex-wrap justify-end gap-2 border-t border-indigo-50 pt-4">
+      <button id="detailEdit" type="button" class="rounded-xl bg-indigo-50 px-4 py-2.5 text-sm font-bold text-indigo-700 hover:bg-indigo-100">
+        <i class="fa-solid fa-pen mr-1"></i> Edit profil
+      </button>
+      <button type="button" onclick="tutupDetail()" class="rounded-xl bg-slate-100 px-4 py-2.5 text-sm font-bold text-slate-600 hover:bg-slate-200">Tutup</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast" class="fixed bottom-24 left-1/2 z-[80] hidden -translate-x-1/2 rounded-xl bg-blue-950 px-5 py-3 text-sm font-semibold text-white shadow-xl md:bottom-6" role="status" aria-live="polite"></div>
+
+<script src="js/app.js"></script>
+<script>
+(function () {
+  'use strict';
+
+  const ROOM_KEY = 'pijarBumiRuanganV1';
+  let ruangan = bacaRuangan();
+  let toastTimer = null;
+
+  const jenisInfo = {
+    kamar:    { label: 'Kamar tidur', icon: 'fa-bed', color: 'bg-blue-50 text-blue-600' },
+    keluarga: { label: 'Ruang keluarga', icon: 'fa-couch', color: 'bg-violet-50 text-violet-600' },
+    dapur:    { label: 'Dapur', icon: 'fa-utensils', color: 'bg-amber-50 text-amber-600' },
+    kerja:    { label: 'Ruang kerja / belajar', icon: 'fa-laptop', color: 'bg-indigo-50 text-indigo-600' },
+    mandi:    { label: 'Kamar mandi', icon: 'fa-shower', color: 'bg-cyan-50 text-cyan-600' },
+    makan:    { label: 'Ruang makan', icon: 'fa-utensils', color: 'bg-orange-50 text-orange-600' },
+    cuci:     { label: 'Area mencuci', icon: 'fa-soap', color: 'bg-teal-50 text-teal-600' },
+    lainnya:  { label: 'Ruangan lainnya', icon: 'fa-door-open', color: 'bg-slate-100 text-slate-600' }
+  };
+
+  function bacaRuangan() {
+    try {
+      const data = JSON.parse(localStorage.getItem(ROOM_KEY) || '[]');
+      return Array.isArray(data) ? data : [];
+    } catch (_) {
+      return [];
+    }
+  }
+
+  function buatId() {
+    return 'room_' + Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
+  }
+
+  function escapeHTML(value) {
+    return String(value ?? '').replace(/[&<>"']/g, char => ({
+      '&': '&amp;', '<': '&lt;', '>': '&gt;',
+      '"': '&quot;', "'": '&#39;'
+    })[char]);
+  }
+
+  function formatAngka(value, maksimum = 1) {
+    return Number(value || 0).toLocaleString('id-ID', {
+      maximumFractionDigits: maksimum
+    });
+  }
+
+  function simpanRuangan() {
+    try {
+      localStorage.setItem(ROOM_KEY, JSON.stringify(ruangan));
+      return true;
+    } catch (_) {
+      tampilToast('Gagal menyimpan data. Periksa penyimpanan browser.');
+      return false;
+    }
+  }
+
+  function ambilPilihan(name) {
+    const pilihan = document.querySelector('input[name="' + name + '"]:checked');
+    return pilihan ? pilihan.value : '';
+  }
+
+  function aturPilihan(name, value) {
+    const pilihan = document.querySelector(
+      'input[name="' + name + '"][value="' + value + '"]'
+    );
+    if (pilihan) pilihan.checked = true;
+  }
+
+  function dataValid(room) {
+    return Number(room.luas) > 0 &&
+      Number(room.penghuni) >= 0 &&
+      Number(room.jamPakai) >= 0 &&
+      Number(room.jamPakai) <= 24;
+  }
+
+  /*
+   * Evaluasi sederhana berdasarkan kondisi yang diinput pengguna.
+   * Ini bukan audit energi profesional dan tidak menghitung kWh.
+   */
+  function evaluasi(room) {
+    const saran = [];
+    let skor = 100;
+
+    if (room.cahaya === 'minim') {
+      skor -= 20;
+      saran.push({
+        icon: 'fa-sun',
+        judul: 'Optimalkan cahaya alami',
+        isi: 'Pertimbangkan membuka tirai pada siang hari atau mengatur ulang area aktivitas agar lebih dekat dengan sumber cahaya alami.'
+      });
+    } else if (room.cahaya === 'sedang') {
+      skor -= 8;
+      saran.push({
+        icon: 'fa-sun',
+        judul: 'Manfaatkan cahaya siang',
+        isi: 'Gunakan cahaya matahari saat cukup terang dan matikan lampu yang tidak diperlukan.'
+      });
+    }
+
+    if (room.ventilasi === 'minim') {
+      skor -= 20;
+      saran.push({
+        icon: 'fa-wind',
+        judul: 'Perhatikan sirkulasi udara',
+        isi: 'Jika kondisi luar aman dan memungkinkan, gunakan ventilasi alami. Pastikan aliran udara tidak terhalang.'
+      });
+    } else if (room.ventilasi === 'sedang') {
+      skor -= 8;
+      saran.push({
+        icon: 'fa-wind',
+        judul: 'Periksa jalur ventilasi',
+        isi: 'Pastikan bukaan udara dapat berfungsi dengan baik dan tidak tertutup benda.'
+      });
+    }
+
+    if (room.lampu === 'nonled') {
+      skor -= 15;
+      saran.push({
+        icon: 'fa-lightbulb',
+        judul: 'Pertimbangkan lampu LED',
+        isi: 'Saat lampu perlu diganti, LED dengan tingkat terang yang sesuai umumnya lebih hemat energi dibandingkan lampu pijar.'
+      });
+    } else if (room.lampu === 'campuran') {
+      skor -= 6;
+      saran.push({
+        icon: 'fa-lightbulb',
+        judul: 'Evaluasi lampu yang masih digunakan',
+        isi: 'Pertimbangkan mengganti lampu non-LED secara bertahap ketika sudah waktunya diganti.'
+      });
+    }
+
+    if (room.ac === 'ya') {
+      skor -= 5;
+      saran.push({
+        icon: 'fa-temperature-half',
+        judul: 'Gunakan AC secara bijak',
+        isi: 'Atur suhu pada tingkat nyaman, tutup pintu dan jendela saat AC digunakan, serta bersihkan filter secara berkala.'
+      });
+    }
+
+    if (Number(room.jamPakai) >= 12) {
+      saran.push({
+        icon: 'fa-clock',
+        judul: 'Atur jadwal penggunaan',
+        isi: 'Karena ruangan digunakan cukup lama, periksa lampu dan perangkat yang tetap menyala ketika tidak diperlukan.'
+      });
+    }
+
+    if (room.prioritas === 'tinggi') {
+      saran.unshift({
+        icon: 'fa-bullseye',
+        judul: 'Ruangan prioritas',
+        isi: 'Pantau kebiasaan penggunaan ruangan ini terlebih dahulu dan lakukan perubahan secara bertahap.'
+      });
+    }
+
+    if (!saran.length) {
+      saran.push({
+        icon: 'fa-circle-check',
+        judul: 'Pertahankan kebiasaan baik',
+        isi: 'Kondisi yang kamu masukkan tidak menunjukkan masalah utama pada indikator ini. Tetap matikan lampu dan perangkat saat tidak dibutuhkan.'
+      });
+    }
+
+    skor = Math.max(0, Math.min(100, skor));
+
+    let status, statusClass;
+    if (skor >= 85) {
+      status = 'Kondisi lebih efisien';
+      statusClass = 'bg-emerald-50 text-emerald-700';
+    } else if (skor >= 65) {
+      status = 'Ada peluang perbaikan';
+      statusClass = 'bg-amber-50 text-amber-700';
+    } else {
+      status = 'Perlu perhatian';
+      statusClass = 'bg-rose-50 text-rose-700';
+    }
+
+    return { skor, status, statusClass, saran };
+  }
+
+  function jumlahPerhatian(room) {
+    const hasil = evaluasi(room);
+    return hasil.skor < 85 || room.prioritas === 'tinggi';
+  }
+
+  function ikonRoom(room) {
+    return jenisInfo[room.jenis] || jenisInfo.lainnya;
+  }
+
+  function kondisiLabel(value) {
+    const labels = {
+      baik: 'Baik',
+      sedang: 'Sedang',
+      minim: 'Minim'
+    };
+    return labels[value] || 'Belum diisi';
+  }
+
+  function buatKartu(room) {
+    const info = ikonRoom(room);
+    const hasil = evaluasi(room);
+
+    return `
+      <article class="room-card panel overflow-hidden">
+        <div class="p-5 sm:p-6">
+          <div class="flex items-start gap-4">
+            <span class="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl ${info.color} text-2xl">
+              <i class="fa-solid ${info.icon}"></i>
+            </span>
+
+            <div class="min-w-0 flex-1">
+              <div class="flex flex-wrap items-start justify-between gap-2">
+                <div class="min-w-0">
+                  <h3 class="break-words text-base font-extrabold text-blue-950">${escapeHTML(room.nama)}</h3>
+                  <p class="mt-1 text-xs text-slate-500">${info.label}</p>
+                </div>
+                ${room.prioritas === 'tinggi'
+                  ? '<span class="rounded-full bg-amber-50 px-2.5 py-1 text-[10px] font-extrabold text-amber-700"><i class="fa-solid fa-flag mr-1"></i>Prioritas</span>'
+                  : ''}
+              </div>
+
+              <span class="mt-3 inline-flex rounded-full px-3 py-1.5 text-xs font-bold ${hasil.statusClass}">
+                ${hasil.status}
+              </span>
+            </div>
+          </div>
+
+          <div class="mt-5 grid grid-cols-2 gap-3">
+            <div class="rounded-xl bg-slate-50 p-3">
+              <p class="text-[11px] font-semibold text-slate-500">Luas ruangan</p>
+              <p class="mt-1 text-lg font-extrabold text-blue-950">${formatAngka(room.luas)} <span class="text-xs font-semibold text-slate-400">m²</span></p>
+            </div>
+            <div class="rounded-xl bg-slate-50 p-3">
+              <p class="text-[11px] font-semibold text-slate-500">Pengguna rutin</p>
+              <p class="mt-1 text-lg font-extrabold text-blue-950">${formatAngka(room.penghuni, 0)} <span class="text-xs font-semibold text-slate-400">orang</span></p>
+            </div>
+          </div>
+
+          <div class="mt-5">
+            <div class="mb-2 flex items-center justify-between gap-2">
+              <span class="text-xs font-bold text-slate-600">Indikator kondisi ruangan</span>
+              <span class="text-xs font-extrabold text-indigo-600">${hasil.skor}/100</span>
+            </div>
+            <div class="progress-track">
+              <div class="progress-fill ${hasil.skor >= 85 ? 'bg-emerald-500' : hasil.skor >= 65 ? 'bg-amber-400' : 'bg-rose-500'}" style="width:${hasil.skor}%"></div>
+            </div>
+            <p class="mt-2 text-[11px] leading-5 text-slate-400">Skor indikator berdasarkan isian, bukan hasil pengukuran energi.</p>
+          </div>
+
+          <div class="mt-4 flex flex-wrap gap-2">
+            <span class="rounded-lg bg-indigo-50 px-2.5 py-1.5 text-[11px] font-semibold text-indigo-700">
+              <i class="fa-solid fa-sun mr-1"></i>Cahaya ${kondisiLabel(room.cahaya)}
+            </span>
+            <span class="rounded-lg bg-blue-50 px-2.5 py-1.5 text-[11px] font-semibold text-blue-700">
+              <i class="fa-solid fa-wind mr-1"></i>Ventilasi ${kondisiLabel(room.ventilasi)}
+            </span>
+          </div>
+
+          <div class="mt-5 flex flex-wrap gap-2 border-t border-indigo-50 pt-4">
+            <button type="button" onclick="lihatDetail('${room.id}')" class="inline-flex items-center gap-2 rounded-xl bg-indigo-600 px-3.5 py-2.5 text-xs font-bold text-white hover:bg-indigo-700">
+              <i class="fa-solid fa-chart-simple"></i> Evaluasi ruangan
+            </button>
+            <button type="button" onclick="editRuangan('${room.id}')" class="inline-flex items-center gap-2 rounded-xl bg-indigo-50 px-3.5 py-2.5 text-xs font-bold text-indigo-700 hover:bg-indigo-100">
+              <i class="fa-solid fa-pen"></i> Edit
+            </button>
+            <button type="button" onclick="hapusRuangan('${room.id}')" aria-label="Hapus ${escapeHTML(room.nama)}" class="ml-auto inline-flex items-center gap-2 rounded-xl bg-rose-50 px-3.5 py-2.5 text-xs font-bold text-rose-600 hover:bg-rose-100">
+              <i class="fa-solid fa-trash"></i>
+            </button>
+          </div>
+        </div>
+      </article>`;
+  }
+
+  function tampilkanRuangan() {
+    const container = document.getElementById('daftarRuangan');
+    const query = document.getElementById('cariRuangan').value.trim().toLowerCase();
+    const filter = document.getElementById('filterRuangan').value;
+
+    const totalLuas = ruangan.reduce((sum, room) => sum + (Number(room.luas) || 0), 0);
+    const perhatian = ruangan.filter(jumlahPerhatian).length;
+
+    document.getElementById('totalRuangan').textContent = ruangan.length;
+    document.getElementById('totalLuas').textContent = formatAngka(totalLuas);
+    document.getElementById('totalPerhatian').textContent = perhatian;
+
+    const hasil = ruangan.filter(room => {
+      const info = ikonRoom(room);
+      const cocokCari = `${room.nama} ${info.label}`.toLowerCase().includes(query);
+      const kondisi = evaluasi(room);
+
+      let cocokFilter = true;
+      if (filter === 'baik') cocokFilter = kondisi.skor >= 85;
+      if (filter === 'perhatian') cocokFilter = kondisi.skor < 85;
+      if (filter === 'prioritas') cocokFilter = room.prioritas === 'tinggi';
+
+      return cocokCari && cocokFilter;
+    });
+
+    document.getElementById('jumlahHasil').textContent = `${hasil.length} ruangan`;
+
+    if (!ruangan.length) {
+      container.innerHTML = `
+        <div class="panel px-5 py-12 text-center xl:col-span-2">
+          <span class="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-indigo-50 text-2xl text-indigo-500">
+            <i class="fa-solid fa-house"></i>
+          </span>
+          <h3 class="mt-4 font-extrabold text-blue-950">Mulai dengan profil ruangan pertama</h3>
+          <p class="mx-auto mt-2 max-w-md text-sm leading-6 text-slate-500">
+            Belum ada data ruangan. Tambahkan kamar, dapur, ruang keluarga, atau bagian rumah lainnya untuk mulai mengevaluasi kondisinya.
+          </p>
+          <button type="button" onclick="bukaTambahRuangan()" class="btn-primary mt-5 inline-flex items-center gap-2 rounded-xl px-5 py-3 text-sm font-bold">
+            <i class="fa-solid fa-plus"></i> Buat profil ruangan
+          </button>
+        </div>`;
+    } else if (!hasil.length) {
+      container.innerHTML = `
+        <div class="panel px-5 py-10 text-center xl:col-span-2">
+          <i class="fa-solid fa-magnifying-glass text-2xl text-slate-300"></i>
+          <h3 class="mt-3 font-bold text-blue-950">Ruangan tidak ditemukan</h3>
+          <p class="mt-1 text-sm text-slate-500">Coba kata kunci atau filter lainnya.</p>
+        </div>`;
+    } else {
+      container.innerHTML = hasil.map(buatKartu).join('');
+    }
+
+    tampilkanRekomendasiRumah();
+  }
+
+  function tampilkanRekomendasiRumah() {
+    const el = document.getElementById('rekomendasiRumah');
+
+    if (!ruangan.length) {
+      el.innerHTML = `
+        <p class="rounded-xl bg-slate-50 p-4 text-sm text-slate-500">
+          Tambahkan profil ruangan untuk mendapatkan rekomendasi yang relevan.
+        </p>`;
+      return;
+    }
+
+    const daftar = [];
+    ruangan.forEach(room => {
+      const hasil = evaluasi(room);
+      hasil.saran.forEach(saran => {
+        daftar.push({
+          ...saran,
+          roomName: room.nama,
+          prioritas: room.prioritas === 'tinggi' ? 1 : 0,
+          skor: hasil.skor
+        });
+      });
+    });
+
+    daftar.sort((a, b) => b.prioritas - a.prioritas || a.skor - b.skor);
+
+    const unik = [];
+    const seen = new Set();
+
+    daftar.forEach(item => {
+      const key = item.roomName + '|' + item.judul;
+      if (!seen.has(key)) {
+        seen.add(key);
+        unik.push(item);
+      }
+    });
+
+    el.innerHTML = unik.slice(0, 5).map(item => `
+      <div class="flex items-start gap-3 rounded-xl border border-indigo-50 p-4">
+        <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-indigo-50 text-indigo-600">
+          <i class="fa-solid ${item.icon}"></i>
+        </span>
+        <div class="min-w-0">
+          <p class="text-xs font-extrabold text-indigo-600">${escapeHTML(item.roomName)}</p>
+          <h3 class="mt-1 text-sm font-bold text-blue-950">${escapeHTML(item.judul)}</h3>
+          <p class="mt-1 text-xs leading-5 text-slate-500">${escapeHTML(item.isi)}</p>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  function isiForm(room) {
+    document.getElementById('roomId').value = room?.id || '';
+    document.getElementById('namaRuangan').value = room?.nama || '';
+    document.getElementById('jenisRuangan').value = room?.jenis || 'kamar';
+    document.getElementById('luasRuangan').value = room?.luas ?? '';
+    document.getElementById('penghuniRuangan').value = room?.penghuni ?? 1;
+    document.getElementById('jamPakai').value = room?.jamPakai ?? 8;
+    document.getElementById('lampu').value = room?.lampu || 'led';
+    document.getElementById('prioritas').value = room?.prioritas || 'normal';
+    document.getElementById('catatanRuangan').value = room?.catatan || '';
+
+    aturPilihan('cahaya', room?.cahaya || 'baik');
+    aturPilihan('ventilasi', room?.ventilasi || 'baik');
+    aturPilihan('ac', room?.ac || 'tidak');
+
+    document.getElementById('pesanForm').className = 'hidden rounded-xl px-4 py-3 text-sm';
+    document.getElementById('pesanForm').textContent = '';
+  }
+
+  window.bukaTambahRuangan = function () {
+    isiForm(null);
+    document.getElementById('judulModal').textContent = 'Tambah profil ruangan';
+    bukaModal();
+  };
+
+  window.editRuangan = function (id) {
+    const room = ruangan.find(item => String(item.id) === String(id));
+    if (!room) return;
+
+    tutupDetail();
+    isiForm(room);
+    document.getElementById('judulModal').textContent = 'Edit profil ruangan';
+    bukaModal();
+  };
+
+  function bukaModal() {
+    const modal = document.getElementById('modalRuangan');
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+    document.body.style.overflow = 'hidden';
+    setTimeout(() => document.getElementById('namaRuangan').focus(), 80);
+  }
+
+  window.tutupModal = function () {
+    const modal = document.getElementById('modalRuangan');
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+    document.body.style.overflow = '';
+  };
+
+  document.getElementById('formRuangan').addEventListener('submit', function (event) {
+    event.preventDefault();
+
+    const id = document.getElementById('roomId').value;
+    const nama = document.getElementById('namaRuangan').value.trim();
+    const jenis = document.getElementById('jenisRuangan').value;
+    const luas = Number(document.getElementById('luasRuangan').value);
+    const penghuni = Number(document.getElementById('penghuniRuangan').value);
+    const jamPakai = Number(document.getElementById('jamPakai').value);
+
+    const room = {
+      id: id || buatId(),
+      nama,
+      jenis,
+      luas,
+      penghuni,
+      cahaya: ambilPilihan('cahaya'),
+      ventilasi: ambilPilihan('ventilasi'),
+      jamPakai,
+      lampu: document.getElementById('lampu').value,
+      ac: ambilPilihan('ac'),
+      prioritas: document.getElementById('prioritas').value,
+      catatan: document.getElementById('catatanRuangan').value.trim(),
+      diperbaruiPada: new Date().toISOString()
+    };
+
+    const pesan = document.getElementById('pesanForm');
+
+    if (!nama || !Number.isFinite(luas) || luas <= 0 ||
+        !Number.isFinite(penghuni) || penghuni < 0 ||
+        !Number.isFinite(jamPakai) || jamPakai < 0 || jamPakai > 24) {
+      pesan.textContent = 'Periksa kembali nama, luas, jumlah pengguna, dan lama penggunaan ruangan.';
+      pesan.className = 'rounded-xl bg-rose-50 px-4 py-3 text-sm text-rose-700';
+      return;
+    }
+
+    const duplikat = ruangan.some(item =>
+      item.nama.toLowerCase() === nama.toLowerCase() &&
+      String(item.id) !== String(id)
+    );
+
+    if (duplikat) {
+      pesan.textContent = 'Nama ruangan sudah digunakan. Gunakan nama yang berbeda.';
+      pesan.className = 'rounded-xl bg-amber-50 px-4 py-3 text-sm text-amber-800';
+      return;
+    }
+
+    if (id) {
+      ruangan = ruangan.map(item => String(item.id) === String(id)
+        ? { ...item, ...room }
+        : item);
+    } else {
+      room.dibuatPada = new Date().toISOString();
+      ruangan.push(room);
+    }
+
+    if (!simpanRuangan()) return;
+
+    tutupModal();
+    tampilkanRuangan();
+    tampilToast(id ? 'Profil ruangan berhasil diperbarui.' : 'Profil ruangan berhasil ditambahkan.');
+  });
+
+  window.hapusRuangan = function (id) {
+    const room = ruangan.find(item => String(item.id) === String(id));
+    if (!room) return;
+
+    if (!confirm(`Hapus profil "${room.nama}"? Tindakan ini tidak bisa dibatalkan.`)) return;
+
+    ruangan = ruangan.filter(item => String(item.id) !== String(id));
+    if (!simpanRuangan()) return;
+
+    tutupDetail();
+    tampilkanRuangan();
+    tampilToast('Profil ruangan berhasil dihapus.');
+  };
+
+  window.lihatDetail = function (id) {
+    const room = ruangan.find(item => String(item.id) === String(id));
+    if (!room) return;
+
+    const hasil = evaluasi(room);
+    const info = ikonRoom(room);
+
+    document.getElementById('detailNama').textContent = room.nama;
+    document.getElementById('detailJenis').textContent = info.label;
+    document.getElementById('detailEdit').onclick = () => editRuangan(id);
+
+    document.getElementById('detailIsi').innerHTML = `
+      <div class="rounded-2xl bg-indigo-50 p-4">
+        <div class="flex items-center justify-between gap-3">
+          <div>
+            <p class="text-xs font-bold text-indigo-600">Indikator kondisi ruangan</p>
+            <p class="mt-1 text-3xl font-extrabold text-blue-950">${hasil.skor}<span class="ml-1 text-sm text-slate-400">/100</span></p>
+          </div>
+          <span class="rounded-full px-3 py-2 text-xs font-bold ${hasil.statusClass}">${hasil.status}</span>
+        </div>
+        <div class="progress-track mt-4 bg-white">
+          <div class="progress-fill ${hasil.skor >= 85 ? 'bg-emerald-500' : hasil.skor >= 65 ? 'bg-amber-400' : 'bg-rose-500'}" style="width:${hasil.skor}%"></div>
+        </div>
+        <p class="mt-3 text-xs leading-5 text-slate-500">Skor ini merupakan indikator sederhana dari isian profil, bukan persentase efisiensi atau besarnya penghematan listrik.</p>
+      </div>
+
+      <div class="grid grid-cols-2 gap-3">
+        <div class="rounded-xl border border-indigo-50 p-3">
+          <p class="text-xs text-slate-500">Luas</p>
+          <p class="mt-1 font-extrabold text-blue-950">${formatAngka(room.luas)} m²</p>
+        </div>
+        <div class="rounded-xl border border-indigo-50 p-3">
+          <p class="text-xs text-slate-500">Pengguna rutin</p>
+          <p class="mt-1 font-extrabold text-blue-950">${formatAngka(room.penghuni, 0)} orang</p>
+        </div>
+        <div class="rounded-xl border border-indigo-50 p-3">
+          <p class="text-xs text-slate-500">Waktu penggunaan</p>
+          <p class="mt-1 font-extrabold text-blue-950">${formatAngka(room.jamPakai)} jam/hari</p>
+        </div>
+        <div class="rounded-xl border border-indigo-50 p-3">
+          <p class="text-xs text-slate-500">Penggunaan AC</p>
+          <p class="mt-1 font-extrabold text-blue-950">${room.ac === 'ya' ? 'Ya' : 'Tidak'}</p>
+        </div>
+      </div>
+
+      <div>
+        <h3 class="mb-3 font-extrabold text-blue-950">Saran untuk ruangan ini</h3>
+        <div class="space-y-3">
+          ${hasil.saran.map(saran => `
+            <div class="flex items-start gap-3 rounded-xl border border-indigo-50 p-3">
+              <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-indigo-50 text-indigo-600">
+                <i class="fa-solid ${saran.icon}"></i>
+              </span>
+              <div>
+                <p class="text-sm font-bold text-blue-950">${escapeHTML(saran.judul)}</p>
+                <p class="mt-1 text-xs leading-5 text-slate-500">${escapeHTML(saran.isi)}</p>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+
+      ${room.catatan ? `
+        <div class="rounded-xl bg-slate-50 p-4">
+          <p class="text-xs font-bold text-slate-500">Catatan kamu</p>
+          <p class="mt-2 whitespace-pre-wrap break-words text-sm leading-6 text-blue-950">${escapeHTML(room.catatan)}</p>
+        </div>` : ''}
+    `;
+
+    const modal = document.getElementById('modalDetail');
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+    document.body.style.overflow = 'hidden';
+  };
+
+  window.tutupDetail = function () {
+    const modal = document.getElementById('modalDetail');
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+
+    const formModal = document.getElementById('modalRuangan');
+    if (formModal.classList.contains('hidden')) {
+      document.body.style.overflow = '';
+    }
+  };
+
+  function tampilToast(pesan) {
+    const el = document.getElementById('toast');
+    el.textContent = pesan;
+    el.classList.remove('hidden');
+
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => el.classList.add('hidden'), 2800);
+  }
+
+  // Profil lokal jika tersedia.
+  try {
+    const profil = JSON.parse(localStorage.getItem('pijarBumiSettingsV1') || '{}');
+    const nama = typeof profil.nama === 'string' && profil.nama.trim()
+      ? profil.nama.trim()
+      : 'Warga';
+
+    document.getElementById('namaHeader').textContent = nama;
+    document.getElementById('avatarHeader').textContent = nama.charAt(0).toUpperCase();
+  } catch (_) {}
+
+  // Tidak menimpa fungsi logout yang mungkin telah disediakan app.js.
+  if (typeof window.prosesLogout !== 'function') {
+    window.prosesLogout = function () {
+      if (confirm('Yakin ingin keluar dari PijarBumi?')) {
+        window.location.href = 'login.html';
+      }
+    };
+  }
+
+  document.getElementById('cariRuangan').addEventListener('input', tampilkanRuangan);
+  document.getElementById('filterRuangan').addEventListener('change', tampilkanRuangan);
+
+  document.getElementById('modalRuangan').addEventListener('click', function (event) {
+    if (event.target === this) tutupModal();
+  });
+
+  document.getElementById('modalDetail').addEventListener('click', function (event) {
+    if (event.target === this) tutupDetail();
+  });
+
+  document.addEventListener('keydown', function (event) {
+    if (event.key === 'Escape') {
+      tutupDetail();
+      tutupModal();
+    }
+  });
+
+  window.addEventListener('storage', function (event) {
+    if (event.key === ROOM_KEY) {
+      ruangan = bacaRuangan();
+      tampilkanRuangan();
+    }
+  });
+
+  tampilkanRuangan();
+})();
+</script>
 </body>
 </html>
+```
