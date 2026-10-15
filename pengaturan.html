@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#5b5ce2">
+  <title>Pengaturan - PijarBumi</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      font-family: 'DM Sans', ui-sans-serif, system-ui, sans-serif;
+      background: #f7f8fc;
+      color: #172554;
+    }
+
+    .sidebar-link {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      padding: 12px 14px;
+      border-radius: 13px;
+      color: #52618b;
+      font-weight: 600;
+      transition: .2s;
+    }
+
+    .sidebar-link:hover,
+    .sidebar-link.active {
+      background: #5b5ce2;
+      color: white;
+      box-shadow: 0 7px 18px #26386b26;
+    }
+
+    .setting-card {
+      transition: transform .2s, box-shadow .2s;
+    }
+
+    .setting-card:hover {
+      box-shadow: 0 12px 28px #26386b10;
+    }
+
+    .setting-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 15px 0;
+      border-bottom: 1px solid #eef0fa;
+    }
+
+    .setting-row:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .setting-icon {
+      width: 42px;
+      height: 42px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 13px;
+    }
+
+    .setting-action {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      border-radius: 11px;
+      padding: 9px 13px;
+      font-size: 12px;
+      font-weight: 700;
+      transition: .2s;
+      white-space: nowrap;
+    }
+
+    .btn-primary {
+      background: #5b5ce2;
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: #4849c9;
+    }
+
+    .btn-light {
+      background: #eef0ff;
+      color: #4f46c8;
+    }
+
+    .btn-light:hover {
+      background: #e0e4ff;
+    }
+
+    .form-input {
+      width: 100%;
+      border: 1px solid #e0e4f5;
+      border-radius: 12px;
+      background: #fff;
+      padding: 11px 13px;
+      font-size: 14px;
+      color: #172554;
+      outline: none;
+      transition: .2s;
+    }
+
+    .form-input:focus {
+      border-color: #7778ed;
+      box-shadow: 0 0 0 3px #5b5ce21a;
+    }
+
+    .toggle {
+      appearance: none;
+      width: 43px;
+      height: 24px;
+      flex-shrink: 0;
+      background: #d7dced;
+      border-radius: 999px;
+      position: relative;
+      cursor: pointer;
+      transition: .2s;
+    }
+
+    .toggle::after {
+      content: "";
+      position: absolute;
+      width: 18px;
+      height: 18px;
+      left: 3px;
+      top: 3px;
+      background: white;
+      border-radius: 50%;
+      box-shadow: 0 1px 4px #0002;
+      transition: .2s;
+    }
+
+    .toggle:checked {
+      background: #5b5ce2;
+    }
+
+    .toggle:checked::after {
+      transform: translateX(19px);
+    }
+
+    .modal-backdrop {
+      background: rgba(23, 37, 84, .45);
+      backdrop-filter: blur(5px);
+    }
+
+    .main-scroll {
+      scrollbar-width: thin;
+      scrollbar-color: #d9def2 transparent;
+    }
+
+    @media (max-width: 767px) {
+      .main-scroll {
+        padding-bottom: 110px;
+      }
+    }
+  </style>
+</head>
+
+<body class="min-h-screen md:h-screen md:overflow-hidden">
+
+<div class="flex min-h-screen md:h-screen">
+
+  <!-- SIDEBAR DESKTOP -->
+  <aside class="hidden w-60 shrink-0 flex-col border-r border-indigo-100 bg-white px-4 md:flex">
+
+    <a href="dashboard.html" class="flex items-center gap-3 px-2 py-7">
+      <span class="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-teal-400 to-emerald-600 text-white">
+        <i class="fa-solid fa-leaf text-xl"></i>
+      </span>
+      <span>
+        <b class="block text-xl font-extrabold tracking-tight text-blue-950">PijarBumi</b>
+        <small class="text-xs text-slate-500">Energi lebih bijak</small>
+      </span>
+    </a>
+
+    <p class="mb-3 px-3 text-[10px] font-extrabold uppercase tracking-[.17em] text-slate-400">
+      Menu utama
+    </p>
+
+    <nav class="space-y-2">
+      <a href="dashboard.html" class="sidebar-link">
+        <i class="fa-solid fa-house w-5 text-center"></i> Dasbor
+      </a>
+      <a href="analitik.html" class="sidebar-link">
+        <i class="fa-solid fa-chart-column w-5 text-center"></i> Analitik
+      </a>
+      <a href="ruangan.html" class="sidebar-link">
+        <i class="fa-solid fa-door-open w-5 text-center"></i> Ruangan
+      </a>
+      <a href="alat.html" class="sidebar-link">
+        <i class="fa-solid fa-plug w-5 text-center"></i> Alat Energi
+      </a>
+      </a>
+      <a href="pengaturan.html" class="sidebar-link active">
+        <i class="fa-solid fa-gear w-5 text-center"></i> Pengaturan
+      </a>
+    </nav>
+
+    <div class="mt-auto mb-4 rounded-2xl border border-indigo-100 bg-gradient-to-br from-indigo-50 to-blue-50 p-4">
+      <div class="mb-3 text-2xl text-indigo-600">
+        <i class="fa-solid fa-sliders"></i>
+      </div>
+      <p class="text-sm font-bold leading-5 text-blue-950">Atur pengalamanmu</p>
+      <p class="mt-1 text-xs leading-5 text-slate-600">
+        Sesuaikan preferensi PijarBumi agar lebih nyaman digunakan.
+      </p>
+    </div>
+
+    <button onclick="prosesLogout()" class="mb-5 flex items-center gap-3 rounded-xl bg-rose-50 px-4 py-3 text-sm font-bold text-rose-600 transition hover:bg-rose-100">
+      <i class="fa-solid fa-right-from-bracket"></i> Keluar
+    </button>
+  </aside>
+
+  <!-- KONTEN UTAMA -->
+  <main class="relative flex min-w-0 flex-1 flex-col md:overflow-hidden">
+
+    <!-- HEADER -->
+    <header class="flex items-center justify-between gap-4 bg-white/90 px-5 py-4 sm:px-8 md:px-10">
+      <div class="flex min-w-0 flex-1 items-center gap-3 rounded-xl border border-indigo-100 bg-slate-50 px-4 py-3 text-sm text-slate-400 sm:max-w-md">
+        <i class="fa-solid fa-gear text-indigo-400"></i>
+        <span class="truncate">Pengaturan akun dan aplikasi</span>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <a href="dashboard.html" aria-label="Kembali ke dasbor"
+           class="flex h-10 w-10 items-center justify-center rounded-xl text-slate-500 transition hover:bg-indigo-50 hover:text-indigo-600">
+          <i class="fa-solid fa-house text-lg"></i>
+        </a>
+        <div class="flex items-center gap-2">
+          <span id="avatarHeader" class="flex h-10 w-10 items-center justify-center rounded-full bg-indigo-100 font-bold text-indigo-700">W</span>
+          <span id="namaHeader" class="hidden text-sm font-bold text-blue-950 sm:block">Warga</span>
+        </div>
+      </div>
+    </header>
+
+    <div class="main-scroll flex-1 overflow-y-auto px-4 py-5 sm:px-7 md:px-10 md:py-7">
+
+      <div class="mx-auto max-w-6xl space-y-6">
+
+        <!-- JUDUL -->
+        <section class="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
+          <div>
+            <div class="mb-2 inline-flex items-center gap-2 rounded-full border border-indigo-100 bg-white px-3 py-1.5 text-xs font-bold text-indigo-700">
+              <i class="fa-solid fa-sliders"></i> Preferensi aplikasi
+            </div>
+            <h1 class="text-2xl font-extrabold tracking-tight text-blue-950 sm:text-3xl">
+              Pengaturan
+            </h1>
+            <p class="mt-2 text-sm leading-6 text-slate-500">
+              Kelola profil, preferensi, dan pengaturan PijarBumi dari satu tempat.
+            </p>
+          </div>
+
+          <button onclick="simpanSemua()" class="setting-action btn-primary self-start px-4 py-3 text-sm sm:self-auto">
+            <i class="fa-solid fa-floppy-disk"></i> Simpan pengaturan
+          </button>
+        </section>
+
+        <!-- PROFIL -->
+        <section class="setting-card overflow-hidden rounded-2xl border border-indigo-100 bg-white shadow-sm">
+          <div class="flex items-center gap-3 border-b border-indigo-50 px-5 py-4 sm:px-6">
+            <span class="flex h-10 w-10 items-center justify-center rounded-xl bg-indigo-100 text-indigo-600">
+              <i class="fa-solid fa-user-gear text-lg"></i>
+            </span>
+            <div>
+              <h2 class="font-extrabold text-blue-950">Profil pengguna</h2>
+              <p class="text-xs text-slate-500">Informasi dasar akunmu</p>
+            </div>
+          </div>
+
+          <div class="p-5 sm:p-6">
+            <div class="flex flex-col gap-5 sm:flex-row sm:items-center">
+              <div class="flex items-center gap-4">
+                <span id="avatarProfil" class="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-indigo-100 text-2xl font-extrabold text-indigo-700">W</span>
+                <div>
+                  <h3 id="namaProfil" class="text-lg font-extrabold text-blue-950">Warga</h3>
+                  <p id="emailProfil" class="mt-1 break-all text-sm text-slate-500">Belum ada email</p>
+                  <p class="mt-2 inline-flex items-center gap-1.5 rounded-full bg-indigo-50 px-2.5 py-1 text-[11px] font-bold text-indigo-600">
+                    <i class="fa-solid fa-circle-check"></i> Profil lokal
+                  </p>
+                </div>
+              </div>
+
+              <div class="sm:ml-auto">
+                <button onclick="bukaModal('modalProfil')" class="setting-action btn-light">
+                  <i class="fa-solid fa-pen"></i> Edit profil
+                </button>
+              </div>
+            </div>
+
+            <div class="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2">
+              <div class="rounded-xl border border-indigo-50 bg-slate-50/70 p-4">
+                <p class="text-xs font-semibold text-slate-500">Nama pengguna</p>
+                <p id="ringkasNama" class="mt-2 break-words text-sm font-bold text-blue-950">Warga</p>
+              </div>
+              <div class="rounded-xl border border-indigo-50 bg-slate-50/70 p-4">
+                <p class="text-xs font-semibold text-slate-500">Bahasa aplikasi</p>
+                <p id="ringkasBahasa" class="mt-2 text-sm font-bold text-blue-950">Bahasa Indonesia</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- PREFERENSI -->
+        <section class="setting-card rounded-2xl border border-indigo-100 bg-white p-5 shadow-sm sm:p-6">
+          <div class="mb-2 flex items-center gap-3">
+            <span class="flex h-10 w-10 items-center justify-center rounded-xl bg-violet-100 text-violet-600">
+              <i class="fa-solid fa-sliders text-lg"></i>
+            </span>
+            <div>
+              <h2 class="font-extrabold text-blue-950">Preferensi aplikasi</h2>
+              <p class="text-xs text-slate-500">Atur kenyamanan penggunaan</p>
+            </div>
+          </div>
+
+          <div class="setting-row">
+            <span class="setting-icon bg-indigo-50 text-indigo-600">
+              <i class="fa-solid fa-language text-lg"></i>
+            </span>
+            <div class="min-w-0 flex-1">
+              <p class="text-sm font-bold text-slate-800">Bahasa</p>
+              <p class="mt-1 text-xs leading-5 text-slate-500">Pilih bahasa preferensi aplikasi.</p>
+            </div>
+            <select id="bahasaSelect" class="form-input max-w-[155px] sm:max-w-[190px]">
+              <option value="id">Bahasa Indonesia</option>
+              <option value="en">English</option>
+            </select>
+          </div>
+
+          <div class="setting-row">
+            <span class="setting-icon bg-amber-50 text-amber-600">
+              <i class="fa-regular fa-bell text-lg"></i>
+            </span>
+            <div class="min-w-0 flex-1">
+              <p class="text-sm font-bold text-slate-800">Notifikasi</p>
+              <p class="mt-1 text-xs leading-5 text-slate-500">Simpan preferensi untuk pemberitahuan aplikasi.</p>
+            </div>
+            <input id="notifikasiToggle" type="checkbox" class="toggle" checked aria-label="Aktifkan preferensi notifikasi">
+          </div>
+
+          <div class="setting-row">
+            <span class="setting-icon bg-blue-50 text-blue-600">
+              <i class="fa-solid fa-chart-line text-lg"></i>
+            </span>
+            <div class="min-w-0 flex-1">
+              <p class="text-sm font-bold text-slate-800">Ringkasan energi</p>
+              <p class="mt-1 text-xs leading-5 text-slate-500">Simpan preferensi untuk menampilkan ringkasan energi.</p>
+            </div>
+            <input id="ringkasanToggle" type="checkbox" class="toggle" checked aria-label="Tampilkan preferensi ringkasan energi">
+          </div>
+        </section>
+
+        <!-- KEAMANAN -->
+        <section class="setting-card rounded-2xl border border-indigo-100 bg-white p-5 shadow-sm sm:p-6">
+          <div class="mb-2 flex items-center gap-3">
+            <span class="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-100 text-blue-600">
+              <i class="fa-solid fa-shield-halved text-lg"></i>
+            </span>
+            <div>
+              <h2 class="font-extrabold text-blue-950">Keamanan dan privasi</h2>
+              <p class="text-xs text-slate-500">Kontrol informasi yang tersimpan di perangkat</p>
+            </div>
+          </div>
+
+          <div class="setting-row">
+            <span class="setting-icon bg-blue-50 text-blue-600">
+              <i class="fa-solid fa-lock text-lg"></i>
+            </span>
+            <div class="min-w-0 flex-1">
+              <p class="text-sm font-bold text-slate-800">Keamanan akun</p>
+              <p class="mt-1 text-xs leading-5 text-slate-500">Pengelolaan autentikasi memerlukan sistem akun yang terhubung.</p>
+            </div>
+            <button onclick="bukaModal('modalKeamanan')" class="setting-action btn-light">
+              Detail <i class="fa-solid fa-chevron-right"></i>
+            </button>
+          </div>
+
+          <div class="setting-row">
+            <span class="setting-icon bg-violet-50 text-violet-600">
+              <i class="fa-solid fa-database text-lg"></i>
+            </span>
+            <div class="min-w-0 flex-1">
+              <p class="text-sm font-bold text-slate-800">Data aplikasi</p>
+              <p class="mt-1 text-xs leading-5 text-slate-500">Data rumah dan perangkat dapat tersimpan di penyimpanan browser.</p>
+            </div>
+            <button onclick="bukaModal('modalData')" class="setting-action btn-light">
+              Kelola <i class="fa-solid fa-chevron-right"></i>
+            </button>
+          </div>
+        </section>
+
+        <!-- BANTUAN -->
+        <section class="setting-card rounded-2xl border border-indigo-100 bg-white p-5 shadow-sm sm:p-6">
+          <div class="mb-2 flex items-center gap-3">
+            <span class="flex h-10 w-10 items-center justify-center rounded-xl bg-indigo-100 text-indigo-600">
+              <i class="fa-solid fa-circle-question text-lg"></i>
+            </span>
+            <div>
+              <h2 class="font-extrabold text-blue-950">Bantuan dan informasi</h2>
+              <p class="text-xs text-slate-500">Informasi mengenai PijarBumi</p>
+            </div>
+          </div>
+
+          <div class="setting-row">
+            <span class="setting-icon bg-indigo-50 text-indigo-600">
+              <i class="fa-solid fa-comment-dots text-lg"></i>
+            </span>
+            <div class="min-w-0 flex-1">
+              <p class="text-sm font-bold text-slate-800">Kirim masukan</p>
+              <p class="mt-1 text-xs leading-5 text-slate-500">Bagikan saran untuk pengembangan aplikasi.</p>
+            </div>
+            <button onclick="bukaModal('modalMasukan')" class="setting-action btn-light">
+              Kirim <i class="fa-solid fa-arrow-right"></i>
+            </button>
+          </div>
+
+          <div class="setting-row">
+            <span class="setting-icon bg-slate-100 text-slate-600">
+              <i class="fa-solid fa-circle-info text-lg"></i>
+            </span>
+            <div class="min-w-0 flex-1">
+              <p class="text-sm font-bold text-slate-800">Tentang PijarBumi</p>
+              <p class="mt-1 text-xs leading-5 text-slate-500">Informasi singkat mengenai aplikasi pemantauan energi.</p>
+            </div>
+            <button onclick="bukaModal('modalTentang')" class="setting-action btn-light">
+              Lihat <i class="fa-solid fa-chevron-right"></i>
+            </button>
+          </div>
+        </section>
+
+        <!-- AREA AKUN -->
+        <section class="rounded-2xl border border-rose-100 bg-white p-5 shadow-sm sm:p-6">
+          <div class="flex items-start gap-3">
+            <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-rose-50 text-rose-600">
+              <i class="fa-solid fa-right-from-bracket text-lg"></i>
+            </span>
+            <div class="min-w-0 flex-1">
+              <h2 class="font-extrabold text-blue-950">Area akun</h2>
+              <p class="mt-1 text-xs leading-5 text-slate-500">
+                Keluar dari aplikasi atau hapus data lokal PijarBumi dari browser ini.
+              </p>
+              <div class="mt-4 flex flex-wrap gap-2">
+                <button onclick="prosesLogout()" class="setting-action bg-rose-50 text-rose-600 hover:bg-rose-100">
+                  <i class="fa-solid fa-right-from-bracket"></i> Keluar
+                </button>
+                <button onclick="bukaModal('modalData')" class="setting-action border border-slate-200 bg-white text-slate-600 hover:bg-slate-50">
+                  <i class="fa-solid fa-database"></i> Kelola data
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="pb-3 text-center text-xs text-slate-400">
+          PijarBumi · Pantau energi, bangun kebiasaan yang lebih bijak.
+        </footer>
+      </div>
+    </div>
+
+    <!-- NAVIGASI MOBILE -->
+    <nav class="fixed inset-x-0 bottom-0 z-30 border-t border-indigo-100 bg-white/95 px-1 pb-[max(8px,env(safe-area-inset-bottom))] pt-2 shadow-[0_-5px_20px_rgba(30,41,90,.06)] backdrop-blur md:hidden">
+      <div class="mx-auto flex max-w-lg items-center justify-around">
+        <a href="dashboard.html" class="flex flex-col items-center gap-1 px-2 py-1 text-slate-500">
+          <span class="flex h-8 w-12 items-center justify-center"><i class="fa-solid fa-house text-lg"></i></span>
+          <span class="text-[10px] font-semibold">Dasbor</span>
+        </a>
+        <a href="analitik.html" class="flex flex-col items-center gap-1 px-2 py-1 text-slate-500">
+          <span class="flex h-8 w-12 items-center justify-center"><i class="fa-solid fa-chart-column text-lg"></i></span>
+          <span class="text-[10px] font-semibold">Analitik</span>
+        </a>
+        <a href="ruangan.html" class="flex flex-col items-center gap-1 px-2 py-1 text-slate-500">
+          <span class="flex h-8 w-12 items-center justify-center"><i class="fa-solid fa-door-open text-lg"></i></span>
+          <span class="text-[10px] font-semibold">Ruangan</span>
+        </a>
+        <a href="alat.html" class="flex flex-col items-center gap-1 px-2 py-1 text-slate-500">
+          <span class="flex h-8 w-12 items-center justify-center"><i class="fa-solid fa-plug text-lg"></i></span>
+          <span class="text-[10px] font-semibold">Perangkat</span>
+        </a>
+        <a href="pengaturan.html" class="flex flex-col items-center gap-1 px-2 py-1 text-indigo-700">
+          <span class="flex h-8 w-12 items-center justify-center rounded-full bg-indigo-100"><i class="fa-solid fa-gear"></i></span>
+          <span class="text-[10px] font-extrabold">Pengaturan</span>
+        </a>
+      </div>
+    </nav>
+
+  </main>
+</div>
+
+<!-- MODAL EDIT PROFIL -->
+<div id="modalProfil" class="modal-backdrop fixed inset-0 z-50 hidden items-center justify-center overflow-y-auto p-4">
+  <div class="my-auto w-full max-w-md rounded-2xl bg-white p-6 shadow-2xl">
+    <div class="mb-5 flex items-center justify-between">
+      <div>
+        <h2 class="text-lg font-extrabold text-blue-950">Edit profil</h2>
+        <p class="mt-1 text-xs text-slate-500">Perbarui informasi lokal profilmu.</p>
+      </div>
+      <button onclick="tutupModal('modalProfil')" class="flex h-9 w-9 items-center justify-center rounded-xl text-slate-400 hover:bg-slate-100" aria-label="Tutup">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+
+    <form onsubmit="simpanProfil(event)" class="space-y-4">
+      <div>
+        <label for="inputNama" class="mb-2 block text-sm font-bold text-slate-700">Nama pengguna</label>
+        <input id="inputNama" class="form-input" maxlength="60" placeholder="Masukkan nama pengguna" required>
+      </div>
+      <div>
+        <label for="inputEmail" class="mb-2 block text-sm font-bold text-slate-700">Email (opsional)</label>
+        <input id="inputEmail" type="email" class="form-input" maxlength="120" placeholder="nama@email.com">
+      </div>
+      <div class="flex justify-end gap-2 pt-2">
+        <button type="button" onclick="tutupModal('modalProfil')" class="setting-action bg-slate-100 text-slate-600 hover:bg-slate-200">Batal</button>
+        <button type="submit" class="setting-action btn-primary">Simpan profil</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- MODAL KEAMANAN -->
+<div id="modalKeamanan" class="modal-backdrop fixed inset-0 z-50 hidden items-center justify-center overflow-y-auto p-4">
+  <div class="my-auto w-full max-w-md rounded-2xl bg-white p-6 shadow-2xl">
+    <div class="mb-4 flex items-center justify-between">
+      <h2 class="text-lg font-extrabold text-blue-950">Keamanan akun</h2>
+      <button onclick="tutupModal('modalKeamanan')" class="flex h-9 w-9 items-center justify-center rounded-xl text-slate-400 hover:bg-slate-100" aria-label="Tutup">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+    <div class="rounded-xl border border-indigo-100 bg-indigo-50 p-4">
+      <i class="fa-solid fa-shield-halved text-xl text-indigo-600"></i>
+      <p class="mt-3 text-sm font-bold text-blue-950">Autentikasi belum dikonfigurasi di halaman ini</p>
+      <p class="mt-2 text-xs leading-5 text-slate-600">
+        Nama dan email pada halaman ini hanya disimpan sebagai preferensi lokal. Fitur ganti kata sandi membutuhkan sistem autentikasi yang benar-benar terhubung.
+      </p>
+    </div>
+    <button onclick="tutupModal('modalKeamanan')" class="setting-action btn-primary mt-5 w-full">Mengerti</button>
+  </div>
+</div>
+
+<!-- MODAL DATA -->
+<div id="modalData" class="modal-backdrop fixed inset-0 z-50 hidden items-center justify-center overflow-y-auto p-4">
+  <div class="my-auto w-full max-w-md rounded-2xl bg-white p-6 shadow-2xl">
+    <div class="mb-4 flex items-center justify-between">
+      <h2 class="text-lg font-extrabold text-blue-950">Kelola data lokal</h2>
+      <button onclick="tutupModal('modalData')" class="flex h-9 w-9 items-center justify-center rounded-xl text-slate-400 hover:bg-slate-100" aria-label="Tutup">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+    <p class="text-sm leading-6 text-slate-600">
+      Data rumah, perangkat, dan preferensi mungkin tersimpan di penyimpanan browser. Menghapusnya dapat menghilangkan data yang belum dicadangkan.
+    </p>
+    <div class="mt-5 rounded-xl border border-rose-100 bg-rose-50 p-4">
+      <p class="text-sm font-bold text-rose-700">Hapus seluruh data aplikasi?</p>
+      <p class="mt-1 text-xs leading-5 text-rose-600">Tindakan ini tidak dapat dibatalkan.</p>
+      <button onclick="hapusDataLokal()" class="setting-action mt-3 bg-rose-600 text-white hover:bg-rose-700">
+        <i class="fa-solid fa-trash"></i> Hapus data lokal
+      </button>
+    </div>
+    <button onclick="tutupModal('modalData')" class="setting-action btn-light mt-4 w-full">Tutup</button>
+  </div>
+</div>
+
+<!-- MODAL MASUKAN -->
+<div id="modalMasukan" class="modal-backdrop fixed inset-0 z-50 hidden items-center justify-center overflow-y-auto p-4">
+  <div class="my-auto w-full max-w-md rounded-2xl bg-white p-6 shadow-2xl">
+    <div class="mb-4 flex items-center justify-between">
+      <h2 class="text-lg font-extrabold text-blue-950">Kirim masukan</h2>
+      <button onclick="tutupModal('modalMasukan')" class="flex h-9 w-9 items-center justify-center rounded-xl text-slate-400 hover:bg-slate-100" aria-label="Tutup">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+    <form onsubmit="simpanMasukan(event)">
+      <label for="inputMasukan" class="mb-2 block text-sm font-bold text-slate-700">Masukanmu</label>
+      <textarea id="inputMasukan" class="form-input min-h-28 resize-y" maxlength="1000" placeholder="Tulis saran atau masukan..." required></textarea>
+      <p class="mt-2 text-xs leading-5 text-slate-400">Masukan disimpan secara lokal di browser ini, belum dikirim ke server.</p>
+      <div class="mt-4 flex justify-end gap-2">
+        <button type="button" onclick="tutupModal('modalMasukan')" class="setting-action bg-slate-100 text-slate-600">Batal</button>
+        <button type="submit" class="setting-action btn-primary"><i class="fa-solid fa-floppy-disk"></i> Simpan</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- MODAL TENTANG -->
+<div id="modalTentang" class="modal-backdrop fixed inset-0 z-50 hidden items-center justify-center overflow-y-auto p-4">
+  <div class="my-auto w-full max-w-md rounded-2xl bg-white p-6 text-center shadow-2xl">
+    <span class="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-teal-400 to-emerald-600 text-3xl text-white">
+      <i class="fa-solid fa-leaf"></i>
+    </span>
+    <h2 class="mt-4 text-xl font-extrabold text-blue-950">PijarBumi</h2>
+    <p class="mt-2 text-sm leading-6 text-slate-600">
+      Aplikasi pemantauan energi rumah untuk membantu mencatat perangkat, memperkirakan konsumsi listrik, dan membangun kebiasaan yang lebih bijak.
+    </p>
+    <p class="mt-3 text-xs text-slate-400">Energi lebih bijak, bumi lebih baik.</p>
+    <button onclick="tutupModal('modalTentang')" class="setting-action btn-primary mt-5 w-full">Tutup</button>
+  </div>
+</div>
+
+<!-- NOTIFIKASI SINGKAT -->
+<div id="toast" class="fixed bottom-24 left-1/2 z-[70] hidden -translate-x-1/2 rounded-xl bg-blue-950 px-5 py-3 text-sm font-semibold text-white shadow-xl md:bottom-6" role="status" aria-live="polite"></div>
+
+<script src="js/app.js"></script>
+<script>
+(function () {
+  const SETTINGS_KEY = 'pijarBumiSettingsV1';
+  const FEEDBACK_KEY = 'pijarBumiFeedbackV1';
+
+  const defaults = {
+    nama: 'Warga',
+    email: '',
+    bahasa: 'id',
+    notifikasi: true,
+    ringkasan: true
+  };
+
+  function bacaSettings() {
+    try {
+      const raw = localStorage.getItem(SETTINGS_KEY);
+      return raw ? { ...defaults, ...JSON.parse(raw) } : { ...defaults };
+    } catch (error) {
+      return { ...defaults };
+    }
+  }
+
+  let settings = bacaSettings();
+  let toastTimer;
+
+  function simpanSettings() {
+    try {
+      localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings));
+      return true;
+    } catch (error) {
+      tampilToast('Pengaturan tidak dapat disimpan di browser ini.');
+      return false;
+    }
+  }
+
+  function inisial(nama) {
+    const bersih = String(nama || 'W').trim();
+    return bersih ? bersih.charAt(0).toUpperCase() : 'W';
+  }
+
+  function tampilkanProfil() {
+    const nama = settings.nama || 'Warga';
+    const email = settings.email || 'Belum ada email';
+
+    document.getElementById('namaHeader').textContent = nama;
+    document.getElementById('avatarHeader').textContent = inisial(nama);
+    document.getElementById('avatarProfil').textContent = inisial(nama);
+    document.getElementById('namaProfil').textContent = nama;
+    document.getElementById('emailProfil').textContent = email;
+    document.getElementById('ringkasNama').textContent = nama;
+    document.getElementById('ringkasBahasa').textContent =
+      settings.bahasa === 'en' ? 'English' : 'Bahasa Indonesia';
+  }
+
+  function tampilkanPreferensi() {
+    document.getElementById('bahasaSelect').value = settings.bahasa;
+    document.getElementById('notifikasiToggle').checked = !!settings.notifikasi;
+    document.getElementById('ringkasanToggle').checked = !!settings.ringkasan;
+  }
+
+  window.bukaModal = function (id) {
+    const modal = document.getElementById(id);
+    if (!modal) return;
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+    document.body.style.overflow = 'hidden';
+
+    const focusable = modal.querySelector('input, textarea, select, button');
+    if (focusable) setTimeout(() => focusable.focus(), 50);
+  };
+
+  window.tutupModal = function (id) {
+    const modal = document.getElementById(id);
+    if (!modal) return;
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+
+    if (!document.querySelector('.modal-backdrop.flex')) {
+      document.body.style.overflow = '';
+    }
+  };
+
+  window.tampilToast = function (pesan) {
+    const toast = document.getElementById('toast');
+    toast.textContent = pesan;
+    toast.classList.remove('hidden');
+
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toast.classList.add('hidden'), 2800);
+  };
+
+  window.simpanProfil = function (event) {
+    event.preventDefault();
+
+    const nama = document.getElementById('inputNama').value.trim();
+    const email = document.getElementById('inputEmail').value.trim();
+
+    if (!nama) {
+      tampilToast('Nama pengguna tidak boleh kosong.');
+      return;
+    }
+
+    settings.nama = nama;
+    settings.email = email;
+
+    if (simpanSettings()) {
+      tampilkanProfil();
+      tutupModal('modalProfil');
+      tampilToast('Profil berhasil disimpan.');
+    }
+  };
+
+  window.simpanSemua = function () {
+    settings.bahasa = document.getElementById('bahasaSelect').value;
+    settings.notifikasi = document.getElementById('notifikasiToggle').checked;
+    settings.ringkasan = document.getElementById('ringkasanToggle').checked;
+
+    if (simpanSettings()) {
+      tampilkanProfil();
+      tampilToast('Pengaturan berhasil disimpan.');
+    }
+  };
+
+  window.simpanMasukan = function (event) {
+    event.preventDefault();
+
+    const teks = document.getElementById('inputMasukan').value.trim();
+    if (!teks) {
+      tampilToast('Masukan belum diisi.');
+      return;
+    }
+
+    try {
+      let daftar = [];
+      const raw = localStorage.getItem(FEEDBACK_KEY);
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        if (Array.isArray(parsed)) daftar = parsed;
+      }
+
+      daftar.push({
+        pesan: teks,
+        tanggal: new Date().toISOString()
+      });
+
+      localStorage.setItem(FEEDBACK_KEY, JSON.stringify(daftar));
+      document.getElementById('inputMasukan').value = '';
+      tutupModal('modalMasukan');
+      tampilToast('Masukan tersimpan di browser ini.');
+    } catch (error) {
+      tampilToast('Masukan gagal disimpan.');
+    }
+  };
+
+  window.hapusDataLokal = function () {
+    const yakin = confirm(
+      'Yakin ingin menghapus data aplikasi PijarBumi dari browser ini? Data yang dihapus mungkin tidak dapat dipulihkan.'
+    );
+
+    if (!yakin) return;
+
+    try {
+      // Hanya hapus kunci data aplikasi yang diketahui.
+      // Jangan hapus seluruh localStorage karena bisa berisi data aplikasi lain.
+      [
+        'pijarBumiDataV1',
+        SETTINGS_KEY,
+        FEEDBACK_KEY
+      ].forEach(key => localStorage.removeItem(key));
+
+      tutupModal('modalData');
+      tampilToast('Data lokal PijarBumi telah dihapus.');
+
+      setTimeout(() => location.reload(), 1000);
+    } catch (error) {
+      tampilToast('Data tidak dapat dihapus dari browser.');
+    }
+  };
+
+  window.prosesLogout = function () {
+    const yakin = confirm('Yakin ingin keluar dari PijarBumi?');
+    if (!yakin) return;
+
+    // Gunakan fungsi logout utama jika tersedia di app.js.
+    if (typeof window.prosesLogoutUtama === 'function') {
+      window.prosesLogoutUtama();
+      return;
+    }
+
+    // Fallback: kembali ke halaman login.
+    // Tidak menghapus data rumah maupun preferensi.
+    window.location.href = 'login.html';
+  };
+
+  document.getElementById('bahasaSelect').addEventListener('change', function () {
+    settings.bahasa = this.value;
+    tampilkanProfil();
+  });
+
+  document.getElementById('notifikasiToggle').addEventListener('change', function () {
+    settings.notifikasi = this.checked;
+  });
+
+  document.getElementById('ringkasanToggle').addEventListener('change', function () {
+    settings.ringkasan = this.checked;
+  });
+
+  // Tutup modal ketika area gelap di luar kartu ditekan.
+  document.querySelectorAll('.modal-backdrop').forEach(modal => {
+    modal.addEventListener('click', function (event) {
+      if (event.target === modal) {
+        tutupModal(modal.id);
+      }
+    });
+  });
+
+  // Tutup modal menggunakan tombol Escape.
+  document.addEventListener('keydown', function (event) {
+    if (event.key === 'Escape') {
+      document.querySelectorAll('.modal-backdrop.flex').forEach(modal => {
+        tutupModal(modal.id);
+      });
+    }
+  });
+
+  document.getElementById('inputNama').value = settings.nama;
+  document.getElementById('inputEmail').value = settings.email;
+
+  tampilkanProfil();
+  tampilkanPreferensi();
+})();
+</script>
+
+</body>
+</html>
