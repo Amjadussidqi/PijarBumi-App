@@ -219,8 +219,7 @@
 
   function seedDemoData() {
     try {
-      if (localStorage.getItem(STORAGE_KEY) !== null) return;
-      if (!saveData()) return;
+      if (localStorage.getItem(STORAGE_KEY) === null && !saveData()) return;
       if (localStorage.getItem(ROOM_KEY) === null) saveRooms(DEFAULT_ROOMS);
     } catch (error) {
       console.error('PijarBumi: gagal menyiapkan data contoh.', error);
