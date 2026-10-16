@@ -1,9 +1,10 @@
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#5b5ce2">
+  <meta name="theme-color" content="#166534">
   <title>Jejak Karbon - PijarBumi</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
@@ -15,10 +16,20 @@
       box-sizing: border-box;
     }
 
+    html {
+      min-height: 100%;
+    }
+
     body {
+      margin: 0;
+      min-width: 320px;
       font-family: 'DM Sans', ui-sans-serif, system-ui, sans-serif;
       background: #f7f8fc;
       color: #172554;
+    }
+
+    .app-layout {
+      min-height: 100dvh;
     }
 
     .sidebar-link {
@@ -30,17 +41,18 @@
       color: #52618b;
       font-size: 14px;
       font-weight: 600;
-      transition: .2s;
+      transition: background .2s, color .2s, box-shadow .2s;
     }
 
     .sidebar-link:hover,
     .sidebar-link.active {
-      background: #5b5ce2;
+      background: #166534;
       color: white;
-      box-shadow: 0 7px 18px #5b5ce226;
+      box-shadow: 0 7px 18px #16653420;
     }
 
     .stat-card {
+      min-width: 0;
       transition: transform .2s, box-shadow .2s;
     }
 
@@ -50,14 +62,16 @@
     }
 
     .main-scroll {
+      min-width: 0;
       scrollbar-width: thin;
       scrollbar-color: #d9def2 transparent;
+      overscroll-behavior-y: contain;
     }
 
     .carbon-hero {
-      background: linear-gradient(110deg, #166534 0%, #15803d 58%, #22a06b 100%);
       position: relative;
       overflow: hidden;
+      background: linear-gradient(110deg, #166534 0%, #15803d 58%, #22a06b 100%);
     }
 
     .carbon-hero::before {
@@ -69,6 +83,7 @@
       border-radius: 50%;
       right: -75px;
       top: -100px;
+      pointer-events: none;
     }
 
     .carbon-hero::after {
@@ -80,6 +95,7 @@
       border-radius: 50%;
       right: 20px;
       top: -60px;
+      pointer-events: none;
     }
 
     .stat-icon {
@@ -92,30 +108,88 @@
       flex-shrink: 0;
     }
 
-    @media (max-width: 767px) {
+    input[type="number"] {
+      max-width: 100%;
+    }
+
+    @media (min-width: 768px) {
+      body {
+        height: 100dvh;
+        overflow: hidden;
+      }
+
+      .app-layout {
+        height: 100dvh;
+        min-height: 0;
+      }
+
+      .sidebar {
+        height: 100%;
+        overflow-y: auto;
+      }
+
+      .app-main {
+        height: 100%;
+        min-height: 0;
+      }
+
       .main-scroll {
-        padding-bottom: 110px;
+        min-height: 0;
+      }
+    }
+
+    @media (max-width: 767px) {
+      body {
+        overflow-x: hidden;
+      }
+
+      .app-layout {
+        min-height: 100dvh;
+      }
+
+      .app-main {
+        min-height: 100dvh;
+      }
+
+      .main-scroll {
+        overflow: visible;
+        padding-bottom: 120px;
+      }
+
+      .carbon-hero {
+        padding: 1.25rem;
       }
 
       .carbon-hero::before {
-        right: -140px;
+        right: -150px;
+      }
+
+      .carbon-hero::after {
+        right: -80px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
       }
     }
   </style>
 </head>
 
-<body class="min-h-screen md:h-screen md:overflow-hidden">
-
-<div class="flex min-h-screen md:h-screen">
+<body>
+<div class="app-layout flex w-full">
 
   <!-- SIDEBAR DESKTOP -->
-  <aside class="hidden w-60 shrink-0 flex-col border-r border-indigo-100 bg-white px-4 md:flex">
+  <aside class="sidebar hidden w-60 shrink-0 flex-col border-r border-indigo-100 bg-white px-4 md:flex">
 
     <a href="dashboard.html" class="flex items-center gap-3 px-2 py-7">
       <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-emerald-50">
-        <svg xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 48 48" width="44" height="44"
-          fill="none" aria-label="Logo PijarBumi" role="img">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"
+          width="44" height="44" fill="none" role="img" aria-label="Logo PijarBumi">
           <circle cx="24" cy="24" r="20" fill="#166534"/>
           <path d="M9 28C9 15 20 7 34 10C31 22 23 31 9 28Z" fill="#86EFAC"/>
           <path d="M10 37C17 26 26 20 37 17C33 29 24 37 10 37Z" fill="#22C55E"/>
@@ -150,16 +224,8 @@
         <i class="fa-solid fa-plug w-5 text-center"></i>Alat Energi
       </a>
 
-      <a href="jejak_karbon.html" class="sidebar-link active">
-        <svg xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 24 24" width="20" height="20"
-          fill="none" stroke="currentColor" stroke-width="1.8"
-          stroke-linecap="round" stroke-linejoin="round"
-          aria-hidden="true">
-          <path d="M20 4c-8 0-14 3-14 10a6 6 0 0 0 6 6c7 0 10-6 8-16Z"/>
-          <path d="M4 21c3-5 7-8 12-11"/>
-        </svg>
-        Jejak Karbon
+      <a href="jejak_karbon.html" class="sidebar-link active" aria-current="page">
+        <i class="fa-solid fa-leaf w-5 text-center"></i>Jejak Karbon
       </a>
 
       <a href="pengaturan.html" class="sidebar-link">
@@ -179,37 +245,33 @@
       </p>
     </div>
 
-    <button onclick="prosesLogout()"
+    <button type="button" onclick="prosesLogout()"
       class="mb-5 flex items-center gap-3 rounded-xl bg-rose-50 px-4 py-3 text-sm font-bold text-rose-600 transition hover:bg-rose-100">
       <i class="fa-solid fa-right-from-bracket"></i>Keluar
     </button>
-
   </aside>
 
   <!-- KONTEN UTAMA -->
-  <main class="relative flex min-w-0 flex-1 flex-col md:overflow-hidden">
+  <main class="app-main relative flex min-w-0 flex-1 flex-col">
 
     <!-- HEADER -->
-    <header class="flex items-center justify-between gap-4 bg-white/90 px-5 py-4 sm:px-8 md:px-10">
+    <header class="relative z-10 flex shrink-0 items-center justify-between gap-3 border-b border-indigo-50 bg-white/95 px-4 py-4 sm:px-8 md:px-10">
       <div class="flex min-w-0 flex-1 items-center gap-3 rounded-xl border border-indigo-100 bg-slate-50 px-4 py-3 text-sm text-slate-400 sm:max-w-md">
         <i class="fa-solid fa-leaf text-emerald-600"></i>
         <span class="truncate">Pantau dampak energi rumahmu</span>
       </div>
 
-      <div class="flex items-center gap-3">
-        <div class="flex items-center gap-2">
-          <span id="inisialUser" class="flex h-10 w-10 items-center justify-center rounded-full bg-indigo-100 font-bold text-indigo-700">W</span>
-          <span id="namaUser" class="hidden text-sm font-bold text-blue-950 sm:block">Warga</span>
-        </div>
+      <div class="flex shrink-0 items-center gap-2">
+        <span id="inisialUser" class="flex h-10 w-10 items-center justify-center rounded-full bg-indigo-100 font-bold text-indigo-700">W</span>
+        <span id="namaUser" class="hidden max-w-32 truncate text-sm font-bold text-blue-950 sm:block">Warga</span>
       </div>
     </header>
 
-    <!-- AREA SCROLL -->
+    <!-- SATU AREA KONTEN SCROLL -->
     <div class="main-scroll flex-1 overflow-y-auto px-4 py-5 sm:px-7 md:px-10 md:py-7">
-
       <div class="mx-auto max-w-6xl space-y-6">
 
-        <!-- JUDUL HALAMAN -->
+        <!-- JUDUL -->
         <section>
           <p class="text-xs font-bold uppercase tracking-widest text-emerald-700">
             PijarBumi / Lingkungan
@@ -222,56 +284,40 @@
           </p>
         </section>
 
-        <!-- HERO KARBON: TETAP HIJAU -->
+        <!-- HERO -->
         <section class="carbon-hero rounded-3xl p-6 text-white shadow-sm sm:p-8">
           <div class="relative z-10 flex flex-col gap-7 sm:flex-row sm:items-center sm:justify-between">
-
             <div class="max-w-xl">
               <span class="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/15 px-3 py-1.5 text-xs font-bold">
-                <svg xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24" width="16" height="16"
-                  fill="none" stroke="currentColor" stroke-width="1.8"
-                  stroke-linecap="round" stroke-linejoin="round"
-                  aria-hidden="true">
-                  <path d="M20 4c-8 0-14 3-14 10a6 6 0 0 0 6 6c7 0 10-6 8-16Z"/>
-                  <path d="M4 21c3-5 7-8 12-11"/>
-                </svg>
+                <i class="fa-solid fa-leaf"></i>
                 Ringkasan jejak karbon
               </span>
 
               <p class="mt-5 text-sm font-medium text-green-100">
-                Total estimasi emisi energi
+                Total estimasi emisi
               </p>
 
-              <div class="mt-1 flex items-baseline gap-2">
+              <div class="mt-1 flex flex-wrap items-baseline gap-2">
                 <h2 id="totalEmisi" class="text-5xl font-extrabold tracking-tight sm:text-6xl">0</h2>
                 <span class="text-lg font-semibold text-green-100">kg CO₂</span>
               </div>
 
-              <p id="periodeEmisi" class="mt-3 text-sm text-green-100">
-                Belum ada data konsumsi energi.
+              <p id="periodeEmisi" class="mt-3 text-sm text-green-100" aria-live="polite">
+                Memuat data emisi...
               </p>
 
               <p class="mt-5 max-w-lg text-xs leading-5 text-green-50">
-                Total dihitung dari emisi listrik, gas rumah tangga, dan sumber energi tambahan yang memiliki data.
+                Estimasi dihitung dari data listrik, gas rumah tangga, dan sumber tambahan yang sudah dicatat.
               </p>
             </div>
 
             <div class="relative z-10 flex flex-col items-center sm:min-w-40">
               <div class="flex h-24 w-24 items-center justify-center rounded-full border border-white/25 bg-white/10 sm:h-28 sm:w-28">
-                <svg xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24" width="58" height="58"
-                  fill="none" stroke="currentColor" stroke-width="1.2"
-                  stroke-linecap="round" stroke-linejoin="round"
-                  class="text-green-100" aria-hidden="true">
-                  <circle cx="12" cy="12" r="9.5"/>
-                  <path d="M2.8 9h18.4M2.8 15h18.4M12 2.5c2.5 2.6 3.7 5.8 3.7 9.5s-1.2 6.9-3.7 9.5c-2.5-2.6-3.7-5.8-3.7-9.5S9.5 5.1 12 2.5Z"/>
-                </svg>
+                <i class="fa-solid fa-earth-asia text-5xl text-green-100"></i>
               </div>
               <p class="mt-4 text-center text-sm font-bold">Kenali dampakmu</p>
               <p class="mt-1 text-center text-xs text-green-100">Ubah kebiasaan, jaga bumi.</p>
             </div>
-
           </div>
         </section>
 
@@ -280,7 +326,7 @@
           <div class="mb-4">
             <h2 class="text-lg font-extrabold text-blue-950">Rincian Emisi</h2>
             <p class="mt-1 text-sm text-slate-500">
-              Perbandingan estimasi emisi berdasarkan sumber energi.
+              Perbandingan estimasi emisi berdasarkan kategori yang dicatat.
             </p>
           </div>
 
@@ -306,12 +352,11 @@
               <div class="mt-4 h-2 overflow-hidden rounded-full bg-slate-100">
                 <div id="barListrik" class="h-full rounded-full bg-amber-400" style="width:0%"></div>
               </div>
-
               <p id="persenListrik" class="mt-2 text-xs text-slate-500">0% dari total emisi</p>
-              <p class="mt-3 text-xs leading-5 text-slate-400">Dari konsumsi energi listrik rumah.</p>
+              <p class="mt-3 text-xs leading-5 text-slate-400">Estimasi dari konsumsi listrik rumah.</p>
             </article>
 
-            <!-- GAS RUMAH TANGGA -->
+            <!-- GAS -->
             <article class="stat-card rounded-2xl border border-indigo-100 bg-white p-5 shadow-sm">
               <div class="flex items-start justify-between gap-3">
                 <div>
@@ -331,20 +376,19 @@
               <div class="mt-4 h-2 overflow-hidden rounded-full bg-slate-100">
                 <div id="barGas" class="h-full rounded-full bg-orange-400" style="width:0%"></div>
               </div>
-
               <p id="persenGas" class="mt-2 text-xs text-slate-500">0% dari total emisi</p>
-              <p class="mt-3 text-xs leading-5 text-slate-400">Dari pemakaian LPG atau gas memasak.</p>
+              <p class="mt-3 text-xs leading-5 text-slate-400">Berdasarkan jumlah gas dan faktor emisinya.</p>
             </article>
 
-            <!-- ENERGI LAIN -->
+            <!-- SUMBER TAMBAHAN -->
             <article class="stat-card rounded-2xl border border-indigo-100 bg-white p-5 shadow-sm sm:col-span-2 xl:col-span-1">
               <div class="flex items-start justify-between gap-3">
                 <div>
-                  <p class="text-xs font-bold text-slate-500">Sumber energi</p>
-                  <h3 class="mt-2 text-lg font-extrabold text-blue-950">Energi lainnya</h3>
+                  <p class="text-xs font-bold text-slate-500">Kategori tambahan</p>
+                  <h3 class="mt-2 text-lg font-extrabold text-blue-950">Emisi lainnya</h3>
                 </div>
                 <div class="stat-icon bg-violet-100 text-violet-600">
-                  <i class="fa-solid fa-solar-panel text-xl"></i>
+                  <i class="fa-solid fa-cloud text-xl"></i>
                 </div>
               </div>
 
@@ -356,15 +400,78 @@
               <div class="mt-4 h-2 overflow-hidden rounded-full bg-slate-100">
                 <div id="barLainnya" class="h-full rounded-full bg-violet-400" style="width:0%"></div>
               </div>
-
               <p id="persenLainnya" class="mt-2 text-xs text-slate-500">0% dari total emisi</p>
-              <p class="mt-3 text-xs leading-5 text-slate-400">Untuk sumber energi tambahan yang dicatat.</p>
+              <p class="mt-3 text-xs leading-5 text-slate-400">Masukkan hasil emisi tambahan pada kalkulator.</p>
             </article>
-
           </div>
         </section>
 
-        <!-- CARA PERHITUNGAN -->
+        <!-- KALKULATOR DALAM HALAMAN YANG SAMA -->
+        <section id="kalkulatorKarbon" class="rounded-2xl border border-indigo-100 bg-white p-5 shadow-sm sm:p-6">
+          <div class="mb-5">
+            <p class="text-xs font-bold uppercase tracking-widest text-emerald-700">Kalkulator</p>
+            <h2 class="mt-2 text-lg font-extrabold text-blue-950">Hitung Jejak Karbon</h2>
+            <p class="mt-1 text-sm leading-6 text-slate-500">
+              Perbarui input gas dan emisi tambahan. Estimasi listrik dibaca dari data perangkat atau tagihan yang tersimpan.
+            </p>
+          </div>
+
+          <form id="formKalkulatorKarbon" class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <label class="block text-sm font-semibold text-slate-700">
+              Konsumsi gas per bulan
+              <input id="inputGasKarbon" name="gas" type="number" min="0" step="0.1" value="0"
+                class="mt-2 block w-full rounded-xl border border-slate-200 p-3 font-normal outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100">
+              <span class="mt-1 block text-xs font-normal text-slate-400">
+                Satuan input mengikuti rumus gas yang digunakan aplikasi.
+              </span>
+            </label>
+
+            <label class="block text-sm font-semibold text-slate-700">
+              Emisi sumber tambahan (kg CO₂/bulan)
+              <input id="inputLainnyaKarbon" name="lainnya" type="number" min="0" step="0.01" value="0"
+                class="mt-2 block w-full rounded-xl border border-slate-200 p-3 font-normal outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100">
+              <span class="mt-1 block text-xs font-normal text-slate-400">
+                Masukkan emisi yang sudah dihitung dengan faktor emisi yang sesuai.
+              </span>
+            </label>
+
+            <div class="rounded-xl bg-slate-50 p-4 sm:col-span-2">
+              <p class="text-xs font-bold uppercase tracking-wide text-slate-500">Hasil estimasi per bulan</p>
+
+              <div class="mt-3 grid grid-cols-1 gap-4 sm:grid-cols-3">
+                <div>
+                  <p class="text-xs text-slate-500">Listrik</p>
+                  <p id="hasilListrikKalkulator" class="mt-1 text-xl font-extrabold text-blue-950">0 kg</p>
+                </div>
+                <div>
+                  <p class="text-xs text-slate-500">Gas rumah tangga</p>
+                  <p id="hasilGasKalkulator" class="mt-1 text-xl font-extrabold text-blue-950">0 kg</p>
+                </div>
+                <div>
+                  <p class="text-xs text-slate-500">Emisi lainnya</p>
+                  <p id="hasilLainnyaKalkulator" class="mt-1 text-xl font-extrabold text-blue-950">0 kg</p>
+                </div>
+              </div>
+
+              <div class="mt-4 border-t border-slate-200 pt-4">
+                <p class="text-sm font-semibold text-slate-600">Total estimasi emisi</p>
+                <p id="hasilTotalKalkulator" class="mt-1 text-3xl font-extrabold text-emerald-700">0 kg CO₂</p>
+              </div>
+
+              <p id="statusKalkulatorKarbon" class="mt-3 text-xs leading-5 text-slate-500" aria-live="polite">
+                Menghitung berdasarkan data yang tersedia.
+              </p>
+            </div>
+
+            <button type="submit"
+              class="rounded-xl bg-emerald-600 px-5 py-3 font-bold text-white transition hover:bg-emerald-700 sm:col-span-2">
+              <i class="fa-solid fa-calculator mr-2"></i>
+              Hitung dan simpan
+            </button>
+          </form>
+        </section>
+
+        <!-- TENTANG PERHITUNGAN -->
         <section class="rounded-2xl border border-indigo-100 bg-white p-5 shadow-sm sm:p-6">
           <div class="flex items-start gap-4">
             <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-indigo-50 text-indigo-600">
@@ -374,10 +481,13 @@
             <div>
               <h2 class="font-extrabold text-blue-950">Tentang perhitungan</h2>
               <p class="mt-2 text-sm leading-6 text-slate-500">
-                Emisi listrik dihitung dari konsumsi listrik dan faktor emisi jaringan. Emisi gas dihitung dari jumlah gas yang digunakan dan faktor emisi bahan bakarnya. Sumber energi tambahan memerlukan data konsumsi dan faktor emisi yang sesuai.
+                Estimasi listrik menggunakan konsumsi kWh dikalikan faktor emisi jaringan.
+                Input gas memakai faktor yang ditetapkan dalam rumus aplikasi. Sumber tambahan
+                dimasukkan sebagai nilai emisi kg CO₂ yang telah dihitung sebelumnya.
               </p>
               <p class="mt-3 text-xs leading-5 text-slate-400">
-                Nilai emisi hanya dapat dianggap sebagai estimasi jika data konsumsi dan faktor emisinya tersedia. Data yang belum dicatat tidak boleh dianggap sebagai emisi nol yang terukur.
+                Hasil bergantung pada kelengkapan data dan faktor emisi yang digunakan.
+                Nilai nol ketika data belum tersedia bukan bukti bahwa emisi aktual benar-benar nol.
               </p>
             </div>
           </div>
@@ -392,7 +502,7 @@
           <div class="flex-1">
             <h2 class="font-extrabold text-blue-950">Mulai dari kebiasaan kecil</h2>
             <p class="mt-1 text-sm leading-6 text-slate-600">
-              Catat konsumsi energi secara rutin agar kamu bisa mengetahui sumber emisi utama dan mencari peluang penghematan.
+              Catat konsumsi energi secara rutin untuk mengetahui sumber emisi utama dan mencari peluang penghematan.
             </p>
           </div>
 
@@ -406,7 +516,6 @@
         <footer class="pb-3 text-center text-xs text-slate-400">
           PijarBumi · Pantau energi, bangun kebiasaan yang lebih bijak.
         </footer>
-
       </div>
     </div>
 
@@ -442,99 +551,210 @@
           <span class="text-[10px] font-semibold">Perangkat</span>
         </a>
 
-        <a href="jejak_karbon.html" class="flex flex-col items-center gap-1 px-2 py-1 text-indigo-700">
-          <span class="flex h-8 w-12 items-center justify-center rounded-full bg-indigo-100">
-            <svg xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24" width="20" height="20"
-              fill="none" stroke="currentColor" stroke-width="1.8"
-              stroke-linecap="round" stroke-linejoin="round"
-              aria-hidden="true">
-              <path d="M20 4c-8 0-14 3-14 10a6 6 0 0 0 6 6c7 0 10-6 8-16Z"/>
-              <path d="M4 21c3-5 7-8 12-11"/>
-            </svg>
+        <a href="jejak_karbon.html" aria-current="page"
+          class="flex flex-col items-center gap-1 px-2 py-1 text-emerald-700">
+          <span class="flex h-8 w-12 items-center justify-center rounded-full bg-emerald-100">
+            <i class="fa-solid fa-leaf text-lg"></i>
           </span>
           <span class="text-[10px] font-extrabold">Karbon</span>
         </a>
-
       </div>
     </nav>
 
   </main>
 </div>
 
+<!-- APP UTAMA -->
 <script src="js/app.js"></script>
 
+<!-- LOGIKA HALAMAN JEJAK KARBON -->
 <script>
 (function () {
+  'use strict';
+
+  const KEY = 'pijarBumiDataV1';
+  const $ = id => document.getElementById(id);
+
   const angka = new Intl.NumberFormat('id-ID', {
     maximumFractionDigits: 2
   });
 
-  /*
-    Nilai awal nol karena data aktual belum dihubungkan di halaman ini.
-    Semua nilai berikut harus berupa estimasi emisi dalam kg CO₂,
-    bukan jumlah konsumsi dalam kWh atau kg bahan bakar.
-  */
-  const emisiAwal = {
-    listrik: 0,
-    gas: 0,
-    lainnya: 0
-  };
+  const format = value => angka.format(
+    Number.isFinite(Number(value)) ? Number(value) : 0
+  );
 
-  function formatAngka(nilai) {
-    return angka.format(nilai);
+  function bacaData() {
+    try {
+      const data = JSON.parse(localStorage.getItem(KEY) || '{}');
+
+      return {
+        ...data,
+        profile: data.profile || {},
+        house: data.house || {},
+        devices: Array.isArray(data.devices) ? data.devices : [],
+        bills: Array.isArray(data.bills) ? data.bills : [],
+        otherCarbon: data.otherCarbon || {}
+      };
+    } catch (error) {
+      console.error('Gagal membaca data PijarBumi:', error);
+
+      return {
+        profile: {},
+        house: {},
+        devices: [],
+        bills: [],
+        otherCarbon: {}
+      };
+    }
   }
 
-  function renderJejakKarbon(data) {
-    const listrik = Math.max(0, Number(data.listrik) || 0);
-    const gas = Math.max(0, Number(data.gas) || 0);
-    const lainnya = Math.max(0, Number(data.lainnya) || 0);
-    const total = listrik + gas + lainnya;
+  function hitung(data) {
+    const perangkatKwh = data.devices.reduce((total, perangkat) => {
+      const watt = Math.max(0, Number(perangkat.watt) || 0);
+      const jumlah = Math.max(0, Number(perangkat.qty) || 0);
+      const jam = Math.max(0, Number(perangkat.hours) || 0);
+      const hari = Math.max(0, Number(perangkat.days) || 0);
 
-    document.getElementById('totalEmisi').textContent = formatAngka(total);
-    document.getElementById('emisiListrik').textContent = formatAngka(listrik);
-    document.getElementById('emisiGas').textContent = formatAngka(gas);
-    document.getElementById('emisiLainnya').textContent = formatAngka(lainnya);
+      return total + watt * jumlah * jam * hari / 1000;
+    }, 0);
+
+    const tagihan = data.bills[0] || {};
+
+    const kwh = tagihan.manual
+      ? Math.max(0, Number(tagihan.kwh) || 0)
+      : perangkatKwh > 0
+        ? perangkatKwh
+        : Math.max(0, Number(tagihan.kwh) || 0);
+
+    const listrik = kwh * 0.87;
+    const gasInput = Math.max(0, Number(data.otherCarbon.gas) || 0);
+    const gas = gasInput * 2;
+    const lainnya = Math.max(
+      0,
+      Number(data.otherCarbon.otherEnergy) || 0
+    );
+
+    return {
+      kwh,
+      listrik,
+      gas,
+      lainnya,
+      gasInput,
+      total: listrik + gas + lainnya
+    };
+  }
+
+  function tampilkan(data) {
+    const hasil = hitung(data);
+    const total = hasil.total;
+
+    $('totalEmisi').textContent = format(total);
+    $('emisiListrik').textContent = format(hasil.listrik);
+    $('emisiGas').textContent = format(hasil.gas);
+    $('emisiLainnya').textContent = format(hasil.lainnya);
 
     const kategori = [
-      { id: 'Listrik', nilai: listrik },
-      { id: 'Gas', nilai: gas },
-      { id: 'Lainnya', nilai: lainnya }
+      { nama: 'Listrik', nilai: hasil.listrik },
+      { nama: 'Gas', nilai: hasil.gas },
+      { nama: 'Lainnya', nilai: hasil.lainnya }
     ];
 
     kategori.forEach(item => {
-      const persen = total > 0 ? item.nilai / total * 100 : 0;
+      const persen = total > 0
+        ? item.nilai / total * 100
+        : 0;
 
-      document.getElementById('bar' + item.id).style.width = persen + '%';
-      document.getElementById('persen' + item.id).textContent =
-        formatAngka(persen) + '% dari total emisi';
+      $('bar' + item.nama).style.width = persen + '%';
+      $('persen' + item.nama).textContent =
+        format(persen) + '% dari total emisi';
     });
 
-    const periode = document.getElementById('periodeEmisi');
+    $('hasilListrikKalkulator').textContent =
+      format(hasil.listrik) + ' kg';
 
-    periode.textContent = total > 0
-      ? 'Total estimasi dari kategori energi yang tersedia.'
-      : 'Belum ada data emisi energi yang dihitung.';
-  }
+    $('hasilGasKalkulator').textContent =
+      format(hasil.gas) + ' kg';
 
-  /*
-    Jika app.js nantinya menyediakan emisi rumah yang sudah dihitung,
-    data tersebut dapat diteruskan ke renderJejakKarbon().
-    Jangan memasukkan kWh langsung sebagai kg CO₂.
-  */
-  renderJejakKarbon(emisiAwal);
+    $('hasilLainnyaKalkulator').textContent =
+      format(hasil.lainnya) + ' kg';
 
-  // Nama pengguna, jika disimpan oleh aplikasi.
-  try {
-    const nama = localStorage.getItem('namaPengguna');
+    $('hasilTotalKalkulator').textContent =
+      format(total) + ' kg CO₂';
+
+    $('inputGasKarbon').value = hasil.gasInput;
+    $('inputLainnyaKarbon').value = hasil.lainnya;
+
+    $('periodeEmisi').textContent = hasil.kwh > 0
+      ? 'Estimasi berdasarkan konsumsi listrik yang tercatat.'
+      : 'Data konsumsi listrik belum tersedia atau belum tercatat.';
+
+    $('statusKalkulatorKarbon').textContent = hasil.kwh > 0
+      ? 'Estimasi listrik menggunakan ' + format(hasil.kwh) +
+        ' kWh dengan faktor 0,87 kg CO₂/kWh. Faktor gas mengikuti rumus aplikasi.'
+      : 'Belum ada data listrik yang dapat dihitung. Tambahkan data perangkat atau tagihan untuk memperoleh estimasi listrik.';
+
+    let nama = '';
+
+    try {
+      nama = localStorage.getItem('namaPengguna') || '';
+    } catch (error) {
+      console.warn('Nama pengguna tidak dapat dibaca.', error);
+    }
+
+    nama = nama || data.profile.name || '';
 
     if (nama) {
-      document.getElementById('namaUser').textContent = nama;
-      document.getElementById('inisialUser').textContent =
+      $('namaUser').textContent = nama;
+      $('inisialUser').textContent =
         nama.trim().charAt(0).toUpperCase() || 'W';
     }
-  } catch (error) {
-    console.warn('Nama pengguna tidak dapat dibaca.', error);
+  }
+
+  function init() {
+    const data = bacaData();
+    tampilkan(data);
+
+    $('formKalkulatorKarbon').addEventListener('submit', function (event) {
+      event.preventDefault();
+
+      const gas = Math.max(
+        0,
+        Number($('inputGasKarbon').value) || 0
+      );
+
+      const lainnya = Math.max(
+        0,
+        Number($('inputLainnyaKarbon').value) || 0
+      );
+
+      try {
+        const terbaru = bacaData();
+
+        terbaru.otherCarbon = {
+          ...terbaru.otherCarbon,
+          gas: gas,
+          otherEnergy: lainnya
+        };
+
+        localStorage.setItem(KEY, JSON.stringify(terbaru));
+
+        tampilkan(terbaru);
+
+        $('statusKalkulatorKarbon').textContent =
+          'Data kalkulator berhasil disimpan di browser ini.';
+      } catch (error) {
+        console.error('Gagal menyimpan kalkulator:', error);
+
+        $('statusKalkulatorKarbon').textContent =
+          'Data gagal disimpan. Periksa pengaturan penyimpanan browser.';
+      }
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
   }
 })();
 </script>
