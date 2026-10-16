@@ -27,6 +27,7 @@
         body {
             margin: 0;
             font-family: 'DM Sans', sans-serif;
+            font-size: 16px;
             color: var(--text);
             background: var(--bg);
         }
@@ -44,8 +45,8 @@
             position: fixed;
             inset: 0 auto 0 0;
             z-index: 20;
-            width: 250px;
-            padding: 28px 18px;
+            width: 240px;
+            padding: 0 16px;
             display: flex;
             flex-direction: column;
             background: #fff;
@@ -55,84 +56,132 @@
         .brand {
             display: flex;
             align-items: center;
-            gap: 11px;
-            padding: 0 12px;
-            margin-bottom: 38px;
+            gap: 12px;
+            padding: 28px 8px;
         }
 
         .brand-icon {
-            width: 42px;
-            height: 42px;
-            display: grid;
-            place-items: center;
-            color: #fff;
-            border-radius: 14px;
-            background: linear-gradient(140deg, #5b5ce2, #8585f7);
-            font-size: 19px;
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            overflow: hidden;
+            border-radius: 16px;
         }
 
-        .brand-name { font-size: 21px; font-weight: 800; letter-spacing: -.7px; }
-        .brand-name span { color: var(--primary); }
+        .brand-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .brand-copy { min-width: 0; }
+        .brand-name { display: block; color: #172554; font-size: 20px; font-weight: 800; letter-spacing: -.5px; }
+        .brand-tagline { display: block; margin-top: 2px; color: #94a3b8; font-size: 11px; font-weight: 500; }
 
         .nav-label {
             padding: 0 13px;
             margin: 0 0 12px;
-            color: #a4a6b7;
+            color: #94a3b8;
             font-size: 10px;
             font-weight: 800;
-            letter-spacing: 1.5px;
+            letter-spacing: .17em;
         }
 
-        .nav-list { display: grid; gap: 7px; }
+        .nav-list { display: grid; gap: 8px; }
 
         .nav-link {
             display: flex;
             align-items: center;
             gap: 13px;
-            padding: 13px 14px;
-            border-radius: 12px;
-            color: #777b91;
-            font-size: 13px;
+            padding: 12px 14px;
+            border-radius: 13px;
+            color: #52618b;
+            font-size: 16px;
             font-weight: 600;
             transition: .2s;
         }
 
-        .nav-link i { width: 19px; text-align: center; font-size: 16px; }
+        .nav-link i { width: 20px; text-align: center; font-size: 16px; }
 
         .nav-link:hover, .nav-link.active {
-            color: var(--primary);
-            background: var(--primary-light);
+            color: white;
+            background: #5b5ce2;
+            box-shadow: 0 7px 18px #5b5ce226;
         }
 
-        .sidebar-bottom { margin-top: auto; }
+        .sidebar-promo {
+            margin-top: auto;
+            margin-bottom: 16px;
+            padding: 16px;
+            border: 1px solid #d1fae5;
+            border-radius: 16px;
+            background: linear-gradient(135deg, #ecfdf5, #f0fdfa);
+        }
 
-        .profile {
+        .sidebar-promo-icon {
+            margin-bottom: 12px;
+            color: #059669;
+            font-size: 24px;
+        }
+
+        .sidebar-promo-title {
+            color: #064e3b;
+            font-size: 14px;
+            font-weight: 700;
+            line-height: 1.4;
+        }
+
+        .sidebar-promo-copy {
+            margin-top: 4px;
+            color: #065f46;
+            font-size: 12px;
+            line-height: 1.65;
+        }
+
+        .logout-button {
             display: flex;
             align-items: center;
-            gap: 11px;
-            padding: 17px 8px 0;
-            border-top: 1px solid var(--border);
+            gap: 12px;
+            margin-bottom: 20px;
+            padding: 12px 16px;
+            border: 0;
+            border-radius: 12px;
+            background: #fff1f2;
+            color: #e11d48;
+            font-size: 14px;
+            font-weight: 700;
+            transition: .2s;
+        }
+
+        .logout-button:hover { background: #ffe4e6; }
+
+        .top-profile {
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .avatar {
-            width: 38px;
-            height: 38px;
+            width: 40px;
+            height: 40px;
             display: grid;
             place-items: center;
             flex-shrink: 0;
             border-radius: 50%;
-            color: var(--primary);
-            background: var(--primary-light);
+            color: #4338ca;
+            background: #e0e7ff;
             font-weight: 800;
         }
 
-        .profile-name { font-size: 12px; font-weight: 800; }
-        .profile-role { margin-top: 3px; color: var(--muted); font-size: 10px; }
+        .top-profile-name { display: none; color: #172554; font-size: 14px; font-weight: 700; }
 
         /* Main content */
         .main {
             min-height: 100vh;
-            margin-left: 250px;
+            margin-left: 240px;
             padding: 30px 36px 50px;
         }
 
@@ -287,9 +336,27 @@
         .filter-select { width: auto; min-width: 130px; }
         .field:focus, .filter-select:focus { border-color: var(--primary); }
 
-        .table-wrap { width: 100%; overflow-x: auto; }
+        .table-wrap {
+            width: 100%;
+            overflow-x: auto;
+            overscroll-behavior-x: contain;
+            -webkit-overflow-scrolling: touch;
+        }
 
-        table { width: 100%; border-collapse: collapse; text-align: left; }
+        table {
+            width: 100%;
+            min-width: 680px;
+            table-layout: fixed;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        th:nth-child(1), td:nth-child(1) { width: 28%; }
+        th:nth-child(2), td:nth-child(2) { width: 16%; }
+        th:nth-child(3), td:nth-child(3) { width: 22%; }
+        th:nth-child(4), td:nth-child(4) { width: 20%; }
+        th:nth-child(5), td:nth-child(5) { width: 14%; }
+
         th {
             padding: 12px 13px;
             color: #999caf;
@@ -309,7 +376,19 @@
 
         tbody tr:last-child td { border-bottom: 0; }
         .bill-month { font-weight: 800; }
+        .sample-badge {
+            display: inline-block;
+            margin-left: 6px;
+            padding: 2px 7px;
+            border-radius: 999px;
+            background: #f1f5f9;
+            color: #64748b;
+            font-size: 9px;
+            font-weight: 700;
+            vertical-align: middle;
+        }
         .bill-date { margin-top: 4px; color: var(--muted); font-size: 10px; }
+        td:nth-child(2), td:nth-child(3), td:nth-child(4), td:nth-child(5) { white-space: nowrap; }
 
         .bill-amount { font-weight: 800; white-space: nowrap; }
 
@@ -390,13 +469,17 @@
 
         .mobile-nav { display: none; }
 
+        @media (min-width: 640px) {
+            .top-profile-name { display: block; }
+        }
+
         @media (max-width: 1100px) {
             .main { padding: 25px 24px 40px; }
             .stats { gap: 12px; }
             .stat-card { padding: 17px; }
         }
 
-        @media (max-width: 800px) {
+        @media (max-width: 767px) {
             .sidebar { display: none; }
             .main { margin-left: 0; padding: 22px 18px 100px; }
             .topbar { margin-bottom: 25px; }
@@ -455,32 +538,33 @@
 
     <aside class="sidebar">
         <a href="dashboard.html" class="brand">
-    <div class="brand-icon">
-        <img src="./assets/logo.png"
-            alt="Logo PijarBumi">
-    </div>
-            <div class="brand-name">Pijar<span>Bumi</span></div>
+            <span class="brand-icon">
+                <img src="./assets/logo.png" alt="Logo PijarBumi">
+            </span>
+            <span class="brand-copy">
+                <span class="brand-name">PijarBumi</span>
+                <span class="brand-tagline">Hitung Energi, Jaga Bumi</span>
+            </span>
         </a>
 
-        <p class="nav-label">MENU UTAMA</p>
+        <p class="nav-label">Menu utama</p>
         <nav class="nav-list">
-            <a href="dashboard.html" class="nav-link"><i class="fa-solid fa-house"></i> Dashboard</a>
+            <a href="dashboard.html" class="nav-link"><i class="fa-solid fa-house"></i> Dasbor</a>
             <a href="analitik.html" class="nav-link"><i class="fa-solid fa-chart-line"></i> Analitik</a>
             <a href="ruangan.html" class="nav-link"><i class="fa-solid fa-door-open"></i> Ruangan</a>
-            <a href="alat.html" class="nav-link"><i class="fa-solid fa-plug"></i> Perangkat</a>
-            <a href="tagihan.html" class="nav-link active"><i class="fa-solid fa-file-invoice-dollar"></i> Tagihan</a>
+            <a href="alat.html" class="nav-link"><i class="fa-solid fa-plug"></i> Alat Energi</a>
             <a href="pengaturan.html" class="nav-link"><i class="fa-solid fa-gear"></i> Pengaturan</a>
         </nav>
 
-        <div class="sidebar-bottom">
-            <div class="profile">
-                <div class="avatar" id="avatarSidebar">W</div>
-                <div>
-                    <div class="profile-name" id="namaSidebar">Pengguna PijarBumi</div>
-                    <div class="profile-role">Pengelola Rumah</div>
-                </div>
-            </div>
+        <div class="sidebar-promo">
+            <div class="sidebar-promo-icon"><i class="fa-solid fa-seedling"></i></div>
+            <p class="sidebar-promo-title">Rumah hemat, bumi lebih sehat</p>
+            <p class="sidebar-promo-copy">Kebiasaan kecil bisa membawa perubahan.</p>
         </div>
+
+        <button class="logout-button" type="button" onclick="prosesLogout()">
+            <i class="fa-solid fa-right-from-bracket"></i> Keluar
+        </button>
     </aside>
 
     <main class="main">
@@ -490,7 +574,10 @@
                 <button class="icon-button" title="Pengaturan" onclick="location.href='pengaturan.html'">
                     <i class="fa-solid fa-gear"></i>
                 </button>
-                <div class="avatar" id="avatarTop">PB</div>
+                <div class="top-profile">
+                    <div class="avatar" id="avatarTop">W</div>
+                    <span class="top-profile-name" id="namaTop">Warga</span>
+                </div>
             </div>
         </div>
 
@@ -556,11 +643,11 @@
     </main>
 
     <nav class="mobile-nav">
-        <a href="dashboard.html"><i class="fa-solid fa-house"></i><span>Beranda</span></a>
+        <a href="dashboard.html"><i class="fa-solid fa-house"></i><span>Dasbor</span></a>
         <a href="analitik.html"><i class="fa-solid fa-chart-line"></i><span>Analitik</span></a>
         <a href="ruangan.html"><i class="fa-solid fa-door-open"></i><span>Ruangan</span></a>
-        <a href="alat.html"><i class="fa-solid fa-plug"></i><span>Perangkat</span></a>
-        <a href="tagihan.html" class="active"><i class="fa-solid fa-file-invoice-dollar"></i><span>Tagihan</span></a>
+        <a href="alat.html"><i class="fa-solid fa-plug"></i><span>Alat Energi</span></a>
+        <a href="pengaturan.html"><i class="fa-solid fa-gear"></i><span>Pengaturan</span></a>
     </nav>
 </div>
 
@@ -638,27 +725,145 @@
     </div>
 </div>
 
+<script src="js/app.js"></script>
 <script>
     const STORAGE_KEY = 'pijarBumiTagihanV1';
+    const ENERGY_STORAGE_KEY = 'pijarBumiDataV1';
     let daftarTagihan = muatTagihan();
 
     function muatTagihan() {
         try {
-            const data = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
-            return Array.isArray(data) ? data : [];
+            const tersimpan = localStorage.getItem(STORAGE_KEY);
+            if (tersimpan === null) {
+                const contoh = [
+                    {
+                        id: 'contoh-tagihan-okt-2026',
+                        nama: 'Tagihan listrik',
+                        bulan: 'Oktober',
+                        tahun: 2026,
+                        tanggal: '2026-10-10',
+                        kwh: 145,
+                        nominal: 209380,
+                        status: 'Belum dibayar'
+                    },
+                    {
+                        id: 'contoh-tagihan-sep-2026',
+                        nama: 'Tagihan listrik',
+                        bulan: 'September',
+                        tahun: 2026,
+                        tanggal: '2026-09-10',
+                        kwh: 160,
+                        nominal: 231040,
+                        status: 'Lunas'
+                    },
+                    {
+                        id: 'contoh-tagihan-agu-2026',
+                        nama: 'Tagihan listrik',
+                        bulan: 'Agustus',
+                        tahun: 2026,
+                        tanggal: '2026-08-10',
+                        kwh: 138,
+                        nominal: 199272,
+                        status: 'Lunas'
+                    }
+                ];
+
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(contoh));
+                return contoh;
+            }
+
+            const data = JSON.parse(tersimpan);
+            return Array.isArray(data)
+                ? data.map(item => (
+                    String(item.id).startsWith('contoh-tagihan-') &&
+                    item.nama === 'Contoh tagihan listrik'
+                        ? { ...item, nama: 'Tagihan listrik' }
+                        : item
+                ))
+                : [];
         } catch (error) {
             console.error('Gagal membaca data tagihan:', error);
             return [];
         }
     }
 
+    function buatDataEnergiTagihan(dataEnergi) {
+        const tagihanTerurut = [...daftarTagihan].sort((a, b) =>
+            (b.tanggal || '').localeCompare(a.tanggal || '')
+        );
+        let tagihanAktifDipilih = false;
+
+        dataEnergi.bills = tagihanTerurut.map(item => {
+            const adaPemakaian = item.kwh !== '' &&
+                item.kwh !== null &&
+                item.kwh !== undefined &&
+                Number.isFinite(Number(item.kwh));
+            const manual = adaPemakaian && !tagihanAktifDipilih;
+            if (manual) tagihanAktifDipilih = true;
+
+            return {
+                id: item.id,
+                month: `${item.bulan} ${item.tahun}`,
+                kwh: adaPemakaian ? Number(item.kwh) : 0,
+                amount: Number(item.nominal) || 0,
+                date: item.tanggal || '',
+                manual
+            };
+        });
+
+        return dataEnergi;
+    }
+
     function simpanTagihan() {
+        const tagihanSebelumnya = localStorage.getItem(STORAGE_KEY);
+        const energiSebelumnya = localStorage.getItem(ENERGY_STORAGE_KEY);
+
         try {
             localStorage.setItem(STORAGE_KEY, JSON.stringify(daftarTagihan));
+            const dataEnergi = buatDataEnergiTagihan(
+                JSON.parse(energiSebelumnya || '{}')
+            );
+            dataEnergi.energySource = dataEnergi.bills.some(item => item.manual)
+                ? 'bill'
+                : 'devices';
+            localStorage.setItem(ENERGY_STORAGE_KEY, JSON.stringify(dataEnergi));
             return true;
         } catch (error) {
+            try {
+                if (tagihanSebelumnya === null) {
+                    localStorage.removeItem(STORAGE_KEY);
+                } else {
+                    localStorage.setItem(STORAGE_KEY, tagihanSebelumnya);
+                }
+                if (energiSebelumnya === null) {
+                    localStorage.removeItem(ENERGY_STORAGE_KEY);
+                } else {
+                    localStorage.setItem(ENERGY_STORAGE_KEY, energiSebelumnya);
+                }
+            } catch (restoreError) {
+                console.error('Gagal memulihkan data setelah sinkronisasi tagihan.', restoreError);
+            }
+            console.error('Gagal menyimpan atau menyinkronkan data tagihan:', error);
             alert('Data gagal disimpan di browser. Periksa ruang penyimpanan browser.');
-            console.error(error);
+            return false;
+        }
+    }
+
+    function sinkronkanTagihanEnergi() {
+        try {
+            const dataEnergi = buatDataEnergiTagihan(
+                JSON.parse(localStorage.getItem(ENERGY_STORAGE_KEY) || '{}')
+            );
+            if (dataEnergi.energySource !== 'devices') {
+                dataEnergi.energySource = dataEnergi.bills.some(item => item.manual)
+                    ? 'bill'
+                    : 'devices';
+            }
+            localStorage.setItem(ENERGY_STORAGE_KEY, JSON.stringify(dataEnergi));
+            return true;
+        } catch (error) {
+            console.error('Gagal menyinkronkan tagihan ke ringkasan energi:', error);
+            alert('Tagihan tersimpan, tetapi belum dapat disinkronkan ke ringkasan energi.');
             return false;
         }
     }
@@ -686,15 +891,18 @@
 
     function bacaProfil() {
         try {
-            const data = JSON.parse(localStorage.getItem('pijarBumiSettingsV1') || '{}');
-            const nama = data.nama || data.namaPengguna || data.name || 'Pengguna PijarBumi';
-            const inisial = nama.split(/\s+/).filter(Boolean).slice(0, 2).map(kata => kata[0]).join('').toUpperCase() || 'PB';
+            const data = JSON.parse(localStorage.getItem('pijarBumiDataV1') || '{}');
+            const nama = String(
+                data.profile?.name ||
+                localStorage.getItem('namaPengguna') ||
+                'Warga'
+            );
 
-            document.getElementById('namaSidebar').textContent = nama;
-            document.getElementById('avatarSidebar').textContent = inisial;
-            document.getElementById('avatarTop').textContent = inisial;
+            document.getElementById('namaTop').textContent = nama;
+            document.getElementById('avatarTop').textContent =
+                nama.trim().charAt(0).toUpperCase() || 'W';
         } catch (error) {
-            console.warn('Profil belum tersedia.');
+            console.error('Gagal membaca profil pengguna:', error);
         }
     }
 
@@ -768,7 +976,10 @@
                         ${hasil.map(item => `
                             <tr>
                                 <td>
-                                    <div class="bill-month">${aman(item.nama)}</div>
+                                    <div class="bill-month">
+                                        ${aman(item.nama)}
+                                        ${String(item.id).startsWith('contoh-tagihan-') ? '<span class="sample-badge">Data contoh</span>' : ''}
+                                    </div>
                                     <div class="bill-date">${aman(item.bulan)} ${aman(item.tahun)} · ${aman(item.tanggal || '-')}</div>
                                 </td>
                                 <td>${item.kwh !== '' && item.kwh != null ? aman(item.kwh) + ' kWh' : '—'}</td>
@@ -911,9 +1122,8 @@
     });
 
     bacaProfil();
+    sinkronkanTagihanEnergi();
     renderTagihan();
 </script>
-
-<script src="js/app.js"></script>
 </body>
 </html>

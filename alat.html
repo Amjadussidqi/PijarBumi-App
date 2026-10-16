@@ -17,6 +17,7 @@
 
     body {
       font-family: 'DM Sans', ui-sans-serif, system-ui, sans-serif;
+      font-size: 16px;
       background: #f7f8fc;
       color: #172554;
     }
@@ -28,6 +29,7 @@
       padding: 12px 14px;
       border-radius: 13px;
       color: #52618b;
+      font-size: 16px;
       font-weight: 600;
       transition: .2s;
     }
@@ -98,14 +100,13 @@
         <img
           src="./assets/logo.png"
           alt="Logo PijarBumi"
-          class="brand-logo"
+          class="h-full w-full object-contain"
         >
       </span>
 
       <span>
         <b class="block text-xl font-extrabold tracking-tight text-blue-950">PijarBumi</b>
         <span class="block text-[11px] font-medium text-slate-400">Hitung Energi, Jaga Bumi</span>
-      </span>
       </span>
     </a>
 
@@ -175,9 +176,7 @@
       </div>
 
       <div class="flex items-center gap-2">
-        <span class="flex h-10 w-10 items-center justify-center rounded-full bg-indigo-100 font-bold text-indigo-700">
-          <i class="fa-regular fa-user"></i>
-        </span>
+        <span id="avatarHeader" class="flex h-10 w-10 items-center justify-center rounded-full bg-indigo-100 font-bold text-indigo-700">W</span>
         <span id="namaHeader" class="hidden text-sm font-bold text-blue-950 sm:block">
           Warga
         </span>
@@ -365,7 +364,7 @@
         <span class="flex h-8 w-12 items-center justify-center rounded-full bg-indigo-100">
           <i class="fa-solid fa-plug text-lg"></i>
         </span>
-        <span class="text-[10px] font-extrabold">Alat</span>
+        <span class="text-[10px] font-extrabold">Alat Energi</span>
       </a>
 
       <a href="pengaturan.html" class="flex flex-col items-center gap-1 py-1 text-slate-500">
@@ -459,10 +458,14 @@
       0
     );
 
-    $('namaHeader').textContent =
+    const profileName = String(
       data.profile?.name ||
       localStorage.getItem('namaPengguna') ||
-      'Warga';
+      'Warga'
+    ).trim() || 'Warga';
+    $('namaHeader').textContent = profileName;
+    $('avatarHeader').textContent =
+      Array.from(profileName)[0]?.toLocaleUpperCase('id-ID') || 'W';
 
     $('totalPerangkat').textContent = devices.length;
     $('totalKwh').textContent = fmt(total) + ' kWh';
@@ -532,7 +535,10 @@
                   </span>
 
                   <div class="min-w-0 flex-1">
-                    <p class="truncate text-sm font-bold text-blue-950">${esc(d.name)}</p>
+                    <div class="flex flex-wrap items-center gap-2">
+                      <p class="truncate text-sm font-bold text-blue-950">${esc(d.name)}</p>
+                      ${d.demo ? '<span class="rounded-full bg-slate-100 px-2 py-0.5 text-[9px] font-bold text-slate-500">Contoh</span>' : ''}
+                    </div>
                     <p class="mt-1 text-xs text-slate-500">
                       ${fmt(d.watt, 0)} W · ${fmt(d.qty, 0)} unit · ${fmt(d.hours)} jam/hari
                     </p>
@@ -570,9 +576,10 @@
 
         d.devices = d.devices.filter(x => String(x.id) !== id);
 
-        if (d.bills?.[0]) {
-          d.bills[0].manual = false;
-        }
+        d.bills?.forEach(bill => {
+          bill.manual = false;
+        });
+        d.energySource = 'devices';
 
         localStorage.setItem(KEY, JSON.stringify(d));
         render();
@@ -622,9 +629,10 @@
       days
     });
 
-    if (d.bills?.[0]) {
-      d.bills[0].manual = false;
-    }
+    d.bills?.forEach(bill => {
+      bill.manual = false;
+    });
+    d.energySource = 'devices';
 
     localStorage.setItem(KEY, JSON.stringify(d));
 

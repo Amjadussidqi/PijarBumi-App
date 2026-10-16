@@ -15,6 +15,7 @@
 
     body {
       font-family: 'DM Sans', ui-sans-serif, system-ui, sans-serif;
+      font-size: 16px;
       background: #f7f8fc;
       color: #172554;
     }
@@ -26,6 +27,7 @@
       padding: 12px 14px;
       border-radius: 13px;
       color: #52618b;
+      font-size: 16px;
       font-weight: 600;
       transition: .2s;
     }
@@ -177,7 +179,7 @@
     <a href="dashboard.html" class="flex items-center gap-3 px-2 py-7">
       <span class="flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-2xl">
         <img
-          src="./assets/logo.PNG"
+          src="./assets/logo.png"
           alt="Logo PijarBumi"
           class="h-full w-full object-contain"
         >
@@ -185,7 +187,6 @@
       <span>
         <b class="block text-xl font-extrabold tracking-tight text-blue-950">PijarBumi</b>
         <span class="block text-[11px] font-medium text-slate-400">Hitung Energi, Jaga Bumi</span>
-      </span>
       </span>
     </a>
 
@@ -243,8 +244,8 @@
           <i class="fa-solid fa-house text-lg"></i>
         </a>
         <div class="flex items-center gap-2">
-          <span id="avatarHeader" class="flex h-10 w-10 items-center justify-center rounded-full bg-indigo-100 font-bold text-indigo-700">W</span>
-          <span id="namaHeader" class="hidden text-sm font-bold text-blue-950 sm:block">Warga</span>
+          <span id="avatarHeaderPengaturan" class="flex h-10 w-10 items-center justify-center rounded-full bg-indigo-100 font-bold text-indigo-700">W</span>
+          <span id="namaHeaderPengaturan" class="hidden text-sm font-bold text-blue-950 sm:block">Warga</span>
         </div>
       </div>
     </header>
@@ -344,17 +345,6 @@
           </div>
 
           <div class="setting-row">
-            <span class="setting-icon bg-amber-50 text-amber-600">
-              <i class="fa-regular fa-bell text-lg"></i>
-            </span>
-            <div class="min-w-0 flex-1">
-              <p class="text-sm font-bold text-slate-800">Notifikasi</p>
-              <p class="mt-1 text-xs leading-5 text-slate-500">Simpan preferensi untuk pemberitahuan aplikasi.</p>
-            </div>
-            <input id="notifikasiToggle" type="checkbox" class="toggle" checked aria-label="Aktifkan preferensi notifikasi">
-          </div>
-
-          <div class="setting-row">
             <span class="setting-icon bg-blue-50 text-blue-600">
               <i class="fa-solid fa-chart-line text-lg"></i>
             </span>
@@ -391,18 +381,6 @@
             </button>
           </div>
 
-          <div class="setting-row">
-            <span class="setting-icon bg-violet-50 text-violet-600">
-              <i class="fa-solid fa-database text-lg"></i>
-            </span>
-            <div class="min-w-0 flex-1">
-              <p class="text-sm font-bold text-slate-800">Data aplikasi</p>
-              <p class="mt-1 text-xs leading-5 text-slate-500">Data rumah dan perangkat dapat tersimpan di penyimpanan browser.</p>
-            </div>
-            <button onclick="bukaModal('modalData')" class="setting-action btn-light">
-              Kelola <i class="fa-solid fa-chevron-right"></i>
-            </button>
-          </div>
         </section>
 
         <!-- BANTUAN -->
@@ -453,14 +431,11 @@
             <div class="min-w-0 flex-1">
               <h2 class="font-extrabold text-blue-950">Area akun</h2>
               <p class="mt-1 text-xs leading-5 text-slate-500">
-                Keluar dari aplikasi atau hapus data lokal PijarBumi dari browser ini.
+                Keluar dari aplikasi PijarBumi.
               </p>
               <div class="mt-4 flex flex-wrap gap-2">
                 <button onclick="prosesLogout()" class="setting-action bg-rose-50 text-rose-600 hover:bg-rose-100">
                   <i class="fa-solid fa-right-from-bracket"></i> Keluar
-                </button>
-                <button onclick="bukaModal('modalData')" class="setting-action border border-slate-200 bg-white text-slate-600 hover:bg-slate-50">
-                  <i class="fa-solid fa-database"></i> Kelola data
                 </button>
               </div>
             </div>
@@ -491,7 +466,7 @@
         </a>
         <a href="alat.html" class="flex flex-col items-center gap-1 px-2 py-1 text-slate-500">
           <span class="flex h-8 w-12 items-center justify-center"><i class="fa-solid fa-plug text-lg"></i></span>
-          <span class="text-[10px] font-semibold">Perangkat</span>
+          <span class="text-[10px] font-semibold">Alat Energi</span>
         </a>
         <a href="pengaturan.html" class="flex flex-col items-center gap-1 px-2 py-1 text-indigo-700">
           <span class="flex h-8 w-12 items-center justify-center rounded-full bg-indigo-100"><i class="fa-solid fa-gear"></i></span>
@@ -516,14 +491,14 @@
       </button>
     </div>
 
-    <form onsubmit="simpanProfil(event)" class="space-y-4">
+    <form id="profileForm" class="space-y-4">
       <div>
         <label for="inputNama" class="mb-2 block text-sm font-bold text-slate-700">Nama pengguna</label>
-        <input id="inputNama" class="form-input" maxlength="60" placeholder="Masukkan nama pengguna" required>
+        <input id="inputNama" name="name" class="form-input" maxlength="100" placeholder="Masukkan nama pengguna" required>
       </div>
       <div>
         <label for="inputEmail" class="mb-2 block text-sm font-bold text-slate-700">Email (opsional)</label>
-        <input id="inputEmail" type="email" class="form-input" maxlength="120" placeholder="nama@email.com">
+        <input id="inputEmail" name="email" type="email" class="form-input" maxlength="150" placeholder="nama@email.com">
       </div>
       <div class="flex justify-end gap-2 pt-2">
         <button type="button" onclick="tutupModal('modalProfil')" class="setting-action bg-slate-100 text-slate-600 hover:bg-slate-200">Batal</button>
@@ -546,33 +521,10 @@
       <i class="fa-solid fa-shield-halved text-xl text-indigo-600"></i>
       <p class="mt-3 text-sm font-bold text-blue-950">Autentikasi belum dikonfigurasi di halaman ini</p>
       <p class="mt-2 text-xs leading-5 text-slate-600">
-        Nama dan email pada halaman ini hanya disimpan sebagai preferensi lokal. Fitur ganti kata sandi membutuhkan sistem autentikasi yang benar-benar terhubung.
+        Pengelolaan keamanan akun membutuhkan sistem autentikasi yang terhubung.
       </p>
     </div>
     <button onclick="tutupModal('modalKeamanan')" class="setting-action btn-primary mt-5 w-full">Mengerti</button>
-  </div>
-</div>
-
-<!-- MODAL DATA -->
-<div id="modalData" class="modal-backdrop fixed inset-0 z-50 hidden items-center justify-center overflow-y-auto p-4">
-  <div class="my-auto w-full max-w-md rounded-2xl bg-white p-6 shadow-2xl">
-    <div class="mb-4 flex items-center justify-between">
-      <h2 class="text-lg font-extrabold text-blue-950">Kelola data lokal</h2>
-      <button onclick="tutupModal('modalData')" class="flex h-9 w-9 items-center justify-center rounded-xl text-slate-400 hover:bg-slate-100" aria-label="Tutup">
-        <i class="fa-solid fa-xmark"></i>
-      </button>
-    </div>
-    <p class="text-sm leading-6 text-slate-600">
-      Data rumah, perangkat, dan preferensi mungkin tersimpan di penyimpanan browser. Menghapusnya dapat menghilangkan data yang belum dicadangkan.
-    </p>
-    <div class="mt-5 rounded-xl border border-rose-100 bg-rose-50 p-4">
-      <p class="text-sm font-bold text-rose-700">Hapus seluruh data aplikasi?</p>
-      <p class="mt-1 text-xs leading-5 text-rose-600">Tindakan ini tidak dapat dibatalkan.</p>
-      <button onclick="hapusDataLokal()" class="setting-action mt-3 bg-rose-600 text-white hover:bg-rose-700">
-        <i class="fa-solid fa-trash"></i> Hapus data lokal
-      </button>
-    </div>
-    <button onclick="tutupModal('modalData')" class="setting-action btn-light mt-4 w-full">Tutup</button>
   </div>
 </div>
 
@@ -636,10 +588,7 @@
   const FEEDBACK_KEY = 'pijarBumiFeedbackV1';
 
   const defaults = {
-    nama: 'Warga',
-    email: '',
     bahasa: 'id',
-    notifikasi: true,
     ringkasan: true
   };
 
@@ -665,29 +614,11 @@
     }
   }
 
-  function inisial(nama) {
-    const bersih = String(nama || 'W').trim();
-    return bersih ? bersih.charAt(0).toUpperCase() : 'W';
-  }
-
-  function tampilkanProfil() {
-    const nama = settings.nama || 'Warga';
-    const email = settings.email || 'Belum ada email';
-
-    document.getElementById('namaHeader').textContent = nama;
-    document.getElementById('avatarHeader').textContent = inisial(nama);
-    document.getElementById('avatarProfil').textContent = inisial(nama);
-    document.getElementById('namaProfil').textContent = nama;
-    document.getElementById('emailProfil').textContent = email;
-    document.getElementById('ringkasNama').textContent = nama;
-    document.getElementById('ringkasBahasa').textContent =
-      settings.bahasa === 'en' ? 'English' : 'Bahasa Indonesia';
-  }
-
   function tampilkanPreferensi() {
     document.getElementById('bahasaSelect').value = settings.bahasa;
-    document.getElementById('notifikasiToggle').checked = !!settings.notifikasi;
     document.getElementById('ringkasanToggle').checked = !!settings.ringkasan;
+    document.getElementById('ringkasBahasa').textContent =
+      settings.bahasa === 'en' ? 'English' : 'Bahasa Indonesia';
   }
 
   window.bukaModal = function (id) {
@@ -721,34 +652,13 @@
     toastTimer = setTimeout(() => toast.classList.add('hidden'), 2800);
   };
 
-  window.simpanProfil = function (event) {
-    event.preventDefault();
-
-    const nama = document.getElementById('inputNama').value.trim();
-    const email = document.getElementById('inputEmail').value.trim();
-
-    if (!nama) {
-      tampilToast('Nama pengguna tidak boleh kosong.');
-      return;
-    }
-
-    settings.nama = nama;
-    settings.email = email;
-
-    if (simpanSettings()) {
-      tampilkanProfil();
-      tutupModal('modalProfil');
-      tampilToast('Profil berhasil disimpan.');
-    }
-  };
-
   window.simpanSemua = function () {
     settings.bahasa = document.getElementById('bahasaSelect').value;
-    settings.notifikasi = document.getElementById('notifikasiToggle').checked;
     settings.ringkasan = document.getElementById('ringkasanToggle').checked;
 
     if (simpanSettings()) {
-      tampilkanProfil();
+      document.getElementById('ringkasBahasa').textContent =
+        settings.bahasa === 'en' ? 'English' : 'Bahasa Indonesia';
       tampilToast('Pengaturan berhasil disimpan.');
     }
   };
@@ -784,31 +694,6 @@
     }
   };
 
-  window.hapusDataLokal = function () {
-    const yakin = confirm(
-      'Yakin ingin menghapus data aplikasi PijarBumi dari browser ini? Data yang dihapus mungkin tidak dapat dipulihkan.'
-    );
-
-    if (!yakin) return;
-
-    try {
-      // Hanya hapus kunci data aplikasi yang diketahui.
-      // Jangan hapus seluruh localStorage karena bisa berisi data aplikasi lain.
-      [
-        'pijarBumiDataV1',
-        SETTINGS_KEY,
-        FEEDBACK_KEY
-      ].forEach(key => localStorage.removeItem(key));
-
-      tutupModal('modalData');
-      tampilToast('Data lokal PijarBumi telah dihapus.');
-
-      setTimeout(() => location.reload(), 1000);
-    } catch (error) {
-      tampilToast('Data tidak dapat dihapus dari browser.');
-    }
-  };
-
   window.prosesLogout = function () {
     const yakin = confirm('Yakin ingin keluar dari PijarBumi?');
     if (!yakin) return;
@@ -826,15 +711,14 @@
 
   document.getElementById('bahasaSelect').addEventListener('change', function () {
     settings.bahasa = this.value;
-    tampilkanProfil();
-  });
-
-  document.getElementById('notifikasiToggle').addEventListener('change', function () {
-    settings.notifikasi = this.checked;
+    document.getElementById('ringkasBahasa').textContent =
+      settings.bahasa === 'en' ? 'English' : 'Bahasa Indonesia';
+    simpanSettings();
   });
 
   document.getElementById('ringkasanToggle').addEventListener('change', function () {
     settings.ringkasan = this.checked;
+    simpanSettings();
   });
 
   // Tutup modal ketika area gelap di luar kartu ditekan.
@@ -855,10 +739,6 @@
     }
   });
 
-  document.getElementById('inputNama').value = settings.nama;
-  document.getElementById('inputEmail').value = settings.email;
-
-  tampilkanProfil();
   tampilkanPreferensi();
 })();
 </script>

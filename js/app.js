@@ -10,6 +10,7 @@
   const STORAGE_KEY = 'pijarBumiDataV1';
   const ROOM_KEY = 'pijarBumiRuanganV1';
   const SETTINGS_KEY = 'pijarBumiSettingsV1';
+  const DAILY_HISTORY_KEY = 'pijarBumiDailyHistoryV1';
 
   const DEFAULT_DATA = {
     profile: {
@@ -24,8 +25,10 @@
       tahun: 2020,
       kamarTidur: 3,
       kamarMandi: 2,
-      tarif: 1444
+      tarif: 1444,
+      demo: true
     },
+    energySource: 'bill',
     devices: [
       {
         id: 1,
@@ -34,7 +37,8 @@
         watt: 10,
         qty: 4,
         hours: 6,
-        days: 30
+        days: 30,
+        demo: true
       },
       {
         id: 2,
@@ -43,7 +47,8 @@
         watt: 80,
         qty: 1,
         hours: 5,
-        days: 30
+        days: 30,
+        demo: true
       },
       {
         id: 3,
@@ -52,7 +57,8 @@
         watt: 120,
         qty: 1,
         hours: 24,
-        days: 30
+        days: 30,
+        demo: true
       }
     ],
     bills: [
@@ -60,17 +66,19 @@
         id: 1,
         month: 'Bulan ini',
         kwh: 145,
-        amount: 209481,
+        amount: 209380,
         date: '',
-        manual: false
+        manual: true,
+        demo: true
       },
       {
         id: 2,
         month: 'Bulan lalu',
         kwh: 160,
-        amount: 230000,
+        amount: 231040,
         date: '',
-        manual: false
+        manual: false,
+        demo: true
       }
     ],
     solar: {
@@ -82,13 +90,47 @@
       system: 'On-grid'
     },
     otherCarbon: {
-      gas: 0,
-      transport: 0
+      gas: 4.5,
+      transport: 0,
+      otherEnergy: 8.4
     },
     settings: {
       notifications: true
     }
   };
+
+  const DEFAULT_ROOMS = [
+    {
+      id: 'contoh-kamar-tidur',
+      nama: 'Kamar Tidur',
+      jenis: 'kamar',
+      luas: 12,
+      penghuni: 2,
+      cahaya: 'sedang',
+      ventilasi: 'sedang',
+      jamPakai: 12,
+      lampu: 'nonled',
+      ac: 'ya',
+      prioritas: 'tinggi',
+      catatan: '',
+      demo: true
+    },
+    {
+      id: 'contoh-ruang-keluarga',
+      nama: 'Ruang Keluarga',
+      jenis: 'keluarga',
+      luas: 20,
+      penghuni: 3,
+      cahaya: 'baik',
+      ventilasi: 'minim',
+      jamPakai: 14,
+      lampu: 'led',
+      ac: 'tidak',
+      prioritas: 'normal',
+      catatan: '',
+      demo: true
+    }
+  ];
 
   const $ = id => document.getElementById(id);
 
@@ -175,6 +217,18 @@
 
   let data = loadData();
 
+  function seedDemoData() {
+    try {
+      if (localStorage.getItem(STORAGE_KEY) !== null) return;
+      if (!saveData()) return;
+      if (localStorage.getItem(ROOM_KEY) === null) saveRooms(DEFAULT_ROOMS);
+    } catch (error) {
+      console.error('PijarBumi: gagal menyiapkan data contoh.', error);
+    }
+  }
+
+  seedDemoData();
+
   function saveData() {
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
@@ -240,23 +294,31 @@
       amount: 0,
       manual: false
     };
+    const manualBill = data.bills.find(bill => bill && bill.manual === true);
 
     // Tagihan manual menjadi sumber utama jika ditandai manual.
     // Jika tidak, total pemakaian berasal dari daftar perangkat.
-    const kwh = latestBill.manual
-      ? positive(latestBill.kwh)
+    const gunakanTagihan = data.energySource === 'bill' ||
+      (!data.energySource && manualBill);
+    const kwh = gunakanTagihan && manualBill
+      ? positive(manualBill.kwh)
       : data.devices.length > 0
         ? deviceKwh
-        : positive(latestBill.kwh);
+        : !data.energySource
+          ? positive(latestBill.kwh)
+          : 0;
 
     const tariff = positive(data.house.tarif) || 1444;
-    const cost = kwh * tariff;
+    const cost = gunakanTagihan && manualBill
+      ? positive(manualBill.amount)
+      : kwh * tariff;
     const daily = kwh / 30;
 
     // Faktor estimasi, bukan pengukuran emisi resmi.
     const electricityCarbon = kwh * 0.87;
     const gasCarbon = positive(data.otherCarbon.gas) * 2;
     const transportCarbon = positive(data.otherCarbon.transport) * 0.21;
+    const otherCarbon = positive(data.otherCarbon.otherEnergy);
 
     return {
       deviceKwh,
@@ -267,7 +329,8 @@
       electricityCarbon,
       gasCarbon,
       transportCarbon,
-      carbon: electricityCarbon + gasCarbon + transportCarbon
+      otherCarbon,
+      carbon: electricityCarbon + gasCarbon + transportCarbon + otherCarbon
     };
   }
 
@@ -307,7 +370,10 @@
         days: Math.min(31, positive(device.days || 30))
       });
 
-      if (data.bills[0]) data.bills[0].manual = false;
+      data.bills.forEach(bill => {
+        bill.manual = false;
+      });
+      data.energySource = 'devices';
 
       return saveData();
     },
@@ -322,6 +388,11 @@
       }
 
       Object.assign(device, changes);
+      delete device.demo;
+      data.bills.forEach(bill => {
+        bill.manual = false;
+      });
+      data.energySource = 'devices';
       return saveData();
     },
 
@@ -334,6 +405,10 @@
 
       if (before === data.devices.length) return false;
 
+      data.bills.forEach(bill => {
+        bill.manual = false;
+      });
+      data.energySource = 'devices';
       return saveData();
     },
 
@@ -372,10 +447,6 @@
     return false;
   }
 
-  function getPageMain() {
-    return document.querySelector('main');
-  }
-
   /* =========================================================
      DASHBOARD
      ========================================================= */
@@ -383,12 +454,12 @@
   function renderDashboard() {
     const result = calculateEnergy();
 
-    const name =
-      data.profile.name ||
-      localStorage.getItem('namaPengguna') ||
-      'Warga';
+    const name = getProfileName();
+    const initial = Array.from(name.trim())[0]?.toLocaleUpperCase('id-ID') || 'W';
 
     setText('sapaanUser', `Hai, ${name}!`);
+    setText('namaDashboard', name);
+    setText('avatarDashboard', initial);
 
     const houseInfo = $('areaInfoRumah');
 
@@ -403,6 +474,7 @@
               <h2 class="mt-1 text-xl font-black text-gray-800">
                 ${escapeHTML(data.house.nama)}
               </h2>
+              ${data.house.demo ? '<span class="mt-2 inline-flex rounded-full bg-slate-100 px-2.5 py-1 text-[10px] font-bold text-slate-500">Data contoh</span>' : ''}
               <p class="mt-1 text-sm text-gray-500">
                 <i class="fa-solid fa-location-dot mr-1"></i>
                 ${escapeHTML(data.house.alamat)}
@@ -425,23 +497,178 @@
 
     // Utamakan ID spesifik supaya ikon dan elemen lain tidak tertimpa.
     setFirstExisting(
-      ['#nilaiKwh', '#totalKwh', '[data-energy="kwh"]'],
+      ['#valTotalKwh', '#nilaiKwh', '#totalKwh', '[data-energy="kwh"]'],
       `${formatNumber(result.kwh)} kWh`
     );
 
     setFirstExisting(
-      ['#nilaiBiaya', '#totalBiaya', '[data-energy="cost"]'],
+      ['#valTotalBiaya', '#nilaiBiaya', '#totalBiaya', '[data-energy="cost"]'],
       formatMoney(result.cost)
     );
 
     setFirstExisting(
-      ['#nilaiHarian', '#pemakaianHarian', '[data-energy="daily"]'],
+      ['#valRataHarian', '#nilaiHarian', '#pemakaianHarian', '[data-energy="daily"]'],
       `${formatNumber(result.daily)} kWh`
     );
 
     setFirstExisting(
-      ['#nilaiKarbon', '#totalKarbon', '[data-energy="carbon"]'],
+      ['#valCo2', '#nilaiKarbon', '#totalKarbon', '[data-energy="carbon"]'],
       `${formatNumber(result.carbon)} kg CO₂`
+    );
+
+    renderDashboardChart();
+  }
+
+  function getProfileName() {
+    return String(
+      data.profile.name || localStorage.getItem('namaPengguna') || 'Warga'
+    ).trim() || 'Warga';
+  }
+
+  function localDateKey(date) {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  }
+
+  function saveDailyEnergySnapshot(dailyKwh) {
+    let history = readJSON(DAILY_HISTORY_KEY, []);
+    if (!Array.isArray(history)) history = [];
+
+    const today = new Date();
+    const todayKey = localDateKey(today);
+    const cutoff = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 89);
+    const cutoffKey = localDateKey(cutoff);
+    const snapshots = history.filter(item =>
+      item &&
+      /^\d{4}-\d{2}-\d{2}$/.test(item.date) &&
+      item.date >= cutoffKey &&
+      Number.isFinite(Number(item.kwh)) &&
+      Number(item.kwh) >= 0
+    );
+    const todaySnapshot = {
+      date: todayKey,
+      kwh: positive(dailyKwh)
+    };
+    const existingIndex = snapshots.findIndex(item => item.date === todayKey);
+
+    if (existingIndex >= 0) {
+      snapshots[existingIndex] = todaySnapshot;
+    } else {
+      snapshots.push(todaySnapshot);
+    }
+
+    snapshots.sort((a, b) => a.date.localeCompare(b.date));
+
+    let saved = true;
+    try {
+      localStorage.setItem(DAILY_HISTORY_KEY, JSON.stringify(snapshots));
+    } catch (error) {
+      saved = false;
+      console.error('PijarBumi: gagal menyimpan riwayat energi harian.', error);
+    }
+
+    return { history: snapshots, saved };
+  }
+
+  function renderDashboardChart() {
+    const chart = $('grafikDashboard');
+    if (!chart) return;
+
+    const { history, saved } = saveDailyEnergySnapshot(calculateEnergy().daily);
+    const today = new Date();
+    const days = Array.from({ length: 7 }, (_, index) => {
+      const date = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 6 + index);
+      const key = localDateKey(date);
+      const snapshot = history.find(item => item.date === key);
+
+      return {
+        date,
+        key,
+        kwh: snapshot ? Number(snapshot.kwh) : null,
+        label: new Intl.DateTimeFormat('id-ID', {
+          day: 'numeric',
+          month: 'short'
+        }).format(date)
+      };
+    });
+    const recorded = days.filter(day => day.kwh !== null);
+    const left = 20;
+    const right = 722;
+    const top = 24;
+    const bottom = 226;
+    const maximum = Math.max(1, ...recorded.map(day => day.kwh)) * 1.15;
+    const xFor = index => left + index * (right - left) / (days.length - 1);
+    const yFor = value => bottom - value / maximum * (bottom - top);
+    const segments = [];
+    let segment = [];
+
+    days.forEach((day, index) => {
+      if (day.kwh === null) {
+        if (segment.length) segments.push(segment);
+        segment = [];
+      } else {
+        segment.push({ ...day, index, x: xFor(index), y: yFor(day.kwh) });
+      }
+    });
+    if (segment.length) segments.push(segment);
+
+    const grid = [0, 0.5, 1].map(ratio => {
+      const y = bottom - ratio * (bottom - top);
+      return `
+        <line x1="${left}" y1="${y}" x2="${right}" y2="${y}" stroke="#e8eaf5" stroke-dasharray="4 5"/>`;
+    }).join('');
+
+    const areas = segments
+      .filter(points => points.length > 1)
+      .map(points => {
+        const line = points.map((point, index) =>
+          `${index ? 'L' : 'M'} ${point.x} ${point.y}`
+        ).join(' ');
+        return `<path d="${line} L ${points[points.length - 1].x} ${bottom} L ${points[0].x} ${bottom} Z" fill="url(#areaFill)"/>`;
+      }).join('');
+    const lines = segments
+      .filter(points => points.length > 1)
+      .map(points => `<path d="${points.map((point, index) =>
+        `${index ? 'L' : 'M'} ${point.x} ${point.y}`
+      ).join(' ')}" fill="none" stroke="#4f46e5" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>`)
+      .join('');
+    const recordedPoints = segments.flat();
+    const gapLines = recordedPoints.slice(1).map((point, index) => {
+      const previous = recordedPoints[index];
+      return point.index - previous.index > 1
+        ? `<path d="M ${previous.x} ${previous.y} L ${point.x} ${point.y}" fill="none" stroke="#818cf8" stroke-width="2" stroke-dasharray="5 5"/>`
+        : '';
+    }).join('');
+    const points = segments.flat().map(point => `
+      <circle cx="${point.x}" cy="${point.y}" r="5" fill="#fff" stroke="#4f46e5" stroke-width="3">
+        <title>${point.label}: ${formatNumber(point.kwh, 2)} kWh/hari</title>
+      </circle>`).join('');
+    const labels = days.map(day => `
+      <span class="truncate text-center text-[10px] ${day.kwh === null ? 'text-slate-300' : 'text-slate-500'}">${day.label}</span>`).join('');
+
+    chart.innerHTML = `
+      <svg class="block h-32 w-full sm:h-40" viewBox="0 0 740 260" preserveAspectRatio="none" role="img" aria-label="Tren estimasi konsumsi energi harian selama tujuh hari terakhir">
+        <defs>
+          <linearGradient id="areaFill" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#6366f1" stop-opacity=".22"/>
+            <stop offset="100%" stop-color="#6366f1" stop-opacity=".02"/>
+          </linearGradient>
+        </defs>
+        ${grid}
+        ${areas}
+        ${lines}
+        ${gapLines}
+        ${points}
+      </svg>
+      <div class="grid grid-cols-7 gap-1" aria-hidden="true">${labels}</div>`;
+
+    setText(
+      'catatanGrafikDashboard',
+      saved
+        ? `Grafik historis menyimpan data konsumsi per tanggal. Estimasi harian dihitung dari total ${formatNumber(calculateEnergy().kwh)} kWh bulanan; hari tanpa catatan tidak ditampilkan sebagai nol.`
+        : 'Riwayat hari ini tidak tersimpan. Periksa penyimpanan browser; grafik hanya menampilkan data yang berhasil dibaca.'
     );
   }
 
@@ -497,94 +724,6 @@
   }
 
   /* =========================================================
-     TAGIHAN
-     ========================================================= */
-
-  function renderBills() {
-    const parent = getPageMain();
-
-    if (!parent || $('billManager')) return;
-
-    const section = document.createElement('section');
-
-    section.id = 'billManager';
-    section.className =
-      'mt-5 rounded-2xl border border-gray-100 bg-white p-5 shadow-sm md:p-6';
-
-    section.innerHTML = `
-      <h2 class="mb-2 text-lg font-extrabold text-gray-800">
-        Catat tagihan listrik
-      </h2>
-      <p class="mb-4 text-sm text-gray-500">
-        Masukkan pemakaian listrik dari tagihan PLN.
-      </p>
-
-      <form id="billForm" class="grid grid-cols-1 gap-3 sm:grid-cols-3">
-        <input name="month" required maxlength="60"
-               placeholder="Periode tagihan"
-               class="rounded-xl border p-3">
-
-        <input name="kwh" type="number" min="0" step="0.1" required
-               placeholder="Pemakaian kWh"
-               class="rounded-xl border p-3">
-
-        <button type="submit"
-                class="rounded-xl bg-indigo-600 p-3 font-bold text-white hover:bg-indigo-700">
-          Simpan tagihan
-        </button>
-      </form>
-
-      <div class="mt-5 space-y-2">
-        ${data.bills.map(bill => `
-          <div class="flex items-center justify-between gap-3 rounded-xl bg-gray-50 p-3">
-            <div>
-              <p class="font-bold text-gray-800">
-                ${escapeHTML(bill.month)}
-              </p>
-              <p class="text-xs text-gray-500">
-                ${formatNumber(bill.kwh)} kWh
-              </p>
-            </div>
-            <p class="font-bold text-gray-800">
-              ${formatMoney(bill.amount ?? bill.kwh * (positive(data.house.tarif) || 1444))}
-            </p>
-          </div>
-        `).join('')}
-      </div>
-    `;
-
-    parent.appendChild(section);
-
-    $('billForm').addEventListener('submit', event => {
-      event.preventDefault();
-
-      const form = new FormData(event.currentTarget);
-      const kwh = positive(form.get('kwh'));
-      const month = String(form.get('month') || '').trim();
-
-      if (!month) {
-        alert('Periode tagihan wajib diisi.');
-        return;
-      }
-
-      const tariff = positive(data.house.tarif) || 1444;
-
-      data.bills.unshift({
-        id: Date.now(),
-        month,
-        kwh,
-        amount: kwh * tariff,
-        date: new Date().toISOString().slice(0, 10),
-        manual: true
-      });
-
-      data.bills = data.bills.slice(0, 12);
-
-      if (saveData()) location.reload();
-    });
-  }
-
-  /* =========================================================
      JEJAK KARBON
      ========================================================= */
 
@@ -632,109 +771,68 @@
      ========================================================= */
 
   function renderSettings() {
-    const parent = getPageMain();
-
     data.settings = {
       ...data.settings,
       ...readJSON(SETTINGS_KEY, {})
     };
 
+    const profile = data.profile;
+    const name = String(
+      profile.name || localStorage.getItem('namaPengguna') || 'Warga'
+    ).trim() || 'Warga';
+    const email = String(profile.email || '');
+    const initial = Array.from(name)[0]?.toLocaleUpperCase('id-ID') || 'W';
+
+    $('avatarProfil').textContent = name.trim().charAt(0).toUpperCase() || 'W';
+    setText('avatarHeaderPengaturan', initial);
+    setText('namaHeaderPengaturan', name);
+    $('namaProfil').textContent = name;
+    $('emailProfil').textContent = email || 'Belum ada email';
+    $('ringkasNama').textContent = name;
+    $('inputNama').value = name;
+    $('inputEmail').value = email;
+
     const form = $('profileForm');
+    if (!form || form.dataset.pijarBound === 'true') return;
+    form.dataset.pijarBound = 'true';
 
-    if (form && !form.dataset.pijarBound) {
-      form.dataset.pijarBound = 'true';
+    form.addEventListener('submit', event => {
+      event.preventDefault();
 
-      const nameInput = form.querySelector('[name="name"]');
-      const emailInput = form.querySelector('[name="email"]');
-      const notificationInput = form.querySelector('[name="notifications"]');
+      const formData = new FormData(form);
+      const updatedName = String(formData.get('name') || '').trim();
+      const updatedEmail = String(formData.get('email') || '').trim();
 
-      if (nameInput) nameInput.value = data.profile.name || '';
-      if (emailInput) emailInput.value = data.profile.email || '';
-      if (notificationInput) {
-        notificationInput.checked = Boolean(data.settings.notifications);
+      if (!updatedName) {
+        alert('Nama pengguna tidak boleh kosong.');
+        return;
       }
 
-      form.addEventListener('submit', event => {
-        event.preventDefault();
+      data.profile = {
+        ...data.profile,
+        name: updatedName,
+        email: updatedEmail
+      };
 
-        const formData = new FormData(form);
+      try {
+        localStorage.setItem('namaPengguna', updatedName);
 
-        data.profile = {
-          name: String(formData.get('name') || '').trim(),
-          email: String(formData.get('email') || '').trim()
-        };
+        if (!saveData()) return;
 
-        data.settings.notifications = formData.has('notifications');
-
-        try {
-          localStorage.setItem(SETTINGS_KEY, JSON.stringify(data.settings));
-          localStorage.setItem('namaPengguna', data.profile.name);
-
-          if (saveData()) alert('Pengaturan berhasil disimpan.');
-        } catch (error) {
-          console.error(error);
-          alert('Pengaturan gagal disimpan.');
-        }
-      });
-    }
-
-    // Tidak membuat section kosong jika halaman belum menyediakan form.
-    if (parent && !$('profileSettings') && !form) {
-      const section = document.createElement('section');
-
-      section.id = 'profileSettings';
-      section.className =
-        'mt-5 rounded-2xl border border-gray-100 bg-white p-5 shadow-sm md:p-6';
-
-      section.innerHTML = `
-        <h2 class="mb-4 text-lg font-extrabold text-gray-800">
-          Pengaturan profil
-        </h2>
-        <form id="profileForm" class="space-y-3">
-          <label class="block text-sm font-medium text-gray-700">
-            Nama
-            <input name="name" required maxlength="100"
-                   value="${escapeHTML(data.profile.name)}"
-                   class="mt-1 block w-full rounded-xl border p-3">
-          </label>
-          <label class="block text-sm font-medium text-gray-700">
-            Email
-            <input name="email" type="email" maxlength="150"
-                   value="${escapeHTML(data.profile.email)}"
-                   class="mt-1 block w-full rounded-xl border p-3">
-          </label>
-          <label class="flex items-center gap-2 text-sm text-gray-700">
-            <input name="notifications" type="checkbox"
-                   ${data.settings.notifications ? 'checked' : ''}>
-            Aktifkan notifikasi
-          </label>
-          <button type="submit"
-                  class="rounded-xl bg-indigo-600 px-5 py-3 font-bold text-white">
-            Simpan pengaturan
-          </button>
-        </form>
-        <button id="resetData" type="button"
-                class="mt-4 rounded-xl border border-red-200 px-4 py-2 font-bold text-red-600">
-          Hapus data lokal
-        </button>
-      `;
-
-      parent.appendChild(section);
-
-      // Pasang listener setelah section dan form dibuat.
-      renderSettings();
-      return;
-    }
-
-    $('resetData')?.addEventListener('click', () => {
-      if (!confirm('Hapus seluruh data PijarBumi dari browser ini?')) return;
-
-      localStorage.removeItem(STORAGE_KEY);
-      localStorage.removeItem(ROOM_KEY);
-      localStorage.removeItem(SETTINGS_KEY);
-      localStorage.removeItem('namaPengguna');
-
-      location.reload();
+        const updatedInitial =
+          Array.from(updatedName)[0]?.toLocaleUpperCase('id-ID') || 'W';
+        $('avatarProfil').textContent = updatedInitial;
+        setText('avatarHeaderPengaturan', updatedInitial);
+        setText('namaHeaderPengaturan', updatedName);
+        $('namaProfil').textContent = updatedName;
+        $('emailProfil').textContent = updatedEmail || 'Belum ada email';
+        $('ringkasNama').textContent = updatedName;
+        window.tutupModal('modalProfil');
+        window.tampilToast('Profil berhasil disimpan.');
+      } catch (error) {
+        console.error('PijarBumi: gagal menyimpan profil.', error);
+        alert('Profil gagal disimpan.');
+      }
     });
   }
 
@@ -786,7 +884,8 @@
         tahun: positive(getValue('tahunRumah')) || new Date().getFullYear(),
         kamarTidur: positive(getValue('kamarTidur')),
         kamarMandi: positive(getValue('kamarMandi')),
-        tarif: positive(getValue('tarifKwh')) || 1444
+        tarif: positive(getValue('tarifKwh')) || 1444,
+        demo: false
       };
 
       if (saveData()) {
@@ -865,7 +964,7 @@
 
     setFirstExisting(
       ['#jumlahKK', '[data-rt="kk"]'],
-      '1 KK demo'
+      '1 KK terdata'
     );
 
     setFirstExisting(
@@ -893,10 +992,6 @@
 
       case 'analitik.html':
         renderAnalytics();
-        break;
-
-      case 'tagihan.html':
-        renderBills();
         break;
 
       case 'jejak_karbon.html':

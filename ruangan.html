@@ -15,6 +15,7 @@
 
     body {
       font-family: 'DM Sans', sans-serif;
+      font-size: 16px;
       background: #f7f8fc;
       color: #172554;
     }
@@ -26,7 +27,7 @@
       padding: 12px 14px;
       border-radius: 13px;
       color: #52618b;
-      font-size: 14px;
+      font-size: 16px;
       font-weight: 600;
       transition: .2s;
     }
@@ -152,7 +153,6 @@
         <b class="block text-xl font-extrabold tracking-tight text-blue-950">PijarBumi</b>
         <span class="block text-[11px] font-medium text-slate-400">Hitung Energi, Jaga Bumi</span>
       </span>
-      </span>
     </a>
 
     <p class="mb-3 px-3 text-[10px] font-extrabold uppercase tracking-[.17em] text-slate-400">
@@ -179,9 +179,9 @@
 
     <div class="mt-auto mb-4 rounded-2xl border border-indigo-100 bg-gradient-to-br from-indigo-50 to-blue-50 p-4">
       <i class="fa-solid fa-house-circle-check mb-3 text-2xl text-indigo-600"></i>
-      <p class="text-sm font-bold leading-5 text-blue-950">Rumah nyaman, energi bijak</p>
+      <p class="text-sm font-bold leading-5 text-blue-950">Rumah hemat, bumi lebih sehat</p>
       <p class="mt-1 text-xs leading-5 text-slate-600">
-        Kenali kondisi tiap ruangan dan temukan peluang penghematan.
+        Kebiasaan kecil bisa membawa perubahan.
       </p>
     </div>
 
@@ -319,7 +319,7 @@
             <div class="min-w-0 flex-1">
               <h2 class="font-extrabold text-blue-950">Rekomendasi untuk rumahmu</h2>
               <p class="mt-1 text-sm leading-6 text-slate-500">
-                Rekomendasi di bawah dibuat dari kondisi ruangan yang kamu catat. Hasilnya merupakan panduan umum, bukan pengukuran listrik langsung.
+                Saran ini disesuaikan dengan kondisi ruangan yang kamu catat.
               </p>
               <div id="rekomendasiRumah" class="mt-4 space-y-3">
                 <p class="rounded-xl bg-slate-50 p-4 text-sm text-slate-500">
@@ -354,7 +354,7 @@
         </a>
         <a href="alat.html" class="flex flex-col items-center gap-1 px-2 py-1 text-slate-500">
           <span class="flex h-8 w-12 items-center justify-center"><i class="fa-solid fa-plug text-lg"></i></span>
-          <span class="text-[10px] font-semibold">Perangkat</span>
+          <span class="text-[10px] font-semibold">Alat Energi</span>
         </a>
         <a href="pengaturan.html" class="flex flex-col items-center gap-1 px-2 py-1 text-slate-500">
           <span class="flex h-8 w-12 items-center justify-center"><i class="fa-solid fa-gear text-lg"></i></span>
@@ -767,9 +767,14 @@
                   <h3 class="break-words text-base font-extrabold text-blue-950">${escapeHTML(room.nama)}</h3>
                   <p class="mt-1 text-xs text-slate-500">${info.label}</p>
                 </div>
-                ${room.prioritas === 'tinggi'
-                  ? '<span class="rounded-full bg-amber-50 px-2.5 py-1 text-[10px] font-extrabold text-amber-700"><i class="fa-solid fa-flag mr-1"></i>Prioritas</span>'
-                  : ''}
+                <div class="flex flex-wrap gap-1.5">
+                  ${room.demo
+                    ? '<span class="rounded-full bg-slate-100 px-2.5 py-1 text-[10px] font-bold text-slate-500">Data contoh</span>'
+                    : ''}
+                  ${room.prioritas === 'tinggi'
+                    ? '<span class="rounded-full bg-amber-50 px-2.5 py-1 text-[10px] font-extrabold text-amber-700"><i class="fa-solid fa-flag mr-1"></i>Prioritas</span>'
+                    : ''}
+                </div>
               </div>
 
               <span class="mt-3 inline-flex rounded-full px-3 py-1.5 text-xs font-bold ${hasil.statusClass}">
@@ -797,7 +802,7 @@
             <div class="progress-track">
               <div class="progress-fill ${hasil.skor >= 85 ? 'bg-emerald-500' : hasil.skor >= 65 ? 'bg-amber-400' : 'bg-rose-500'}" style="width:${hasil.skor}%"></div>
             </div>
-            <p class="mt-2 text-[11px] leading-5 text-slate-400">Skor indikator berdasarkan isian, bukan hasil pengukuran energi.</p>
+            <p class="mt-2 text-[11px] leading-5 text-slate-400">Skor merangkum kondisi berdasarkan informasi yang kamu masukkan.</p>
           </div>
 
           <div class="mt-4 flex flex-wrap gap-2">
@@ -1029,7 +1034,7 @@
 
     if (id) {
       ruangan = ruangan.map(item => String(item.id) === String(id)
-        ? { ...item, ...room }
+        ? { ...item, ...room, demo: false }
         : item);
     } else {
       room.dibuatPada = new Date().toISOString();
@@ -1154,14 +1159,17 @@
 
   // Profil lokal jika tersedia.
   try {
-    const profil = JSON.parse(localStorage.getItem('pijarBumiSettingsV1') || '{}');
-    const nama = typeof profil.nama === 'string' && profil.nama.trim()
-      ? profil.nama.trim()
-      : 'Warga';
+    const dataEnergi = JSON.parse(localStorage.getItem('pijarBumiDataV1') || '{}');
+    const nama = String(
+      dataEnergi.profile?.name || localStorage.getItem('namaPengguna') || 'Warga'
+    ).trim() || 'Warga';
 
     document.getElementById('namaHeader').textContent = nama;
-    document.getElementById('avatarHeader').textContent = nama.charAt(0).toUpperCase();
-  } catch (_) {}
+    document.getElementById('avatarHeader').textContent =
+      Array.from(nama)[0]?.toLocaleUpperCase('id-ID') || 'W';
+  } catch (error) {
+    console.error('Profil pengguna tidak dapat ditampilkan.', error);
+  }
 
   // Tidak menimpa fungsi logout yang mungkin telah disediakan app.js.
   if (typeof window.prosesLogout !== 'function') {

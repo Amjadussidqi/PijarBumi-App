@@ -27,6 +27,7 @@
         body {
             margin: 0;
             font-family: 'DM Sans', sans-serif;
+            font-size: 16px;
             background: var(--bg);
             color: var(--text);
         }
@@ -55,21 +56,20 @@
         .brand {
             display: flex;
             align-items: center;
-            gap: 11px;
-            padding: 0 12px;
-            margin-bottom: 38px;
+            gap: 12px;
+            padding: 0 6px;
         }
 
         /* Logo gambar PijarBumi */
         .brand-icon {
-            width: 42px;
-            height: 42px;
+            width: 44px;
+            height: 44px;
             display: flex;
             align-items: center;
             justify-content: center;
             flex-shrink: 0;
             overflow: hidden;
-            border-radius: 14px;
+            border-radius: 16px;
             background: transparent;
         }
 
@@ -81,12 +81,18 @@
         }
 
         .brand-name {
-            font-size: 21px;
+            font-size: 20px;
             font-weight: 800;
-            letter-spacing: -.7px;
+            letter-spacing: -.5px;
         }
 
-        .brand-name span { color: var(--primary); }
+        .brand-tagline {
+            display: block;
+            margin-top: 2px;
+            color: #94a3b8;
+            font-size: 11px;
+            font-weight: 500;
+        }
 
         .nav-label {
             padding: 0 13px;
@@ -103,10 +109,10 @@
             display: flex;
             align-items: center;
             gap: 13px;
-            padding: 13px 14px;
-            border-radius: 12px;
+            padding: 12px 14px;
+            border-radius: 13px;
             color: #777b91;
-            font-size: 13px;
+            font-size: 16px;
             font-weight: 600;
             transition: .2s;
         }
@@ -123,30 +129,33 @@
             background: var(--primary-light);
         }
 
-        .sidebar-bottom { margin-top: auto; }
+        .sidebar-tip {
+            margin-top: auto;
+            margin-bottom: 16px;
+            padding: 16px;
+            border: 1px solid #d1fae5;
+            border-radius: 16px;
+            background: linear-gradient(135deg, #ecfdf5, #f0fdfa);
+        }
 
-        .profile {
+        .sidebar-tip-icon { margin-bottom: 12px; color: #059669; font-size: 24px; }
+        .sidebar-tip-title { color: #064e3b; font-size: 14px; font-weight: 700; line-height: 1.4; }
+        .sidebar-tip-copy { margin-top: 4px; color: #065f46; font-size: 12px; line-height: 1.65; }
+        .logout-button {
             display: flex;
             align-items: center;
-            gap: 11px;
-            padding: 17px 8px 0;
-            border-top: 1px solid var(--border);
+            gap: 12px;
+            margin-bottom: 20px;
+            padding: 12px 16px;
+            border: 0;
+            border-radius: 12px;
+            background: #fff1f2;
+            color: #e11d48;
+            font-size: 14px;
+            font-weight: 700;
+            transition: .2s;
         }
-
-        .avatar {
-            width: 38px;
-            height: 38px;
-            display: grid;
-            place-items: center;
-            flex-shrink: 0;
-            border-radius: 50%;
-            color: var(--primary);
-            background: var(--primary-light);
-            font-weight: 800;
-        }
-
-        .profile-name { font-size: 12px; font-weight: 800; }
-        .profile-role { margin-top: 3px; color: var(--muted); font-size: 10px; }
+        .logout-button:hover { background: #ffe4e6; }
 
         /* Konten utama */
         .main {
@@ -391,7 +400,7 @@
             .form-card { padding: 21px; }
         }
 
-        @media (max-width: 800px) {
+        @media (max-width: 767px) {
             .sidebar { display: none; }
             .main { margin-left: 0; padding: 22px 18px 100px; }
             .topbar { margin-bottom: 25px; }
@@ -449,30 +458,30 @@
             <div class="brand-icon">
                 <img src="./assets/logo.png" alt="Logo PijarBumi">
             </div>
-            <div class="brand-name">Pijar<span>Bumi</span></div>
-            
+            <span class="brand-copy">
+                <span class="brand-name">PijarBumi</span>
+                <span class="brand-tagline">Hitung Energi, Jaga Bumi</span>
+            </span>
         </a>
 
-        <p class="nav-label">MENU UTAMA</p>
+        <p class="nav-label">Menu utama</p>
 
         <nav class="nav-list">
-            <a href="dashboard.html" class="nav-link"><i class="fa-solid fa-house"></i> Dashboard</a>
+            <a href="dashboard.html" class="nav-link"><i class="fa-solid fa-house"></i> Dasbor</a>
             <a href="analitik.html" class="nav-link"><i class="fa-solid fa-chart-line"></i> Analitik</a>
             <a href="ruangan.html" class="nav-link"><i class="fa-solid fa-door-open"></i> Ruangan</a>
-            <a href="alat.html" class="nav-link"><i class="fa-solid fa-plug"></i> Perangkat</a>
-            <a href="tagihan.html" class="nav-link"><i class="fa-solid fa-file-invoice-dollar"></i> Tagihan</a>
+            <a href="alat.html" class="nav-link"><i class="fa-solid fa-plug"></i> Alat Energi</a>
             <a href="pengaturan.html" class="nav-link"><i class="fa-solid fa-gear"></i> Pengaturan</a>
         </nav>
 
-        <div class="sidebar-bottom">
-            <div class="profile">
-                <div class="avatar" id="avatarSidebar">PB</div>
-                <div>
-                    <div class="profile-name" id="namaSidebar">Pengguna PijarBumi</div>
-                    <div class="profile-role">Pengelola Rumah</div>
-                </div>
-            </div>
+        <div class="sidebar-tip">
+            <div class="sidebar-tip-icon"><i class="fa-solid fa-seedling"></i></div>
+            <p class="sidebar-tip-title">Rumah hemat, bumi lebih sehat</p>
+            <p class="sidebar-tip-copy">Kebiasaan kecil bisa membawa perubahan.</p>
         </div>
+        <button type="button" onclick="prosesLogout()" class="logout-button">
+            <i class="fa-solid fa-right-from-bracket"></i> Keluar
+        </button>
     </aside>
 
     <main class="main">
@@ -483,7 +492,7 @@
                     onclick="location.href='pengaturan.html'">
                     <i class="fa-solid fa-gear"></i>
                 </button>
-                <div class="avatar" id="avatarTop">PB</div>
+                <div class="avatar" id="avatarTop" aria-label="Profil pengguna">W</div>
             </div>
         </div>
 
@@ -628,11 +637,11 @@
     </main>
 
     <nav class="mobile-nav">
-        <a href="dashboard.html"><i class="fa-solid fa-house"></i><span>Beranda</span></a>
+        <a href="dashboard.html"><i class="fa-solid fa-house"></i><span>Dasbor</span></a>
         <a href="analitik.html"><i class="fa-solid fa-chart-line"></i><span>Analitik</span></a>
         <a href="ruangan.html"><i class="fa-solid fa-door-open"></i><span>Ruangan</span></a>
-        <a href="alat.html"><i class="fa-solid fa-plug"></i><span>Perangkat</span></a>
-        <a href="tagihan.html"><i class="fa-solid fa-file-invoice-dollar"></i><span>Tagihan</span></a>
+        <a href="alat.html"><i class="fa-solid fa-plug"></i><span>Alat Energi</span></a>
+        <a href="pengaturan.html"><i class="fa-solid fa-gear"></i><span>Pengaturan</span></a>
     </nav>
 </div>
 
@@ -650,31 +659,19 @@
 
     kosongkanForm();
 
-    // Ambil nama profil jika tersedia.
+    // Samakan inisial dengan nama profil pada halaman pengaturan.
     try {
-        const settings = JSON.parse(
-            localStorage.getItem('pijarBumiSettingsV1') || '{}'
+        const dataEnergi = JSON.parse(
+            localStorage.getItem('pijarBumiDataV1') || '{}'
         );
+        const nama = String(
+            dataEnergi.profile?.name || localStorage.getItem('namaPengguna') || 'Warga'
+        ).trim() || 'Warga';
 
-        const nama =
-            settings.nama ||
-            settings.namaPengguna ||
-            settings.name ||
-            'Pengguna PijarBumi';
-
-        const inisial = nama
-            .split(/\s+/)
-            .filter(Boolean)
-            .slice(0, 2)
-            .map(kata => kata[0])
-            .join('')
-            .toUpperCase() || 'PB';
-
-        document.getElementById('namaSidebar').textContent = nama;
-        document.getElementById('avatarSidebar').textContent = inisial;
-        document.getElementById('avatarTop').textContent = inisial;
+        document.getElementById('avatarTop').textContent =
+            Array.from(nama)[0]?.toLocaleUpperCase('id-ID') || 'W';
     } catch (error) {
-        console.warn('Data profil belum tersedia.');
+        console.error('Profil pengguna tidak dapat ditampilkan.', error);
     }
 
     function tampilkanPesan(teks, tipe) {

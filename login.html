@@ -9,6 +9,7 @@
 
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
   <style>
     * {
@@ -17,7 +18,8 @@
 
     body {
       min-height: 100vh;
-      font-family: "DM Sans", Inter, ui-sans-serif, system-ui, sans-serif;
+      font-family: 'DM Sans', ui-sans-serif, system-ui, sans-serif;
+      font-size: 16px;
     }
 
     input {
@@ -62,7 +64,7 @@
         <a href="index.html" class="inline-flex items-center gap-3">
           <span class="flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-2xl">
     <img
-      src="./assets/logo.PNG"
+      src="./assets/logo.png"
       alt="Logo PijarBumi"
       class="h-full w-full object-contain"
     >
@@ -99,7 +101,7 @@
         </div>
 
         <p class="mt-6 text-xs text-indigo-200">
-          Prototype v1.0 · Green Champions © 2026
+          PijarBumi · Green Champions © 2026
         </p>
       </div>
 
@@ -114,7 +116,7 @@
       <div class="mb-8 flex items-center gap-3 md:hidden">
           <span class="flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-2xl">
     <img
-      src="./assets/logo.PNG"
+      src="./assets/logo.png"
       alt="Logo PijarBumi"
       class="h-full w-full object-contain"
     >
@@ -273,7 +275,7 @@
       </p>
 
       <p class="mt-5 text-center text-xs text-slate-400 md:hidden">
-        Prototype v1.0 © 2026 Green Champions
+        PijarBumi · Green Champions © 2026
       </p>
     </section>
   </main>
@@ -386,7 +388,7 @@
            * Jangan simpan password ke localStorage.
            */
           setStatus(
-            'Tampilan registrasi sudah siap, tetapi pembuatan akun belum terhubung ke backend. Akun belum dibuat.',
+            'Pendaftaran akun belum tersedia saat ini. Silakan masuk menggunakan akun yang sudah tersedia.',
             false
           );
           return;
@@ -407,13 +409,13 @@
 
       $('googleLogin').addEventListener('click', function () {
         setStatus(
-          'Login Google belum terhubung. Perlu konfigurasi OAuth dan callback autentikasi.'
+          'Masuk dengan Google belum tersedia saat ini.'
         );
       });
 
       $('appleLogin').addEventListener('click', function () {
         setStatus(
-          'Login Apple belum terhubung. Perlu konfigurasi Sign in with Apple dan callback autentikasi.'
+          'Masuk dengan Apple belum tersedia saat ini.'
         );
       });
 

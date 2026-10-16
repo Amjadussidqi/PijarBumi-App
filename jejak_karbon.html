@@ -22,8 +22,8 @@
 
     body {
       margin: 0;
-      min-width: 320px;
       font-family: 'DM Sans', ui-sans-serif, system-ui, sans-serif;
+      font-size: 16px;
       background: #f7f8fc;
       color: #172554;
     }
@@ -39,7 +39,7 @@
       padding: 12px 14px;
       border-radius: 13px;
       color: #52618b;
-      font-size: 14px;
+      font-size: 16px;
       font-weight: 600;
       transition: background .2s, color .2s, box-shadow .2s;
     }
@@ -156,6 +156,15 @@
         padding-bottom: 120px;
       }
 
+      .mobile-nav > div {
+        width: 100%;
+      }
+
+      .mobile-nav a {
+        min-width: 0;
+        flex: 1;
+      }
+
       .carbon-hero {
         padding: 1.25rem;
       }
@@ -187,15 +196,12 @@
   <aside class="sidebar hidden w-60 shrink-0 flex-col border-r border-indigo-100 bg-white px-4 md:flex">
 
     <a href="dashboard.html" class="flex items-center gap-3 px-2 py-7">
-      <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-emerald-50">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"
-          width="44" height="44" fill="none" role="img" aria-label="Logo PijarBumi">
-          <circle cx="24" cy="24" r="20" fill="#166534"/>
-          <path d="M9 28C9 15 20 7 34 10C31 22 23 31 9 28Z" fill="#86EFAC"/>
-          <path d="M10 37C17 26 26 20 37 17C33 29 24 37 10 37Z" fill="#22C55E"/>
-          <circle cx="35" cy="10" r="5" fill="#FACC15"/>
-          <path d="M12 31L29 17" stroke="#166534" stroke-width="2" stroke-linecap="round"/>
-        </svg>
+      <span class="flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-2xl">
+        <img
+          src="./assets/logo.png"
+          alt="Logo PijarBumi"
+          class="h-full w-full object-contain"
+        >
       </span>
       <span>
         <b class="block text-xl font-extrabold tracking-tight text-blue-950">PijarBumi</b>
@@ -222,10 +228,6 @@
 
       <a href="alat.html" class="sidebar-link">
         <i class="fa-solid fa-plug w-5 text-center"></i>Alat Energi
-      </a>
-
-      <a href="jejak_karbon.html" class="sidebar-link active" aria-current="page">
-        <i class="fa-solid fa-leaf w-5 text-center"></i>Jejak Karbon
       </a>
 
       <a href="pengaturan.html" class="sidebar-link">
@@ -257,7 +259,22 @@
     <!-- HEADER -->
     <header class="relative z-10 flex shrink-0 items-center justify-between gap-3 border-b border-indigo-50 bg-white/95 px-4 py-4 sm:px-8 md:px-10">
       <div class="flex min-w-0 flex-1 items-center gap-3 rounded-xl border border-indigo-100 bg-slate-50 px-4 py-3 text-sm text-slate-400 sm:max-w-md">
-        <i class="fa-solid fa-leaf text-emerald-600"></i>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          width="16"
+          height="16"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.8"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="shrink-0 text-emerald-600"
+          aria-hidden="true"
+        >
+          <path d="M20 4c-8 0-14 3-14 10a6 6 0 0 0 6 6c7 0 10-6 8-16Z"/>
+          <path d="M4 21c3-5 7-8 12-11"/>
+        </svg>
         <span class="truncate">Pantau dampak energi rumahmu</span>
       </div>
 
@@ -289,7 +306,21 @@
           <div class="relative z-10 flex flex-col gap-7 sm:flex-row sm:items-center sm:justify-between">
             <div class="max-w-xl">
               <span class="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/15 px-3 py-1.5 text-xs font-bold">
-                <i class="fa-solid fa-leaf"></i>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  width="16"
+                  height="16"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="M20 4c-8 0-14 3-14 10a6 6 0 0 0 6 6c7 0 10-6 8-16Z"/>
+                  <path d="M4 21c3-5 7-8 12-11"/>
+                </svg>
                 Ringkasan jejak karbon
               </span>
 
@@ -486,8 +517,7 @@
                 dimasukkan sebagai nilai emisi kg CO₂ yang telah dihitung sebelumnya.
               </p>
               <p class="mt-3 text-xs leading-5 text-slate-400">
-                Hasil bergantung pada kelengkapan data dan faktor emisi yang digunakan.
-                Nilai nol ketika data belum tersedia bukan bukti bahwa emisi aktual benar-benar nol.
+                Lengkapi data energi agar estimasi emisi rumahmu semakin akurat.
               </p>
             </div>
           </div>
@@ -548,15 +578,15 @@
           <span class="flex h-8 w-12 items-center justify-center">
             <i class="fa-solid fa-plug text-lg"></i>
           </span>
-          <span class="text-[10px] font-semibold">Perangkat</span>
+          <span class="text-[10px] font-semibold">Alat Energi</span>
         </a>
 
-        <a href="jejak_karbon.html" aria-current="page"
-          class="flex flex-col items-center gap-1 px-2 py-1 text-emerald-700">
-          <span class="flex h-8 w-12 items-center justify-center rounded-full bg-emerald-100">
-            <i class="fa-solid fa-leaf text-lg"></i>
+        <a href="pengaturan.html"
+        class="flex flex-col items-center gap-1 px-2 py-1 text-slate-500">
+        <span class="flex h-8 w-12 items-center justify-center">
+          <i class="fa-solid fa-gear text-lg"></i>
           </span>
-          <span class="text-[10px] font-extrabold">Karbon</span>
+        <span class="text-[10px] font-semibold">Pengaturan</span>
         </a>
       </div>
     </nav>
@@ -693,21 +723,13 @@
         ' kWh dengan faktor 0,87 kg CO₂/kWh. Faktor gas mengikuti rumus aplikasi.'
       : 'Belum ada data listrik yang dapat dihitung. Tambahkan data perangkat atau tagihan untuk memperoleh estimasi listrik.';
 
-    let nama = '';
+    const nama = String(
+      data.profile?.name || localStorage.getItem('namaPengguna') || 'Warga'
+    ).trim() || 'Warga';
 
-    try {
-      nama = localStorage.getItem('namaPengguna') || '';
-    } catch (error) {
-      console.warn('Nama pengguna tidak dapat dibaca.', error);
-    }
-
-    nama = nama || data.profile.name || '';
-
-    if (nama) {
-      $('namaUser').textContent = nama;
-      $('inisialUser').textContent =
-        nama.trim().charAt(0).toUpperCase() || 'W';
-    }
+    $('namaUser').textContent = nama;
+    $('inisialUser').textContent =
+      Array.from(nama)[0]?.toLocaleUpperCase('id-ID') || 'W';
   }
 
   function init() {

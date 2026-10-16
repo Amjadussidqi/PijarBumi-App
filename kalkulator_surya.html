@@ -15,6 +15,7 @@
 
         body {
             margin: 0;
+            font-size: 16px;
             background: #f8fafc;
             color: #1e293b;
         }
@@ -22,23 +23,23 @@
         .sidebar-link {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 13px;
             padding: 12px 14px;
-            border-radius: 12px;
+            border-radius: 13px;
             color: #64748b;
-            font-size: 14px;
+            font-size: 16px;
             font-weight: 600;
             transition: .2s;
         }
 
         .sidebar-link:hover {
-            background: #f0fdf4;
-            color: #15803d;
+            background: #eef2ff;
+            color: #4f46e5;
         }
 
         .sidebar-link.active {
-            color: #15803d;
-            background: #dcfce7;
+            color: #4f46e5;
+            background: #eef2ff;
         }
 
         .card {
@@ -64,13 +65,13 @@
         }
 
         .field-wrap:focus-within {
-            border-color: #16a34a;
+            border-color: #818cf8;
             background: white;
-            box-shadow: 0 0 0 3px rgba(22, 163, 74, .08);
+            box-shadow: 0 0 0 3px rgba(91, 92, 226, .12);
         }
 
         .solar-hero {
-            background: linear-gradient(120deg, #14532d, #15803d 60%, #d9a514);
+            background: linear-gradient(120deg, #3730a3, #5b5ce2 65%, #d9a514);
             position: relative;
             overflow: hidden;
         }
@@ -100,7 +101,7 @@
 
             .mobile-nav {
                 display: grid;
-                grid-template-columns: repeat(4, minmax(0, 1fr));
+                grid-template-columns: repeat(5, minmax(0, 1fr));
             }
 
             .page-content { padding-bottom: 100px; }
@@ -113,79 +114,64 @@
 <div class="min-h-screen md:flex">
 
     <!-- SIDEBAR DESKTOP -->
-    <aside class="desktop-sidebar w-64 bg-white border-r border-slate-200 min-h-screen fixed left-0 top-0 bottom-0 p-5 z-30">
-        <a href="dashboard.html" class="flex items-center gap-3 mb-10 px-2">
-Hitung Energi, Jaga Bumi
+    <aside class="desktop-sidebar w-60 bg-white border-r border-indigo-100 min-h-screen fixed left-0 top-0 bottom-0 px-4 z-30 flex flex-col">
+        <a href="dashboard.html" class="flex items-center gap-3 px-2 py-7">
+            <span class="flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-2xl">
+                <img src="./assets/logo.png" alt="Logo PijarBumi" class="h-full w-full object-contain">
+            </span>
             <div>
-                <h1 class="font-extrabold text-xl tracking-tight text-slate-800">
-                    Pijar<span class="text-green-600">Bumi</span>
-                </h1>
-                <p class="text-[10px] text-slate-400 font-semibold tracking-widest uppercase">
+                <h1 class="font-extrabold text-xl tracking-tight text-blue-950">PijarBumi</h1>
+                <p class="text-[11px] text-slate-400 font-medium">
                     Hitung Energi, Jaga Bumi
                 </p>
             </div>
         </a>
 
-        <p class="text-[10px] uppercase tracking-widest font-bold text-slate-400 px-3 mb-3">
-            Menu Utama
+        <p class="text-[10px] uppercase tracking-[.17em] font-extrabold text-slate-400 px-3 mb-3">
+            Menu utama
         </p>
 
-        <nav class="space-y-1">
+        <nav class="space-y-2">
             <a href="dashboard.html" class="sidebar-link">
                 <i class="fa-solid fa-house w-5"></i> Dasbor
             </a>
             <a href="analitik.html" class="sidebar-link">
                 <i class="fa-solid fa-chart-line w-5"></i> Analitik
             </a>
-            <a href="alat.html" class="sidebar-link active">
-                <i class="fa-solid fa-plug w-5"></i> Perangkat
+            <a href="ruangan.html" class="sidebar-link">
+                <i class="fa-solid fa-door-open w-5"></i> Ruangan
             </a>
-            <a href="jejak_karbon.html" class="sidebar-link">
-                <svg
-  xmlns="http://www.w3.org/2000/svg"
-  viewBox="0 0 24 24"
-  width="20"
-  height="20"
-  fill="none"
-  stroke="currentColor"
-  stroke-width="1.8"
-  stroke-linecap="round"
-  stroke-linejoin="round"
-  aria-hidden="true"
->
-  <path d="M20 4c-8 0-14 3-14 10a6 6 0 0 0 6 6c7 0 10-6 8-16Z"/>
-  <path d="M4 21c3-5 7-8 12-11"/>
-</svg> Jejak Karbon
+            <a href="alat.html" class="sidebar-link">
+                <i class="fa-solid fa-plug w-5"></i> Alat Energi
+            </a>
+            <a href="pengaturan.html" class="sidebar-link">
+                <i class="fa-solid fa-gear w-5"></i> Pengaturan
             </a>
         </nav>
 
-        <div class="absolute bottom-5 left-5 right-5">
-            <div class="rounded-2xl bg-green-50 border border-green-100 p-4">
-                <div class="w-9 h-9 rounded-xl bg-green-100 text-green-700 flex items-center justify-center mb-3">
-                    <i class="fa-solid fa-sun"></i>
-                </div>
-                <p class="text-sm font-bold text-slate-800">Energi lebih bersih</p>
-                <p class="text-xs text-slate-500 mt-1 leading-relaxed">
-                    Kenali potensi energi matahari untuk rumahmu.
-                </p>
-            </div>
-            <p class="text-[10px] text-center text-slate-400 mt-4">PijarBumi © 2026</p>
+        <div class="mt-auto mb-4 rounded-2xl border border-emerald-100 bg-gradient-to-br from-emerald-50 to-teal-50 p-4">
+            <div class="mb-3 text-2xl text-emerald-600"><i class="fa-solid fa-seedling"></i></div>
+            <p class="text-sm font-bold leading-5 text-emerald-950">Rumah hemat, bumi lebih sehat</p>
+            <p class="mt-1 text-xs leading-5 text-emerald-800">Kebiasaan kecil bisa membawa perubahan.</p>
         </div>
+        <button type="button" onclick="prosesLogout()" class="mb-5 flex items-center gap-3 rounded-xl bg-rose-50 px-4 py-3 text-sm font-bold text-rose-600 transition hover:bg-rose-100">
+            <i class="fa-solid fa-right-from-bracket"></i> Keluar
+        </button>
     </aside>
 
     <!-- KONTEN UTAMA -->
-    <main class="page-content w-full min-w-0 md:ml-64 px-4 py-5 sm:px-6 md:px-8 lg:px-10">
+    <main class="page-content w-full min-w-0 md:ml-60 px-4 py-5 sm:px-6 md:px-8 lg:px-10">
 
         <!-- HEADER -->
         <header class="flex items-center gap-3 mb-7">
-            <a href="alat.html"
-               aria-label="Kembali ke perangkat"
-               class="w-10 h-10 rounded-xl bg-white border border-slate-200 flex items-center justify-center text-slate-600 hover:text-green-700 hover:border-green-300 transition">
+            <a href="dashboard.html"
+               aria-label="Kembali ke dasbor"
+               class="w-10 h-10 rounded-xl bg-white border border-slate-200 flex items-center justify-center text-slate-600 hover:text-indigo-600 hover:border-indigo-300 transition">
                 <i class="fa-solid fa-arrow-left"></i>
             </a>
 
             <div>
-                <p class="text-xs font-semibold text-green-700 mb-1">PijarBumi / Perangkat</p>
+                <p class="text-xs font-semibold text-indigo-600 mb-1">PijarBumi / Energi Surya</p>
                 <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-800">
                     Kalkulator Surya
                 </h2>
@@ -208,8 +194,8 @@ Hitung Energi, Jaga Bumi
                         Apakah rumahmu cocok menggunakan panel surya?
                     </h3>
 
-                    <p class="text-sm text-green-50 mt-3 leading-relaxed">
-                        Masukkan informasi rumah dan tagihan listrik untuk mendapatkan simulasi awal kebutuhan panel surya, biaya, serta potensi penghematan.
+                    <p class="text-sm text-indigo-50 mt-3 leading-relaxed">
+                        Masukkan informasi rumah dan tagihan listrik untuk melihat perkiraan kebutuhan panel surya, biaya, serta potensi penghematan.
                     </p>
                 </div>
 
@@ -224,7 +210,7 @@ Hitung Energi, Jaga Bumi
             <!-- FORM INPUT -->
             <section class="card p-5 sm:p-6 xl:col-span-3">
                 <div class="flex items-start gap-3 mb-6">
-                    <div class="w-10 h-10 rounded-xl bg-green-50 text-green-700 flex items-center justify-center">
+                    <div class="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center">
                         <i class="fa-solid fa-sliders"></i>
                     </div>
                     <div>
@@ -241,7 +227,7 @@ Hitung Energi, Jaga Bumi
                             Tagihan listrik per bulan
                         </label>
                         <div class="field-wrap flex items-center gap-3">
-                            <span class="text-green-700 font-bold text-sm">Rp</span>
+                            <span class="text-indigo-600 font-bold text-sm">Rp</span>
                             <input
                                 id="tagihan"
                                 class="field text-lg"
@@ -262,7 +248,7 @@ Hitung Energi, Jaga Bumi
                             Luas atap yang dapat digunakan
                         </label>
                         <div class="field-wrap flex items-center gap-3">
-                            <i class="fa-solid fa-house text-green-700"></i>
+                            <i class="fa-solid fa-house text-indigo-600"></i>
                             <input
                                 id="luasAtap"
                                 class="field text-lg"
@@ -297,7 +283,7 @@ Hitung Energi, Jaga Bumi
                             <span class="text-sm text-slate-400 font-semibold whitespace-nowrap">jam/hari</span>
                         </div>
                         <p class="text-xs text-slate-400 mt-2">
-                            Nilai awal 4 jam hanya asumsi simulasi, bukan data cuaca lokasi secara langsung.
+                            Sesuaikan dengan rata-rata paparan matahari di lokasi rumahmu.
                         </p>
                     </div>
 
@@ -307,7 +293,7 @@ Hitung Energi, Jaga Bumi
                             Jenis atap
                         </label>
                         <div class="field-wrap flex items-center gap-3">
-                            <i class="fa-solid fa-house-chimney text-green-700"></i>
+                            <i class="fa-solid fa-house-chimney text-indigo-600"></i>
                             <select id="jenisAtap" class="field text-sm cursor-pointer" required>
                                 <option value="beton">Beton / Dak</option>
                                 <option value="genteng">Genteng Tanah Liat</option>
@@ -338,10 +324,10 @@ Hitung Energi, Jaga Bumi
                     <!-- BIAYA INSTALASI -->
                     <div>
                         <label for="biayaPerWp" class="block text-sm font-bold text-slate-700 mb-2">
-                            Asumsi biaya instalasi per Wp
+                            Perkiraan biaya pemasangan per Wp
                         </label>
                         <div class="field-wrap flex items-center gap-3">
-                            <span class="text-green-700 font-bold text-xs whitespace-nowrap">Rp/Wp</span>
+                            <span class="text-indigo-600 font-bold text-xs whitespace-nowrap">Rp/Wp</span>
                             <input
                                 id="biayaPerWp"
                                 class="field text-lg"
@@ -353,7 +339,7 @@ Hitung Energi, Jaga Bumi
                                 required>
                         </div>
                         <p class="text-xs text-slate-400 mt-2">
-                            Asumsi simulasi yang bisa diubah. Bukan harga penawaran pemasangan.
+                            Sesuaikan dengan perkiraan biaya pemasangan di wilayahmu.
                         </p>
                     </div>
 
@@ -363,7 +349,7 @@ Hitung Energi, Jaga Bumi
                             Tarif listrik
                         </label>
                         <div class="field-wrap flex items-center gap-3">
-                            <span class="text-green-700 font-bold text-xs whitespace-nowrap">Rp/kWh</span>
+                            <span class="text-indigo-600 font-bold text-xs whitespace-nowrap">Rp/kWh</span>
                             <input
                                 id="tarifListrik"
                                 class="field text-lg"
@@ -383,13 +369,13 @@ Hitung Energi, Jaga Bumi
 
                     <button
                         type="submit"
-                        class="w-full bg-green-700 hover:bg-green-800 active:bg-green-900 text-white font-bold py-4 rounded-xl shadow-lg shadow-green-100 transition flex items-center justify-center gap-2">
+                        class="w-full bg-indigo-600 hover:bg-indigo-700 active:bg-indigo-800 text-white font-bold py-4 rounded-xl shadow-lg shadow-indigo-100 transition flex items-center justify-center gap-2">
                         <i class="fa-solid fa-calculator"></i>
                         Hitung Potensi Surya
                     </button>
 
                     <p class="text-xs text-slate-400 text-center leading-relaxed">
-                        Hasil merupakan estimasi awal dan tidak menggantikan survei teknis.
+                        Hasil berupa perkiraan; kondisi atap dan instalasi dapat memengaruhi hasil sebenarnya.
                     </p>
                 </form>
             </section>
@@ -402,7 +388,7 @@ Hitung Energi, Jaga Bumi
                         <i class="fa-solid fa-chart-column"></i>
                     </div>
                     <div>
-                        <h3 class="font-extrabold text-lg text-slate-800">Hasil Simulasi</h3>
+                        <h3 class="font-extrabold text-lg text-slate-800">Hasil Perhitungan</h3>
                         <p class="text-sm text-slate-500">Ringkasan potensi sistem surya.</p>
                     </div>
                 </div>
@@ -421,16 +407,16 @@ Hitung Energi, Jaga Bumi
                 <div id="resultPanel" class="hidden space-y-4">
 
                     <!-- KAPASITAS -->
-                    <div class="rounded-2xl bg-green-700 text-white p-5 shadow-lg">
+                    <div class="rounded-2xl bg-indigo-600 text-white p-5 shadow-lg">
                         <div class="flex items-center justify-between gap-3">
-                            <p class="text-sm font-semibold text-green-100">Rekomendasi kapasitas panel</p>
-                            <i class="fa-solid fa-solar-panel text-green-200 text-xl"></i>
+                            <p class="text-sm font-semibold text-indigo-100">Rekomendasi kapasitas panel</p>
+                            <i class="fa-solid fa-solar-panel text-yellow-200 text-xl"></i>
                         </div>
                         <div class="flex items-baseline gap-2 mt-3">
                             <h4 id="hasilKapasitas" class="result-value text-4xl font-extrabold">0</h4>
-                            <span class="text-sm text-green-100">kWp</span>
+                            <span class="text-sm text-indigo-100">kWp</span>
                         </div>
-                        <p id="hasilJumlahPanel" class="text-xs text-green-100 mt-3">Estimasi kapasitas sistem.</p>
+                        <p id="hasilJumlahPanel" class="text-xs text-indigo-100 mt-3">Estimasi kapasitas sistem.</p>
                     </div>
 
                     <!-- ESTIMASI BIAYA -->
@@ -522,27 +508,17 @@ Hitung Energi, Jaga Bumi
         <i class="fa-solid fa-chart-line text-lg"></i>
         <span class="text-[10px] font-semibold">Analitik</span>
     </a>
-    <a href="alat.html" class="flex flex-col items-center gap-1 py-2 text-green-700">
-        <i class="fa-solid fa-plug text-lg"></i>
-        <span class="text-[10px] font-bold">Perangkat</span>
+    <a href="ruangan.html" class="flex flex-col items-center gap-1 py-2 text-slate-400">
+        <i class="fa-solid fa-door-open text-lg"></i>
+        <span class="text-[10px] font-semibold">Ruangan</span>
     </a>
-    <a href="jejak_karbon.html" class="flex flex-col items-center gap-1 py-2 text-slate-400">
-        <svg
-  xmlns="http://www.w3.org/2000/svg"
-  viewBox="0 0 24 24"
-  width="20"
-  height="20"
-  fill="none"
-  stroke="currentColor"
-  stroke-width="1.8"
-  stroke-linecap="round"
-  stroke-linejoin="round"
-  aria-hidden="true"
->
-  <path d="M20 4c-8 0-14 3-14 10a6 6 0 0 0 6 6c7 0 10-6 8-16Z"/>
-  <path d="M4 21c3-5 7-8 12-11"/>
-</svg>
-        <span class="text-[10px] font-semibold">Karbon</span>
+    <a href="alat.html" class="flex flex-col items-center gap-1 py-2 text-slate-400">
+        <i class="fa-solid fa-plug text-lg"></i>
+        <span class="text-[10px] font-bold">Alat Energi</span>
+    </a>
+    <a href="pengaturan.html" class="flex flex-col items-center gap-1 py-2 text-slate-400">
+        <i class="fa-solid fa-gear text-lg"></i>
+        <span class="text-[10px] font-semibold">Pengaturan</span>
     </a>
 </nav>
 
@@ -669,11 +645,11 @@ Hitung Energi, Jaga Bumi
         if (dibatasiAtap) {
             catatan.className = 'rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-800 leading-relaxed';
             catatan.textContent =
-                'Kapasitas simulasi dibatasi oleh luas atap yang tersedia. Sistem aktual perlu diperiksa berdasarkan bentuk atap, jarak antarpanel, dan kondisi lokasi.';
+                'Kapasitas panel disesuaikan dengan luas atap yang tersedia. Bentuk atap, jarak antarpanel, dan kondisi lokasi dapat memengaruhi pemasangan.';
         } else {
-            catatan.className = 'rounded-xl border border-green-200 bg-green-50 p-4 text-sm text-green-800 leading-relaxed';
+            catatan.className = 'rounded-xl border border-indigo-200 bg-indigo-50 p-4 text-sm text-indigo-800 leading-relaxed';
             catatan.textContent =
-                'Hasil ini merupakan estimasi awal berdasarkan input dan asumsi simulasi. Konsultasikan dengan tenaga profesional untuk desain sistem dan perhitungan biaya yang lebih akurat.';
+                'Perkiraan ini berdasarkan data yang kamu masukkan. Konsultasikan pemasangan dengan tenaga profesional untuk menilai kondisi rumah secara langsung.';
         }
 
         document.getElementById('resultPanel').scrollIntoView({
